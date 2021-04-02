@@ -1,7 +1,7 @@
-// ./components/HomeLink.vue
+// ./components/authLink.vue
 <script>
 export default {
-	name: 'HomeLink'
+	name: 'authLink'
 }
 </script>
 
