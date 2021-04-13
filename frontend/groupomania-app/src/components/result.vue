@@ -27,12 +27,13 @@
 
                 <div class="result__block" v-for="article in articles"  v-bind:key="article.id" :id="article.id"> 
                     <h2 class="result__block__article_title">{{ article.title }} </h2>
-                    <p  >Posté par:{{  }} </p>
+                    <p id="createdBy"> </p>
                     <p>{{ article.description}} </p>
-                    <p >Commentaires</p>
-                    <ul>
-                        <li></li>
-                    </ul>
+                    <div>
+                        <h3>Commentaires</h3>
+                      
+                    </div>
+                   
                 </div>
                
             
@@ -52,9 +53,7 @@ export default {
         return{
           
             articles:[""],
-            createdBy:[""],
-            comment:[""],
-            postedBy:"",
+       
         success:false,
         title:"",
         description:""
@@ -126,13 +125,30 @@ methods:{
         this.articles =res.data;
         console.log(res.data)
 
-            res.data.forEach(data => {                    
+            res.data.forEach(data => {      
+                console.log("helooooooo",data.User)              
             
                 
-                axios.get(`http://localhost:8080/api/articles/${data.id}/comments`)
+                axios.get(`http://localhost:8080/api/articles/${data.id}/comments`,{
+                    headers:{
+                        'Authorization': `bearer ${token}`
+                        
+                    }
+                })
                 .then((commentsArray)=>{
-                    console.log("comment",commentsArray)
-                    
+                    commentsArray.data.forEach(comment=>{
+//                     const articleBox = document.getElementById(comment.ArticleId)
+                          let result = document.createElement('p');
+                        result.className = `comment`;
+                        result.id = `comment${comment.id}`;
+                        result.textContent = `${comment.content}`;
+
+                        document.getElementById(`${comment.ArticleId}`).appendChild(result)
+                        console.log("help---------------------------",comment.content)
+
+                                        
+
+                    })               
                 })
 
             });
@@ -246,4 +262,5 @@ methods:{
 *{
       box-sizing: border-box;
 }
+
 </style>
