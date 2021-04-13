@@ -8,7 +8,7 @@
 <div class="login_box">
   <h1 class="login_box__title">Pagemania</h1>
   <p class="login_box__slogan">Inscription Rapide!</p>
-  <p class="login_box__text">En moins d'une minute.</p>
+  <p class="login_box__text">En moins d'une minute...</p>
   <SignUp />
 </div>
   </section>
@@ -24,3 +24,4 @@ export default {
   }
 }
 </script>
+

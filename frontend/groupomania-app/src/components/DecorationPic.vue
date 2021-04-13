@@ -15,7 +15,7 @@ export default {
             
         }
     },
-
+//@/asset/l'image    static asset
   
 }
 
