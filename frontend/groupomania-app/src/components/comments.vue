@@ -2,14 +2,26 @@
 <template>
 <section class="result">
    <div class="result__block" > 
-       <p v-if="done" class="done">C'est fait!</p>
-       <div @click="deleteArticle" class="delete" v-if="success">supprimer</div>
-       <div @click="showFormArticle" class="update" v-if="success">modifier</div>
-                
-                    <h2  class="result__block__article_title">  {{ article.title }} </h2>
+      
+       <form @submit="form_submit" >                
+                            <div class="header__form__div">
+                                <textarea  v-model="content" class="header__form__article_title__article_description" type="textarea" name="description" id="description" placeholder="ajouter un commentaire..." aria-label="taper la description" pattern="[ A-Za-z-0-9\p{L}]{2,100000}" required></textarea>
+                            
+                            </div>
+                            
+                            <input  type="submit" value="Envoyer" class="header__form__article_title__btn succes" id="btn">
                     
-                    <p>{{ article.description}} </p>
-                                          
+     </form>
+                <div v-for=" comment in commentArray" :key="comment.id" >
+
+                     <p v-if="done" class="done">C'est fait!</p>
+       <div @click="deleteArticle" class="delete"  :id="'delete'+comment.id">Supprimer </div>
+       <div @click="showFormArticle" class="update" v-if="success">modifier</div>
+       
+                    <p  class="result__block__article_title"> {{ comment.User }} </p>
+                    
+                    <p> {{ comment.content}} </p>
+                </div>                          
             <form @submit="update" v-if="show" class="header__form">
                     <div class="header__form__div">
                         <label class="header__form__label" for="lastname">Modifier le titre </label>
@@ -18,17 +30,16 @@
                 
                     <div class="header__form__div">
                         <label class="header__form__label" for="description">Modifier la description </label>
-                        <textarea @keyup="close" v-model="article.description" class="header__form__article_title__article_description" type="text" name="firstname" id="firstname" aria-label="taper votre prénom" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required></textarea>
+                        <textarea @keyup="close" v-model="content" class="header__form__article_title__article_description" type="text" name="firstname" id="firstname" aria-label="taper votre prénom" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required></textarea>
                     
                     </div>
                     <input  type="submit" value="Modifier mes infos!" class="header__form__article_title__btn succes" id="btn"> 
             
             </form>
-           
+          
                     <div>
-                        
-                       <router-link to="/comments">  <h3 :id="'commentCount'+article.id"> Commentaires </h3></router-link >
-                            <router-view /> 
+                    
+               
                     </div>
                 </div>
 </section>
@@ -45,14 +56,11 @@ export default {
     name: 'Result',
     data(){
         return{
-          
-            article:[""],
+        commentArray:[""],
+        content: "",
         success:false,
-        title:"",
-        description:"",
         show:false,
-        done:false,
-        articleIdfromVuex: ""
+        done:false
 
         }    
     },
@@ -63,11 +71,32 @@ export default {
         close(){
             this.done = false
         },
+        form_submit(e){
+                e.preventDefault();
+                let token = localStorage.getItem("Token");
+    
+                axios.post(`http://localhost:8080/api/articles/${this.$store.state.articleId}/comments`,{
+                     content: this.content
+                   
+
+                },{
+                    headers:{
+                        'Authorization': `bearer ${token}`
+                    }
+                }
+                )
+                .then(response=>{
+        console.log(response)
+                })
+                .catch(error=>{
+                    console.log(error)
+                })
+        },
        update(e){
      e.preventDefault();
                 let token = localStorage.getItem("Token");
     
-                axios.put(`http://localhost:8080/api/articles/${this.$route.params.id}`,{
+                axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}`,{
                      title: this.article.title,
                     description:this.article.description,
 
@@ -92,7 +121,7 @@ export default {
        deleteArticle(){
             let token = localStorage.getItem("Token");
 
-           axios.delete(`http://localhost:8080/api/articles/${this.$route.params.id}`,{
+           axios.delete(`http://localhost:8080/api/articles/`,{
                     headers:{
                         'Authorization': `bearer ${token}`
                     }
@@ -110,50 +139,44 @@ export default {
         
 
     },
-   created(){
-        
 
-        
-            this.title = `${this.$route.params.id}`
-            console.log("la route",)
-        
-    },
      beforeCreate(){
      let token = localStorage.getItem("Token");
-     
  
-     axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}`,{
+     axios.get(`http://localhost:8080/api/articles/${this.$store.state.articleId}/comments`,{
                    headers:{
                    'Authorization': `bearer ${token}`
                         
                   }
-             }).then(res=>{
-                console.log(res.data.id)
-       this.article =res.data;
-localStorage.setItem("articleId", res.data.id) 
-         
-                    axios.get(
-                        `http://localhost:8080/api/articles/${this.$route.params.id}/comments`,
-                        {
-                         headers:{'Authorization': `bearer ${token}`},
-                         })
-                         .then((commentsArray)=>{
-                    console.log(commentsArray.data)
-                      document.getElementById(`commentCount${this.$route.params.id}`).textContent =`${commentsArray.data.length} commentaire(s)`;
-    
+             })
+            .then(res=>{
+                                 
 
-                  })
-                     
-                   let userId = localStorage.getItem('userId')
-                   if (userId == res.data.UserId){
-                       this.success = true
+           res.data.forEach(data => {
+               let userId =parseInt(localStorage.getItem("userId"))
+               let id = parseInt(data.id)
+                console.log("l",id) 
+                                  console.log(document.getElementById(`delete${id}`) )
+
+                    if (userId === data.UserId){
+             //       document.getElementById(`delete${data.id}`).setAttribute('v-if','true')
+
                    }
+
+                this.commentArray.push(data);
+
+            
+          // let articleId = data.id
+                  
+                  //            document.getElementById(`commentCount${articleId}`).textContent =`${commentsArray.data.length} commentaire(s)`;
+    
+                      
+           })            
      })
      
      }  
    
-
-
+   
 
 }    
 </script>
@@ -161,18 +184,17 @@ localStorage.setItem("articleId", res.data.id)
 <style lang="scss" scoped>
 
 .result{
-    width: 75vw;
-    overflow: auto;
-    z-index: 7;
+    width: 50vw;
     background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top:150px;
+   border: 1px red solid;
+   padding: 0%;
+   margin: 0%;
   
     &__block{
         position: relative;
-        border: 1px gray solid;
         width: 80%;
         margin:40px;
         padding:10px;

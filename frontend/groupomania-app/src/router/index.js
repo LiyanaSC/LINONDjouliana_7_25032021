@@ -34,7 +34,7 @@ const routes = [{
             }, {
                 path: '/articles/',
                 name: 'articles',
-                children: [],
+
                 // route level code-splitting
                 // this generates a separate chunk (singIn.[hash].js) for this route
                 // which is lazy-loaded when the route is visited.
@@ -46,6 +46,18 @@ const routes = [{
 
                 path: '/articles/:id(\\d+)',
                 name: 'article',
+                children: [{
+                    path: '/comments/',
+                    name: 'comments',
+
+                    // route level code-splitting
+                    // this generates a separate chunk (singIn.[hash].js) for this route
+                    // which is lazy-loaded when the route is visited.
+                    component: () =>
+                        import ( /* webpackChunkName: "singIn" */ '../components/comments.vue'),
+
+                    //before enter
+                }, ],
                 // route level code-splitting
                 // this generates a separate chunk (singIn.[hash].js) for this route
                 // which is lazy-loaded when the route is visited.

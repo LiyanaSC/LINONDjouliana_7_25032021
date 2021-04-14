@@ -129,7 +129,7 @@ methods:{
     
                             document.getElementById(`${articleId}`).addEventListener("click", function() {
                                 console.log(this.$router)
-                        window.document.location = `${articleId}`
+                        window.document.location = `articles/${articleId}`
 
                     })
 

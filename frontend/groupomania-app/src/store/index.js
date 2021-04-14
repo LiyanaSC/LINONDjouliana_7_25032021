@@ -5,7 +5,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        token: localStorage.getItem("Token")
+        token: localStorage.getItem("Token"),
+        articleId: localStorage.getItem("articleId")
+
 
 
     },
