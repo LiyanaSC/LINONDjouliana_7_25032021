@@ -5,7 +5,7 @@
       
        <form @submit="form_submit" >                
                             <div class="header__form__div">
-                                <textarea  v-model="content" class="header__form__article_title__article_description" type="textarea" name="description" id="description" placeholder="ajouter un commentaire..." aria-label="taper la description" pattern="[ A-Za-z-0-9\p{L}]{2,100000}" required></textarea>
+                                <textarea  v-model="contentUpdate" class="header__form__article_title__article_description" type="textarea" name="description" id="description" placeholder="ajouter un commentaire..." aria-label="taper la description" pattern="[ A-Za-z-0-9\p{L}]{2,100000}" required></textarea>
                             
                             </div>
                             
@@ -15,27 +15,24 @@
                 <div v-for=" comment in commentArray" :key="comment.id" >
 
                      <p v-if="done" class="done">C'est fait!</p>
-       <div @click="deleteArticle" class="delete"  :id="'delete'+comment.id">Supprimer </div>
-       <div @click="showFormArticle" class="update" v-if="success">modifier</div>
+       <div class="delete"  :id="'delete'+comment.id">Supprimer </div>
+       <div class="update" :id="'update'+comment.id">modifier</div>
        
                     <p  class="result__block__article_title"> {{ comment.User }} </p>
                     
-                    <p> {{ comment.content}} </p>
-                </div>                          
-            <form @submit="update" v-if="show" class="header__form">
+                    <p> {{ comment.content}} </p> 
+
+              <form @submit="update" class="header__form" :id="'form'+comment.id" style="display: none;">
+
                     <div class="header__form__div">
-                        <label class="header__form__label" for="lastname">Modifier le titre </label>
-                        <textarea @keyup="close" v-model="article.title" class="header__form__article_title" type="text"  name="lastname" id="lastname" aria-label="taper votre nom de famille" pattern="[ A-Za-z-0-9.@p{L}]{2,254}" required ></textarea> 
-                    </div>
-                
-                    <div class="header__form__div">
-                        <label class="header__form__label" for="description">Modifier la description </label>
-                        <textarea @keyup="close" v-model="content" class="header__form__article_title__article_description" type="text" name="firstname" id="firstname" aria-label="taper votre prénom" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required></textarea>
+                        <textarea @keyup="close" v-model="content" class="header__form__article_title__article_description" type="text" name="firstname" id="firstname" aria-label="taper votre commentaire" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required></textarea>
                     
                     </div>
                     <input  type="submit" value="Modifier mes infos!" class="header__form__article_title__btn succes" id="btn"> 
             
             </form>
+                </div>                          
+     
           
                     <div>
                     
@@ -58,6 +55,7 @@ export default {
         return{
         commentArray:[""],
         content: "",
+        contentUpdate: "",
         success:false,
         show:false,
         done:false
@@ -65,8 +63,18 @@ export default {
         }    
     },
     methods:{
-        showFormArticle(){
-            this.show = true
+        showFormComment(){
+        
+            this.commentArray.forEach(comment=>{
+                const userId = parseInt(localStorage.getItem("userId")) 
+        const  form = document.getElementById(`form${comment.id}`)
+
+         
+         if (userId === comment.UserId  ){
+        form.removeAttribute('style')
+         }
+               console.log(form)
+            })
         },
         close(){
             this.done = false
@@ -93,12 +101,13 @@ export default {
                 })
         },
        update(e){
-     e.preventDefault();
+               e.preventDefault();
                 let token = localStorage.getItem("Token");
+                let commentId = localStorage.getItem("commentId")
     
-                axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}`,{
-                     title: this.article.title,
-                    description:this.article.description,
+                axios.put(`http://localhost:8080/api/articles/${this.$store.state.articleId}/comments/${commentId}`,{
+                     content: this.content
+                   
 
                 },{
                     headers:{
@@ -109,33 +118,15 @@ export default {
                 .then(response=>{
         console.log(response)
                 })
+
+                
                 .catch(error=>{
                     console.log(error)
                 })
-            
-                this.show=false;
-                this.done=true;
-               
-
-       },
-       deleteArticle(){
-            let token = localStorage.getItem("Token");
-
-           axios.delete(`http://localhost:8080/api/articles/`,{
-                    headers:{
-                        'Authorization': `bearer ${token}`
-                    }
-                }
-                )
-                .then(response=>{
-             console.log(response)
-                  })
-                .catch(error=>{
-                    console.log(error,"error front end")
-                })
-                 this.$router.push({path:'/articles/'})
-
+     
        }
+        
+
         
 
     },
@@ -149,21 +140,73 @@ export default {
                         
                   }
              })
-            .then(res=>{
-                                 
+            .then((res)=>{
+               this.commentArray = res.data             
+      
+     })
+     
+     },
+     created(){
 
-           res.data.forEach(data => {
+
+    let token = localStorage.getItem("Token");
+ 
+     axios.get(`http://localhost:8080/api/articles/${this.$store.state.articleId}/comments`,{
+                   headers:{
+                   'Authorization': `bearer ${token}`
+                        
+                  }
+             })
+            .then((res)=>{
+              res.data.forEach((data) => {
+              //.push(data);
+
                let userId =parseInt(localStorage.getItem("userId"))
-               let id = parseInt(data.id)
-                console.log("l",id) 
-                                  console.log(document.getElementById(`delete${id}`) )
+                let deleteBtn =document.getElementById(`delete${data.id}`)
+                let updateBtn =document.getElementById(`update${data.id}`) 
 
-                    if (userId === data.UserId){
-             //       document.getElementById(`delete${data.id}`).setAttribute('v-if','true')
-
+                    if (userId !== data.UserId){
+                deleteBtn.setAttribute('style',' display:none ')
+                updateBtn.setAttribute('style',' display:none ')
+                   }else{
+                       console.log('en attente de commentaires d autres utilisateurs')
                    }
 
-                this.commentArray.push(data);
+               updateBtn.addEventListener("click", function() {
+                                 const  form = document.getElementById(`form${data.id}`)
+                                const  SplitFormId = form.getAttribute("id")
+                                const formId =SplitFormId.split("form")
+
+        form.removeAttribute('style')
+        localStorage.setItem("commentId", `${formId[1]}`)
+               })
+
+                   deleteBtn.addEventListener("click", function() {
+                                const  form = document.getElementById(`form${data.id}`)
+                                const  SplitFormId = form.getAttribute("id")
+                                const formId =SplitFormId.split("form")
+
+              function deleteComment(){
+
+                let token = localStorage.getItem("Token");
+                let articleId = localStorage.getItem("articleId")
+    
+                     axios.delete(`http://localhost:8080/api/articles/${articleId}/comments/${formId[1]}`,{
+                    headers:{
+                        'Authorization': `bearer ${token}`
+                        
+                    }
+                }).then((res)=>{
+                        console.log(res)
+                 }).catch(error=>{
+                                    console.log(error)
+                  })
+                    
+                    }
+                    deleteComment()
+                    })
+                
+
 
             
           // let articleId = data.id
@@ -171,9 +214,8 @@ export default {
                   //            document.getElementById(`commentCount${articleId}`).textContent =`${commentsArray.data.length} commentaire(s)`;
     
                       
-           })            
-     })
-     
+                     }) 
+             })     
      }  
    
    

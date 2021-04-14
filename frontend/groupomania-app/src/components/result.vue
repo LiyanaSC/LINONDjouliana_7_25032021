@@ -119,16 +119,14 @@ methods:{
             res.data.forEach(data => { 
            let articleId = data.id
                     axios.get(
-                        `http://localhost:8080/api/articles/${data.id}/comments`,
+                        `http://localhost:8080/api/articles/${articleId}/comments`,
                         {
                          headers:{'Authorization': `bearer ${token}`},
                          })
                          .then((commentsArray)=>{
-                       console.log(document.getElementById(`${articleId}`))
                               document.getElementById(`commentCount${articleId}`).textContent =`${commentsArray.data.length} commentaire(s)`;
     
                             document.getElementById(`${articleId}`).addEventListener("click", function() {
-                                console.log(this.$router)
                         window.document.location = `articles/${articleId}`
 
                     })

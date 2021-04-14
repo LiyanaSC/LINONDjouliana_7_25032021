@@ -115,7 +115,6 @@ export default {
 
         
             this.title = `${this.$route.params.id}`
-            console.log("la route",)
         
     },
      beforeCreate(){
@@ -128,9 +127,8 @@ export default {
                         
                   }
              }).then(res=>{
-                console.log(res.data.id)
        this.article =res.data;
-localStorage.setItem("articleId", res.data.id) 
+        localStorage.setItem("articleId", res.data.id) 
          
                     axios.get(
                         `http://localhost:8080/api/articles/${this.$route.params.id}/comments`,
@@ -138,7 +136,6 @@ localStorage.setItem("articleId", res.data.id)
                          headers:{'Authorization': `bearer ${token}`},
                          })
                          .then((commentsArray)=>{
-                    console.log(commentsArray.data)
                       document.getElementById(`commentCount${this.$route.params.id}`).textContent =`${commentsArray.data.length} commentaire(s)`;
     
 

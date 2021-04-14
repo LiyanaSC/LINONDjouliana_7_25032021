@@ -54,6 +54,7 @@ methods:{
         console.log(res)
             })
            this.$router.push({path:'/'})
+           
     },
     
 }
