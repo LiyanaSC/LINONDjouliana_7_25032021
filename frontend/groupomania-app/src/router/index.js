@@ -34,6 +34,7 @@ const routes = [{
             }, {
                 path: '/articles/',
                 name: 'articles',
+                children: [],
                 // route level code-splitting
                 // this generates a separate chunk (singIn.[hash].js) for this route
                 // which is lazy-loaded when the route is visited.
@@ -41,6 +42,19 @@ const routes = [{
                     import ( /* webpackChunkName: "singIn" */ '../components/result.vue'),
 
                 //before enter
+            }, {
+
+                path: '/articles/:id(\\d+)',
+                name: 'article',
+                // route level code-splitting
+                // this generates a separate chunk (singIn.[hash].js) for this route
+                // which is lazy-loaded when the route is visited.
+                component: () =>
+                    import ( /* webpackChunkName: "singIn" */ '../components/Article.vue')
+
+                //before enter
+
+
             }, {
                 path: '/delete/',
                 name: 'delete',
@@ -85,17 +99,6 @@ const routes = [{
 
     },
 
-    {
-        path: '/articles/:id(\\d+)',
-        name: 'article',
-        // route level code-splitting
-        // this generates a separate chunk (singIn.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () =>
-            import ( /* webpackChunkName: "singIn" */ '../components/article.vue')
-
-        //before enter
-    },
 
     //the end
     {

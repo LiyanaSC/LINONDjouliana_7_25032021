@@ -1,7 +1,7 @@
 <template>
 
-    <section class="result">
-            <header class="header">
+    <section class="result" id="hello">
+            <header class="header" >
                 
                     <p @click="open" class="header__create_post">Créer un post!</p>
                     <h2 v-if="!success" class="header__title"> PAGEMANIA</h2>
@@ -25,28 +25,29 @@
                 </header>        
         
 
-                <div class="result__block" v-for="article in articles"  v-bind:key="article.id" :id="article.id"> 
-                    <h2 class="result__block__article_title">{{ article.title }} </h2>
-                    <p id="createdBy"> </p>
+                <div class="result__block" v-for="article in articles"  v-bind:key="article.id" :id="article.id" > 
+                
+                    <h2  class="result__block__article_title">{{ article.title }} </h2>
+                    <p id="createdBy">{{ article.User}} </p>
                     <p>{{ article.description}} </p>
                     <div>
-                        <h3>Commentaires</h3>
-                      
+                        <h3 :id="'commentCount'+article.id"> Commentaires</h3>
+                
+                         
+                    
+             
                     </div>
-                   
                 </div>
-               
-            
-
+             
     </section>
 </template>
 <script>
 import axios from 'axios'
 
 
-
 export default {
   components: {
+
   },
     name: 'Result',
     data(){
@@ -56,8 +57,7 @@ export default {
        
         success:false,
         title:"",
-        description:""
-
+        description:"",
         }
     },
 methods:{
@@ -68,14 +68,12 @@ methods:{
      this.success=false
  },
 
- 
+
 
  form_submit(e){
                 e.preventDefault();
                 let token = localStorage.getItem("Token");
-                console.log("ici",token)
-
-                     
+    
                 axios.post('http://localhost:8080/api/articles/',{
                      title: this.title,
                     description:this.description,
@@ -83,7 +81,6 @@ methods:{
                 },{
                     headers:{
                         'Authorization': `bearer ${token}`
-                        
                     }
                 }
                 )
@@ -94,7 +91,6 @@ methods:{
                     console.log(error)
                 })
             
-               
                 this.success=false;
                 const createdArticle = {
                     title : this.title,
@@ -102,9 +98,6 @@ methods:{
 
                 }
                 this.articles.unshift(createdArticle)
-                 
-               
-             //   location.reload()
 
             }
     
@@ -113,53 +106,47 @@ methods:{
 
 
      beforeCreate(){
-        let token = localStorage.getItem("Token");
-
+     let token = localStorage.getItem("Token");
+ 
      axios.get('http://localhost:8080/api/articles',{
-                    headers:{
-                        'Authorization': `bearer ${token}`
+                   headers:{
+                   'Authorization': `bearer ${token}`
                         
-                    }
-                })
-            .then((res)=>{
-        this.articles =res.data;
-        console.log(res.data)
-
-            res.data.forEach(data => {      
-                console.log("helooooooo",data.User)              
-            
-                
-                axios.get(`http://localhost:8080/api/articles/${data.id}/comments`,{
-                    headers:{
-                        'Authorization': `bearer ${token}`
-                        
-                    }
-                })
-                .then((commentsArray)=>{
-                    commentsArray.data.forEach(comment=>{
-//                     const articleBox = document.getElementById(comment.ArticleId)
-                          let result = document.createElement('p');
-                        result.className = `comment`;
-                        result.id = `comment${comment.id}`;
-                        result.textContent = `${comment.content}`;
-
-                        document.getElementById(`${comment.ArticleId}`).appendChild(result)
-                        console.log("help---------------------------",comment.content)
-
-                                        
-
-                    })               
-                })
-
-            });
-            })
-       
-    },
-
-   
+                  }
+             })
+            .then(res=>{
+       this.articles =res.data;
+            res.data.forEach(data => { 
+           let articleId = data.id
+                    axios.get(
+                        `http://localhost:8080/api/articles/${data.id}/comments`,
+                        {
+                         headers:{'Authorization': `bearer ${token}`},
+                         })
+                         .then((commentsArray)=>{
+                       console.log(document.getElementById(`${articleId}`))
+                              document.getElementById(`commentCount${articleId}`).textContent =`${commentsArray.data.length} commentaire(s)`;
     
-}
+                            document.getElementById(`${articleId}`).addEventListener("click", function() {
+                                console.log(this.$router)
+                        window.document.location = `${articleId}`
 
+                    })
+
+              
+                               
+            });
+                  })
+                     
+     })
+     
+     }  
+   
+
+
+
+  
+}
 
 </script>
 <style lang="scss" scoped>

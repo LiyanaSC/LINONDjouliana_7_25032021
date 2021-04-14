@@ -48,8 +48,7 @@ methods:{
                 })
             .then((res)=>{
                
-                   localStorage.removeItem("Token");
-                   localStorage.removeItem("userId")
+                  
 
 
         console.log(res)
