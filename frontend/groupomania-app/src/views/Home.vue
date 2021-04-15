@@ -35,8 +35,7 @@ export default {
   name:'home',
   methods:{
     disconnected(){
-       localStorage.removeItem("Token");
-       localStorage.removeItem("userId");
+        localStorage.clear()
         this.$router.push({path:'/'})
 
 

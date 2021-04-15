@@ -1,6 +1,7 @@
 
 <template>
 <section class="result">
+   <i @click="goback" class="fas fa-arrow-left "></i>
    <div class="result__block" > 
        <p v-if="done" class="done">C'est fait!</p>
        <div @click="deleteArticle" class="delete" v-if="success">supprimer</div>
@@ -10,25 +11,27 @@
                     
                     <p>{{ article.description}} </p>
                                           
-            <form @submit="update" v-if="show" class="header__form">
-                    <div class="header__form__div">
-                        <label class="header__form__label" for="lastname">Modifier le titre </label>
-                        <textarea @keyup="close" v-model="article.title" class="header__form__article_title" type="text"  name="lastname" id="lastname" aria-label="taper votre nom de famille" pattern="[ A-Za-z-0-9.@p{L}]{2,254}" required ></textarea> 
+            <form @submit="update" v-if="show" class="result__article_form">
+           <i @click="closeForm" class="closeIcon">X</i>
+
+                    <div class="result__article_form__div">
+                        <label class="result__article_form__div__label" for="lastname">Modifier le titre </label>
+                        <textarea @keyup="closeDone" v-model="article.title" class="result__article_form__div__textarea" type="text"  name="lastname" id="lastname" aria-label="taper votre nom de famille" pattern="[ A-Za-z-0-9.@p{L}]{2,254}" required ></textarea> 
                     </div>
                 
-                    <div class="header__form__div">
-                        <label class="header__form__label" for="description">Modifier la description </label>
-                        <textarea @keyup="close" v-model="article.description" class="header__form__article_title__article_description" type="text" name="firstname" id="firstname" aria-label="taper votre prénom" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required></textarea>
+                    <div class="result__article_form__div">
+                        <label class="result__article_form__div__label" for="description">Modifier la description </label>
+                        <textarea @keyup="closeDone" v-model="article.description" class="result__article_form__div__textarea" type="text" name="firstname" id="firstname" aria-label="taper votre prénom" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required></textarea>
                     
                     </div>
-                    <input  type="submit" value="Modifier mes infos!" class="header__form__article_title__btn succes" id="btn"> 
+                    <input  type="submit" value="Modifier mes infos!" class=" succes" id="btn"> 
             
             </form>
            
                     <div>
                         
-                       <router-link to="/comments">  <h3 :id="'commentCount'+article.id"> Commentaires </h3></router-link >
-                            <router-view /> 
+                      <h3 :id="'commentCount'+article.id"> Commentaires </h3>
+                    <Comments />
                     </div>
                 </div>
 </section>
@@ -36,10 +39,12 @@
 
 <script>
 import axios from 'axios'
+import Comments from './comments.vue'
 
 
 export default {
   components: {
+    Comments
 
   },
     name: 'Result',
@@ -60,8 +65,13 @@ export default {
         showFormArticle(){
             this.show = true
         },
-        close(){
+        closeForm(){
+            this.show = false
+        },closeDone(){
             this.done = false
+        },
+        goback(){
+            this.$router.push({name:'articles'})
         },
        update(e){
      e.preventDefault();
@@ -119,7 +129,10 @@ export default {
     },
      beforeCreate(){
      let token = localStorage.getItem("Token");
-     
+     if(token == null){
+        this.$router.push({name:'notFound'})
+
+     }
  
      axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}`,{
                    headers:{
@@ -142,6 +155,7 @@ export default {
                   })
                      
                    let userId = localStorage.getItem('userId')
+
                    if (userId == res.data.UserId){
                        this.success = true
                    }
@@ -181,6 +195,31 @@ export default {
         }
 
     }
+    &__article_form{
+                        background-color: #ffd166;
+                                        padding: 10px;
+
+
+        &__div{
+
+            display: flex;
+            align-items: center;
+            &__label{
+                font-weight: bold;
+            }
+            &__textarea{
+                display: flex;
+                flex: 1;
+                margin-top: 5px;
+                margin-right: 30px;
+                margin-left: 5px;
+            }
+            &__btn{
+                border: 1px white solid;
+                background-color: violet;
+            }
+        }
+    }
 }
 .delete{
  color: #fff;
@@ -218,5 +257,20 @@ export default {
 
  font-weight: bold;
  color: #06d6a0;
+}
+.closeIcon{
+    font-size: 1.5rem;
+    position:absolute;
+    right: 20px;
+    &:hover{
+        color: #ef476f;
+     
+    }
+.fas{
+    position:absolute;
+    left: 10px;
+    font-size: 10rem;
+
+}
 }
 </style>

@@ -19,7 +19,7 @@
                             
                             </div>
                             
-                            <input  type="submit" value="Envoyer" class="header__form__article_title__btn succes" id="btn">
+                            <input @click="updatePost" type="submit" value="Envoyer" class="header__form__article_title__btn succes" id="btn">
                     
                     </form>
                 </header>        
@@ -60,6 +60,7 @@ export default {
         description:"",
         }
     },
+
 methods:{
  open(){
      this.success=true
@@ -67,7 +68,23 @@ methods:{
   close(){
      this.success=false
  },
+  updatePost(){
+             let token = localStorage.getItem("Token");
+ 
+     axios.get('http://localhost:8080/api/articles',{
+                   headers:{
+                   'Authorization': `bearer ${token}`
+                        
+                  }
+             })
+            .then(res=>{
+       this.articles =res.data;
+       this.title ="";
+       this.description="";
+             
+     })
 
+    },
 
 
  form_submit(e){
@@ -86,23 +103,26 @@ methods:{
                 )
                 .then(response=>{
         console.log(response)
+  
                 })
                 .catch(error=>{
                     console.log(error)
                 })
             
                 this.success=false;
-                const createdArticle = {
+             /*   const createdArticle = {
                     title : this.title,
                     description: this.description,
 
                 }
-                this.articles.unshift(createdArticle)
-
+                //this.articles.unshift(createdArticle)*/
+                
             }
     
 
 },
+
+
 
 
      beforeCreate(){
@@ -125,26 +145,58 @@ methods:{
                          })
                          .then((commentsArray)=>{
                               document.getElementById(`commentCount${articleId}`).textContent =`${commentsArray.data.length} commentaire(s)`;
-    
-                            document.getElementById(`${articleId}`).addEventListener("click", function() {
-                        window.document.location = `articles/${articleId}`
-
-                    })
-
-              
-                               
-            });
+           
+                            });
                   })
                      
      })
      
-     }  
+     },
+mounted(){
+              let token = localStorage.getItem("Token");
+
+    axios.get('http://localhost:8080/api/articles',{
+                   headers:{
+                   'Authorization': `bearer ${token}`
+                        
+                  }
+             })
+            .then(res=>{
+       this.articles =res.data;
+            res.data.forEach(data => { 
+           let articleId = data.id
+           axios.get(`http://localhost:8080/api/articles/${articleId}/comments`,
+                        {
+                         headers:{'Authorization': `bearer ${token}`},
+                         })
+                         .then((commentsArray)=>{
+
+                        console.log(commentsArray)
+                        const changeRoute = this.$router
+                            document.getElementById(`${articleId}`).addEventListener("click", function(e) {
+                                e.preventDefault
+                                console.log(changeRoute)
+                                changeRoute.push({path: `/articles/${articleId}` })
+                    //    window.document.location = `/` //attention au bug!!!!!!
+                                //  window.history.pushState({path:`/articles/${articleId}`})
+                         
+
+                                    })        
+                            });
+
+                        
+                            });
+                  })
+                     
+     
+}
+
+
+}
    
 
 
 
-  
-}
 
 </script>
 <style lang="scss" scoped>

@@ -39,13 +39,19 @@ export default {
                     console.log(response.data)
                     localStorage.setItem("Token", response.data.token );
                     localStorage.setItem("userId", response.data.userId )
+                    localStorage.setItem("admin", response.data.admin )
+                     this.$router.push({path:'/articles'})
 
 
                 })
                 .catch(error=>{
                     console.log(error)
+              
+ 
+
                 })
-                this.$router.push({path:'/articles'})
+
+
             }
     }
   

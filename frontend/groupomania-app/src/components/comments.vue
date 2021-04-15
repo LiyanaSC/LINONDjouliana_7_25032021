@@ -1,18 +1,10 @@
 
 <template>
-<section class="result">
-   <div class="result__block" > 
+<section class="commentResults">
+   <div class="commentResults__block" > 
       
-       <form @submit="form_submit" >                
-                            <div class="header__form__div">
-                                <textarea  v-model="contentUpdate" class="header__form__article_title__article_description" type="textarea" name="description" id="description" placeholder="ajouter un commentaire..." aria-label="taper la description" pattern="[ A-Za-z-0-9\p{L}]{2,100000}" required></textarea>
-                            
-                            </div>
-                            
-                            <input  type="submit" value="Envoyer" class="header__form__article_title__btn succes" id="btn">
-                    
-     </form>
-                <div v-for=" comment in commentArray" :key="comment.id" >
+       
+                <div v-for=" comment in commentArray" :key="comment.id" class="commentResults__block__comments">
 
                      <p v-if="done" class="done">C'est fait!</p>
        <div class="delete"  :id="'delete'+comment.id">Supprimer </div>
@@ -22,18 +14,26 @@
                     
                     <p> {{ comment.content}} </p> 
 
-              <form @submit="update" class="header__form" :id="'form'+comment.id" style="display: none;">
+              <form @submit="update" v-show="show" class="header__form" :id="'form'+comment.id" style="display: none;">
 
                     <div class="header__form__div">
-                        <textarea @keyup="close" v-model="content" class="header__form__article_title__article_description" type="text" name="firstname" id="firstname" aria-label="taper votre commentaire" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required></textarea>
+                        <textarea @keyup="close" v-model="contentUpdate" class="header__form__article_title__article_description" type="text" name="firstname" id="firstname" aria-label="taper votre commentaire" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required></textarea>
                     
                     </div>
-                    <input  type="submit" value="Modifier mes infos!" class="header__form__article_title__btn succes" id="btn"> 
+                    <input @click="updateVueComments" type="submit" value="Modifier mon commentaire!" class="header__form__article_title__btn succes" id="btn"> 
             
             </form>
                 </div>                          
      
-          
+          <form @submit="form_submitComment" >                
+                            <div >
+                                <textarea  v-model="content" class="textaera" type="textarea" name="description" id="description" placeholder="ajouter un commentaire..." aria-label="taper la description" pattern="[ A-Za-z-0-9\p{L}]{2,100000}" required></textarea>
+                            
+                            </div>
+                            
+                            <input @click="updateVueComments" type="submit" value="Envoyer" class="header__form__article_title__btn succes" id="btn">
+                    
+     </form>
                     <div>
                     
                
@@ -50,7 +50,7 @@ export default {
   components: {
 
   },
-    name: 'Result',
+    name: 'Comments',
     data(){
         return{
         commentArray:[""],
@@ -68,9 +68,9 @@ export default {
             this.commentArray.forEach(comment=>{
                 const userId = parseInt(localStorage.getItem("userId")) 
         const  form = document.getElementById(`form${comment.id}`)
-
+                   let admin = localStorage.getItem('admin')
          
-         if (userId === comment.UserId  ){
+         if (userId === comment.UserId  || admin =='true' ){
         form.removeAttribute('style')
          }
                console.log(form)
@@ -79,7 +79,27 @@ export default {
         close(){
             this.done = false
         },
-        form_submit(e){
+         updateVueComments(){
+             let token = localStorage.getItem("Token");
+ 
+     axios.get(`http://localhost:8080/api/articles/${this.$store.state.articleId}/comments`,{
+                   headers:{
+                   'Authorization': `bearer ${token}`
+                        
+                  }
+             })
+            .then(res=>{
+        this.commentArray = res.data             
+       this.content ="";
+ 
+             
+     })
+
+    },
+
+
+        
+        form_submitComment(e){
                 e.preventDefault();
                 let token = localStorage.getItem("Token");
     
@@ -106,7 +126,7 @@ export default {
                 let commentId = localStorage.getItem("commentId")
     
                 axios.put(`http://localhost:8080/api/articles/${this.$store.state.articleId}/comments/${commentId}`,{
-                     content: this.content
+                     content: this.contentUpdate
                    
 
                 },{
@@ -117,6 +137,8 @@ export default {
                 )
                 .then(response=>{
         console.log(response)
+              
+
                 })
 
                 
@@ -164,8 +186,10 @@ export default {
                let userId =parseInt(localStorage.getItem("userId"))
                 let deleteBtn =document.getElementById(`delete${data.id}`)
                 let updateBtn =document.getElementById(`update${data.id}`) 
+                 let admin = localStorage.getItem('admin')
 
-                    if (userId !== data.UserId){
+
+                    if (userId !== data.UserId  && admin !='true'){
                 deleteBtn.setAttribute('style',' display:none ')
                 updateBtn.setAttribute('style',' display:none ')
                    }else{
@@ -173,15 +197,21 @@ export default {
                    }
 
                updateBtn.addEventListener("click", function() {
+                                   this.show=false
                                  const  form = document.getElementById(`form${data.id}`)
                                 const  SplitFormId = form.getAttribute("id")
                                 const formId =SplitFormId.split("form")
+                           
+                           
+                                    form.removeAttribute('style')
+                                            localStorage.setItem("commentId", `${formId[1]}`)
+                               
 
-        form.removeAttribute('style')
-        localStorage.setItem("commentId", `${formId[1]}`)
+     
                })
 
                    deleteBtn.addEventListener("click", function() {
+                                   this.show=false
                                 const  form = document.getElementById(`form${data.id}`)
                                 const  SplitFormId = form.getAttribute("id")
                                 const formId =SplitFormId.split("form")
@@ -225,26 +255,27 @@ export default {
 
 <style lang="scss" scoped>
 
-.result{
-    width: 50vw;
-    background-color: #fff;
+.commentResults{
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
-   border: 1px red solid;
+   border: 1px black solid;
+       background-color: rgb(210, 241, 255);
+
    padding: 0%;
    margin: 0%;
   
     &__block{
         position: relative;
-        width: 80%;
-        margin:40px;
+        width: 95%;
+      
         padding:10px;
         font-family: 'Roboto',sans-serif;
         color: #073b4c;s
-        &__article_title{
-            font-family: 'Marck Script',cursive;
-            
+        &__comments{
+              border: 1px #073b4c solid;
+        border-radius: 20%;
         }
 
     }
@@ -285,5 +316,8 @@ export default {
 
  font-weight: bold;
  color: #06d6a0;
+}
+.textaera{
+width: 95%;
 }
 </style>
