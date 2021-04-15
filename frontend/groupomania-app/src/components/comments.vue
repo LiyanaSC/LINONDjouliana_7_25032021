@@ -82,7 +82,7 @@ export default {
          updateVueComments(){
              let token = localStorage.getItem("Token");
  
-     axios.get(`http://localhost:8080/api/articles/${this.$store.state.articleId}/comments`,{
+     axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                    headers:{
                    'Authorization': `bearer ${token}`
                         
@@ -99,11 +99,11 @@ export default {
 
 
         
-        form_submitComment(e){
-                e.preventDefault();
+        form_submitComment(){
+            
                 let token = localStorage.getItem("Token");
     
-                axios.post(`http://localhost:8080/api/articles/${this.$store.state.articleId}/comments`,{
+                axios.post(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                      content: this.content
                    
 
@@ -125,7 +125,7 @@ export default {
                 let token = localStorage.getItem("Token");
                 let commentId = localStorage.getItem("commentId")
     
-                axios.put(`http://localhost:8080/api/articles/${this.$store.state.articleId}/comments/${commentId}`,{
+                axios.put(`http://localhost:8080/api/articles/${this.$route.params.id}/comments/${commentId}`,{
                      content: this.contentUpdate
                    
 
@@ -156,7 +156,7 @@ export default {
      beforeCreate(){
      let token = localStorage.getItem("Token");
  
-     axios.get(`http://localhost:8080/api/articles/${this.$store.state.articleId}/comments`,{
+     axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                    headers:{
                    'Authorization': `bearer ${token}`
                         
@@ -173,7 +173,7 @@ export default {
 
     let token = localStorage.getItem("Token");
  
-     axios.get(`http://localhost:8080/api/articles/${this.$store.state.articleId}/comments`,{
+     axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                    headers:{
                    'Authorization': `bearer ${token}`
                         

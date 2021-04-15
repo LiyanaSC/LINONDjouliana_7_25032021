@@ -30,7 +30,6 @@ const routes = [{
                 component: () =>
                     import ( /* webpackChunkName: "singIn" */ '../components/user.vue'),
 
-                //before enter
             }, {
                 path: '/articles/',
                 name: 'articles',
@@ -41,7 +40,12 @@ const routes = [{
                 component: () =>
                     import ( /* webpackChunkName: "singIn" */ '../components/result.vue'),
 
-                //before enter
+                /*  beforeEnter(route, redirecte, next) {
+                      let confirm = window.confirm('work?')
+                      if (confirm) {
+                          next()
+                      } else { redirecte('/') }
+                  }*/
             }, {
 
                 path: '/articles/:id(\\d+)',

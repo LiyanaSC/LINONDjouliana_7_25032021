@@ -37,11 +37,10 @@ export default {
     disconnected(){
         localStorage.clear()
         this.$router.push({path:'/'})
-
-
     }
-  }
-   
+  },
+
+
 }
 </script>
 

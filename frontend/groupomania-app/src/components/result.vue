@@ -19,41 +19,39 @@
                             
                             </div>
                             
-                            <input @click="updatePost" type="submit" value="Envoyer" class="header__form__article_title__btn succes" id="btn">
+                            <input  type="submit" value="Envoyer" class="header__form__article_title__btn succes" id="btn">
                     
                     </form>
                 </header>        
-        
+                            <button  @click="updatePost">Rafraîchire la page</button>
 
                 <div class="result__block" v-for="article in articles"  v-bind:key="article.id" :id="article.id" > 
                 
-                    <h2  class="result__block__article_title">{{ article.title }} </h2>
-                    <p id="createdBy">{{ article.User}} </p>
-                    <p>{{ article.description}} </p>
-                    <div>
-                        <h3 :id="'commentCount'+article.id"> Commentaires</h3>
-                
-                         
+                        <Articleitems :article="article" />  
                     
              
-                    </div>
+            
+
+                
                 </div>
              
     </section>
 </template>
 <script>
 import axios from 'axios'
+import Articleitems from './Articleitems.vue'
 
 
 export default {
   components: {
+    Articleitems
 
   },
     name: 'Result',
     data(){
         return{
           
-            articles:[""],
+            articles:[],
        
         success:false,
         title:"",
@@ -62,11 +60,14 @@ export default {
     },
 
 methods:{
+
  open(){
      this.success=true
  },
   close(){
      this.success=false
+       this.title ="";
+       this.description="";
  },
   updatePost(){
              let token = localStorage.getItem("Token");
@@ -78,17 +79,17 @@ methods:{
                   }
              })
             .then(res=>{
-       this.articles =res.data;
-       this.title ="";
-       this.description="";
-             
+      
+     
+        this.articles =res.data;
+
      })
 
     },
 
 
  form_submit(e){
-                e.preventDefault();
+                 e.preventDefault()
                 let token = localStorage.getItem("Token");
     
                 axios.post('http://localhost:8080/api/articles/',{
@@ -102,20 +103,16 @@ methods:{
                 }
                 )
                 .then(response=>{
-        console.log(response)
+                console.log('ici',response.data)
+                 this.articles.unshift(response.data)
+           
   
                 })
                 .catch(error=>{
                     console.log(error)
                 })
-            
-                this.success=false;
-             /*   const createdArticle = {
-                    title : this.title,
-                    description: this.description,
-
-                }
-                //this.articles.unshift(createdArticle)*/
+          
+        
                 
             }
     
@@ -125,17 +122,25 @@ methods:{
 
 
 
-     beforeCreate(){
+beforeRouteEnter(route, redirecte, next) {
+                   //   let confirm = window.confirm('work?')
+                  //    if (confirm) {
+                    //      next()
+                    //  } else { redirecte('/') }
+
      let token = localStorage.getItem("Token");
  
      axios.get('http://localhost:8080/api/articles',{
                    headers:{
-                   'Authorization': `bearer ${token}`
+                   'Authorization': `Bearer ${token}`
                         
                   }
              })
             .then(res=>{
-       this.articles =res.data;
+
+       console.log("coucou",res.data)
+      next()
+              this.articles =res.data;
             res.data.forEach(data => { 
            let articleId = data.id
                     axios.get(
@@ -150,8 +155,8 @@ methods:{
                   })
                      
      })
-     
-     },
+                    
+                  },
 mounted(){
               let token = localStorage.getItem("Token");
 
@@ -163,25 +168,21 @@ mounted(){
              })
             .then(res=>{
        this.articles =res.data;
+       console.log("ici",res.data)
             res.data.forEach(data => { 
            let articleId = data.id
+       
            axios.get(`http://localhost:8080/api/articles/${articleId}/comments`,
                         {
                          headers:{'Authorization': `bearer ${token}`},
                          })
-                         .then((commentsArray)=>{
+                         .then(()=>{
 
-                        console.log(commentsArray)
-                        const changeRoute = this.$router
-                            document.getElementById(`${articleId}`).addEventListener("click", function(e) {
-                                e.preventDefault
-                                console.log(changeRoute)
-                                changeRoute.push({path: `/articles/${articleId}` })
-                    //    window.document.location = `/` //attention au bug!!!!!!
-                                //  window.history.pushState({path:`/articles/${articleId}`})
+
+                         
                          
 
-                                    })        
+                                   
                             });
 
                         

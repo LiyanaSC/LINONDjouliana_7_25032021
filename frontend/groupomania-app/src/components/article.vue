@@ -127,6 +127,7 @@ export default {
             this.title = `${this.$route.params.id}`
         
     },
+  
      beforeCreate(){
      let token = localStorage.getItem("Token");
      if(token == null){
