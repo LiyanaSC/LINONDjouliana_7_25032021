@@ -138,7 +138,6 @@ beforeRouteEnter(route, redirecte, next) {
              })
             .then(res=>{
 
-       console.log("coucou",res.data)
       next()
               this.articles =res.data;
             res.data.forEach(data => { 

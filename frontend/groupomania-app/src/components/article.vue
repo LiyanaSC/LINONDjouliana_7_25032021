@@ -40,9 +40,15 @@
 <script>
 import axios from 'axios'
 import Comments from './comments.vue'
+import { mapState } from 'vuex'
+
+
 
 
 export default {
+      computed: {
+        ...mapState(['token'])
+    },
   components: {
     Comments
 
@@ -75,7 +81,6 @@ export default {
         },
        update(e){
      e.preventDefault();
-                let token = localStorage.getItem("Token");
     
                 axios.put(`http://localhost:8080/api/articles/${this.$route.params.id}`,{
                      title: this.article.title,
@@ -83,7 +88,7 @@ export default {
 
                 },{
                     headers:{
-                        'Authorization': `bearer ${token}`
+                        'Authorization': `bearer ${this.token}`
                     }
                 }
                 )
@@ -100,11 +105,11 @@ export default {
 
        },
        deleteArticle(){
-            let token = localStorage.getItem("Token");
+        
 
            axios.delete(`http://localhost:8080/api/articles/${this.$route.params.id}`,{
                     headers:{
-                        'Authorization': `bearer ${token}`
+                        'Authorization': `bearer ${this.token}`
                     }
                 }
                 )
@@ -127,17 +132,16 @@ export default {
             this.title = `${this.$route.params.id}`
         
     },
-  
-     beforeCreate(){
-     let token = localStorage.getItem("Token");
-     if(token == null){
-        this.$router.push({name:'notFound'})
 
-     }
+
+    
+  
+     mounted(){
+   
  
      axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}`,{
                    headers:{
-                   'Authorization': `bearer ${token}`
+                   'Authorization': `bearer ${this.token}`
                         
                   }
              }).then(res=>{
@@ -147,7 +151,7 @@ export default {
                     axios.get(
                         `http://localhost:8080/api/articles/${this.$route.params.id}/comments`,
                         {
-                         headers:{'Authorization': `bearer ${token}`},
+                         headers:{'Authorization': `bearer ${this.token}`},
                          })
                          .then((commentsArray)=>{
                       document.getElementById(`commentCount${this.$route.params.id}`).textContent =`${commentsArray.data.length} commentaire(s)`;

@@ -28,10 +28,15 @@
 </template>
 <script>
 import axios from 'axios'
+import { mapState } from 'vuex'
+
 
 
 
 export default {
+      computed: {
+        ...mapState(['token'])
+    },
   components: {
   },
     name: 'Delete',
@@ -47,12 +52,11 @@ export default {
     },
     async created(){
     
-            let token = localStorage.getItem("Token");
                     let userId = localStorage.getItem("userId");
 
                  axios.get(`http://localhost:8080/api/users/${userId}`,{
                                 headers:{
-                                    'Authorization': `bearer ${token}`
+                                    'Authorization': `bearer ${this.token}`
                                     
                                 }
                             })
@@ -70,7 +74,7 @@ export default {
 
      form_submit(e){
                 e.preventDefault();
-                let token = localStorage.getItem("Token");
+                
                     let userId = localStorage.getItem("userId");
 
                      
@@ -81,7 +85,7 @@ export default {
 
                 },{
                     headers:{
-                        'Authorization': `bearer ${token}`
+                        'Authorization': `bearer ${this.token}`
                         
                     }
                 }

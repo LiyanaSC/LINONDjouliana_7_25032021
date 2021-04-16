@@ -10,7 +10,7 @@
                     <input type="password" v-model="loginPassword" name="password" id="password" placeholder="Votre mot de passe" aria-label="taper votre mot de passe" pattern="[ A-Za-z-0-9\p{L}]{8,100}" required>
                 </div>
 
-                <div><input type="submit" value="Connexion" class="form__btn"> </div>
+                <div><input @click="refreshTokenStart" type="submit" value="Connexion" class="form__btn"> </div>
            
 
             </form>
@@ -36,11 +36,18 @@ export default {
                        email:this.loginEmail
                 })
                 .then(response=>{
-                    console.log(response.data)
+                    
                     localStorage.setItem("Token", response.data.token );
                     localStorage.setItem("userId", response.data.userId )
                     localStorage.setItem("admin", response.data.admin )
-                     this.$router.push({path:'/articles'})
+                    this.$router.push({path:'/articles'})
+                    this.$store.state.tokenList.push(response.data.token,response.data.refreshToken)
+                    this.$store.state.userId=response.data.userId
+                    this.$store.state.admin=response.data.admin
+                    this.$store.state.token=response.data.token
+                    this.$store.state.refreshToken=response.data.refreshToken
+
+                    console.log("verif store",this.$store.state)
 
 
                 })
@@ -52,8 +59,14 @@ export default {
                 })
 
 
-            }
-    }
+            },
+
+                 refreshTokenStart(){
+             this.$store.commit('refreshMyToken')
+              },
+
+    },
+  
   
 }
 </script>

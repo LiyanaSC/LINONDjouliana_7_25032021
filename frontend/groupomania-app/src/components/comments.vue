@@ -44,9 +44,13 @@
 
 <script>
 import axios from 'axios'
+import { mapState } from 'vuex'
 
 
 export default {
+        computed: {
+        ...mapState(['token'])
+    },
   components: {
 
   },
@@ -80,11 +84,11 @@ export default {
             this.done = false
         },
          updateVueComments(){
-             let token = localStorage.getItem("Token");
+            
  
      axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                    headers:{
-                   'Authorization': `bearer ${token}`
+                   'Authorization': `bearer ${this.token}`
                         
                   }
              })
@@ -101,7 +105,6 @@ export default {
         
         form_submitComment(){
             
-                let token = localStorage.getItem("Token");
     
                 axios.post(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                      content: this.content
@@ -109,7 +112,7 @@ export default {
 
                 },{
                     headers:{
-                        'Authorization': `bearer ${token}`
+                        'Authorization': `bearer ${this.token}`
                     }
                 }
                 )
@@ -122,7 +125,6 @@ export default {
         },
        update(e){
                e.preventDefault();
-                let token = localStorage.getItem("Token");
                 let commentId = localStorage.getItem("commentId")
     
                 axios.put(`http://localhost:8080/api/articles/${this.$route.params.id}/comments/${commentId}`,{
@@ -131,7 +133,7 @@ export default {
 
                 },{
                     headers:{
-                        'Authorization': `bearer ${token}`
+                        'Authorization': `bearer ${this.token}`
                     }
                 }
                 )
@@ -153,12 +155,11 @@ export default {
 
     },
 
-     beforeCreate(){
-     let token = localStorage.getItem("Token");
+     mounted(){
  
      axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                    headers:{
-                   'Authorization': `bearer ${token}`
+                   'Authorization': `bearer ${this.token}`
                         
                   }
              })
