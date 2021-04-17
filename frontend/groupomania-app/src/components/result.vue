@@ -23,7 +23,6 @@
                     
                     </form>
                 </header>        
-                            <button  @click="updatePost">Rafraîchire la page</button>
 
                 <div class="result__block" v-for="article in articles"  v-bind:key="article.id" :id="article.id" > 
                 
@@ -69,24 +68,6 @@ methods:{
        this.title ="";
        this.description="";
  },
-  updatePost(){
-             let token = localStorage.getItem("Token");
- 
-     axios.get('http://localhost:8080/api/articles',{
-                   headers:{
-                   'Authorization': `bearer ${token}`
-                        
-                  }
-             })
-            .then(res=>{
-      
-     
-        this.articles =res.data;
-
-     })
-
-    },
-
 
  form_submit(e){
                  e.preventDefault()
@@ -123,22 +104,17 @@ methods:{
 
 
 beforeRouteEnter(route, redirecte, next) {
-                   //   let confirm = window.confirm('work?')
-                  //    if (confirm) {
-                    //      next()
-                    //  } else { redirecte('/') }
-
+              
      let token = localStorage.getItem("Token");
  
      axios.get('http://localhost:8080/api/articles',{
                    headers:{
                    'Authorization': `Bearer ${token}`
-                        
                   }
              })
             .then(res=>{
 
-      next()
+zzzzz     next()
               this.articles =res.data;
             res.data.forEach(data => { 
            let articleId = data.id

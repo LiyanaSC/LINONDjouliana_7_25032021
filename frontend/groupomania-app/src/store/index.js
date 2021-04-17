@@ -13,9 +13,6 @@ export default new Vuex.Store({
         refreshToken: "",
         userId: Number,
         admin: Boolean,
-        try: "coucou"
-
-
 
 
     },

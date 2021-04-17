@@ -7,12 +7,8 @@
                 <div v-for=" comment in commentArray" :key="comment.id" class="commentResults__block__comments">
 
                      <p v-if="done" class="done">C'est fait!</p>
-       <div class="delete"  :id="'delete'+comment.id">Supprimer </div>
-       <div class="update" :id="'update'+comment.id">modifier</div>
-       
-                    <p  class="result__block__article_title"> {{ comment.User }} </p>
-                    
-                    <p> {{ comment.content}} </p> 
+      
+                 <Commentitems :comment="comment"/>
 
               <form @submit="update" v-show="show" class="header__form" :id="'form'+comment.id" style="display: none;">
 
@@ -44,29 +40,28 @@
 
 <script>
 import axios from 'axios'
-import { mapState } from 'vuex'
+import Commentitems from './Commentitems.vue'
 
+export default {   
 
-export default {
-        computed: {
-        ...mapState(['token'])
-    },
   components: {
+    Commentitems
 
   },
     name: 'Comments',
     data(){
         return{
-        commentArray:[""],
+      
         content: "",
         contentUpdate: "",
         success:false,
         show:false,
-        done:false
+        done:false,
+        commentArray:[]
 
         }    
     },
-    methods:{
+methods:{
         showFormComment(){
         
             this.commentArray.forEach(comment=>{
@@ -84,16 +79,17 @@ export default {
             this.done = false
         },
          updateVueComments(){
-            
+             let token = localStorage.getItem("Token");
  
      axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                    headers:{
-                   'Authorization': `bearer ${this.token}`
+                   'Authorization': `bearer ${token}`
                         
                   }
              })
             .then(res=>{
-        this.commentArray = res.data             
+       this.commentArray = res.data      
+      console.log(res)       
        this.content ="";
  
              
@@ -103,8 +99,10 @@ export default {
 
 
         
-        form_submitComment(){
+        form_submitComment(e){
+            e.preventDefault()
             
+                let token = localStorage.getItem("Token");
     
                 axios.post(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                      content: this.content
@@ -112,12 +110,14 @@ export default {
 
                 },{
                     headers:{
-                        'Authorization': `bearer ${this.token}`
+                        'Authorization': `bearer ${token}`
                     }
                 }
                 )
                 .then(response=>{
-        console.log(response)
+        console.log(response.data, this.commentArray)
+        this.commentArray.push(response.data)
+
                 })
                 .catch(error=>{
                     console.log(error)
@@ -125,6 +125,7 @@ export default {
         },
        update(e){
                e.preventDefault();
+                let token = localStorage.getItem("Token");
                 let commentId = localStorage.getItem("commentId")
     
                 axios.put(`http://localhost:8080/api/articles/${this.$route.params.id}/comments/${commentId}`,{
@@ -133,7 +134,7 @@ export default {
 
                 },{
                     headers:{
-                        'Authorization': `bearer ${this.token}`
+                        'Authorization': `bearer ${token}`
                     }
                 }
                 )
@@ -155,11 +156,12 @@ export default {
 
     },
 
-     mounted(){
+  /*   beforeCreate(){
+     let token = localStorage.getItem("Token");
  
      axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                    headers:{
-                   'Authorization': `bearer ${this.token}`
+                   'Authorization': `bearer ${token}`
                         
                   }
              })
@@ -168,10 +170,10 @@ export default {
       
      })
      
-     },
-     created(){
+     },*/
+    created(){
 
-
+console.log(this.$route.params.id)
     let token = localStorage.getItem("Token");
  
      axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
@@ -181,10 +183,12 @@ export default {
                   }
              })
             .then((res)=>{
+                this.commentArray.push(res.data)
               res.data.forEach((data) => {
-              //.push(data);
+          
+       
 
-               let userId =parseInt(localStorage.getItem("userId"))
+            let userId =parseInt(localStorage.getItem("userId"))
                 let deleteBtn =document.getElementById(`delete${data.id}`)
                 let updateBtn =document.getElementById(`update${data.id}`) 
                  let admin = localStorage.getItem('admin')
@@ -211,31 +215,6 @@ export default {
      
                })
 
-                   deleteBtn.addEventListener("click", function() {
-                                   this.show=false
-                                const  form = document.getElementById(`form${data.id}`)
-                                const  SplitFormId = form.getAttribute("id")
-                                const formId =SplitFormId.split("form")
-
-              function deleteComment(){
-
-                let token = localStorage.getItem("Token");
-                let articleId = localStorage.getItem("articleId")
-    
-                     axios.delete(`http://localhost:8080/api/articles/${articleId}/comments/${formId[1]}`,{
-                    headers:{
-                        'Authorization': `bearer ${token}`
-                        
-                    }
-                }).then((res)=>{
-                        console.log(res)
-                 }).catch(error=>{
-                                    console.log(error)
-                  })
-                    
-                    }
-                    deleteComment()
-                    })
                 
 
 
@@ -245,16 +224,16 @@ export default {
                   //            document.getElementById(`commentCount${articleId}`).textContent =`${commentsArray.data.length} commentaire(s)`;
     
                       
-                     }) 
-             })     
-     }  
+                    }) 
+          })     
+   }  
    
    
 
 }    
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 
 .commentResults{
     width: 90%;

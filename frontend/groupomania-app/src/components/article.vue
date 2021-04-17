@@ -153,9 +153,10 @@ export default {
                         {
                          headers:{'Authorization': `bearer ${this.token}`},
                          })
-                         .then((commentsArray)=>{
-                      document.getElementById(`commentCount${this.$route.params.id}`).textContent =`${commentsArray.data.length} commentaire(s)`;
-    
+                         .then((response)=>{
+                        
+                      document.getElementById(`commentCount${this.$route.params.id}`).textContent =`${response.data.length} commentaire(s)`;
+                      
 
                   })
                      
