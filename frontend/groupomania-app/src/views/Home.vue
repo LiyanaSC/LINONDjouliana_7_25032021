@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <i class="fas fa-plus-circle"></i>
       <header class="sidebar">
         <div class="sidebar__image"><img src="../assets/woman1.png" alt="avatar utilisateur" class="sidebar__image__url"></div>
         <nav class="sidebar__nav">
@@ -45,6 +46,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.fa-plus-circle{
+  color: #ffd166;
+  position: absolute;
+  top:10px;
+ left: 10px;
+  font-size: 5rem;
+  z-index: 1;
+}
 *{
       box-sizing: border-box;
 }

@@ -10,7 +10,7 @@
           <form @submit="updateComment" v-if="show" class="header__form" :id="'form'+comment.id">
 
                     <div class="header__form__div">
-                        <textarea @keyup="close" v-model="contentUpdate" class="header__form__article_title__article_description" type="text" name="firstname" id="firstname" aria-label="taper votre commentaire" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required></textarea>
+                        <textarea  v-model="contentUpdate" class="header__form__article_title__article_description" type="text" name="firstname" id="firstname" aria-label="taper votre commentaire" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required></textarea>
                     
                     </div>
                     <input @click="closeForm" type="submit" value="Modifier mon commentaire!" class="header__form__article_title__btn succes" id="btn"> 
@@ -29,18 +29,20 @@ export default {
         name: 'Commentitem',
         data(){
             return{
-                show:false
+                show:false,
+               contentUpdate: "",
+
             }
         },
     props:{
-        comment:[],
+        comment:Object,
 
         
     },
     methods:{
         deleteComment(){
                 let token =localStorage.getItem('Token')
-                console.log('là',token)
+              
               
                 let articleId = localStorage.getItem("articleId")
     
@@ -63,9 +65,13 @@ export default {
          openForm(){
              this.show=true
          },
-       /*  closeForm(){
-         
-         },*/
+        closeForm(){
+           
+             setTimeout(() => {
+                   this.show=false
+                   this.contentUpdate=""
+             }, 1000);
+         },
         
            updateComment(e){
                e.preventDefault();
@@ -84,9 +90,10 @@ export default {
                 )
                 .then(response=>{
             console.log(response)
-                                        this.$emit('commentsUpdate')
+                this.$emit('commentsUpdate')
 
                   this.show=false
+          
 
                 })
 

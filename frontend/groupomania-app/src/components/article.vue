@@ -121,7 +121,10 @@ export default {
                 .catch(error=>{
                     console.log(error,"error front end")
                 })
-                 this.$router.push({path:'/articles/'})
+                 setTimeout(() => {
+                     this.$router.push({path:'/articles/'})
+                 }, 1000);
+                
 
        }
         

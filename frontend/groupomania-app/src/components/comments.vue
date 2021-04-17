@@ -45,7 +45,6 @@ export default {
         return{
       
         content: "",
-        contentUpdate: "",
         success:false,
         show:false,
         done:false,
