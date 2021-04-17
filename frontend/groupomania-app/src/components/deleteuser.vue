@@ -78,6 +78,10 @@ methods:{
     align-items: center;
     padding-top:150px;
     font-family: 'Roboto',sans-serif;
+        @media (max-width: 900px) {
+        padding-top: 0%;
+          
+        }
 
   
     &__title{

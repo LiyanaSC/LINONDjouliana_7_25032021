@@ -6,14 +6,14 @@
                     <p>Salut {{ UserLastName }} {{ UserFirstName }} </p>
                 
                    
-            <form @submit="form_submit" class="header__form">
-                    <div class="header__form__div">
-                        <label class="header__form__label" for="lastname">Modifier mon nom </label>
+            <form @submit="form_submit" class="User__form">
+                    <div class="">
+                        <label class="" for="lastname">Modifier mon nom </label>
                         <input @keyup="close" v-model="UserLastName" class="header__form__article_title" type="text"  name="lastname" id="lastname" aria-label="taper votre nom de famille" pattern="[ A-Za-z-0-9.@p{L}]{2,254}" required > 
                     </div>
                 
                     <div class="header__form__div">
-                        <label class="header__form__label" for="description">Modifier mon Prénom </label>
+                        <label class="" for="description">Modifier mon Prénom </label>
                         <input @keyup="close" v-model="UserFirstName" class="header__form__article_title__article_description" type="text" name="firstname" id="firstname" aria-label="taper votre prénom" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required>
                     
                     </div>
@@ -126,6 +126,15 @@ export default {
     align-items: center;
     padding-top:150px;
     font-family: 'Roboto',sans-serif;
+             @media (max-width: 900px) {
+          width: 100%;
+         overflow: auto;
+          height: 100%;
+          z-index: 1;
+          margin: 0%;
+        
+        
+        }
 
   
     &__title{
@@ -140,6 +149,11 @@ export default {
         justify-content: center;
        
 
+    }
+    &__form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     &__update{
         color: #ffd166;

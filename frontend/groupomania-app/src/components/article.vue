@@ -142,11 +142,12 @@ export default {
     
   
      mounted(){
-   
+                   let token = localStorage.getItem("Token");
+
  
      axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}`,{
                    headers:{
-                   'Authorization': `bearer ${this.token}`
+                   'Authorization': `bearer ${token}`
                         
                   }
              }).then(res=>{
@@ -192,6 +193,11 @@ export default {
     flex-direction: column;
     align-items: center;
     padding-top:150px;
+       @media (max-width: 900px) {
+        padding-top: 0%;
+          
+        }
+    
   
     &__block{
         position: relative;

@@ -186,6 +186,14 @@ mounted(){
     flex-direction: column;
     align-items: center;
     padding-top:150px;
+        @media (max-width: 900px) {
+          width: 100%;
+          height: 100vh;
+          overflow: auto;
+        
+          
+        }
+
   
     &__block{
   
@@ -194,10 +202,12 @@ mounted(){
         margin:40px;
         padding:10px;
         font-family: 'Roboto',sans-serif;
-        color: #073b4c;s
+        color: #073b4c;
+    
         &__article_title{
             font-family: 'Marck Script',cursive;
-            
+           
+
         }
 
     }
@@ -212,6 +222,11 @@ mounted(){
    position: fixed;
    top: 0;
    right: 0;
+          @media (max-width: 900px) {
+          width: 100%;
+        }
+ 
+    
    &__title{
      
        display: flex;
