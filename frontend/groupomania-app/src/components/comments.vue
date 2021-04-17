@@ -171,9 +171,9 @@ methods:{
      })
      
      },*/
-    created(){
+    
+   mounted(){
 
-console.log(this.$route.params.id)
     let token = localStorage.getItem("Token");
  
      axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
@@ -183,8 +183,9 @@ console.log(this.$route.params.id)
                   }
              })
             .then((res)=>{
-                this.commentArray.push(res.data)
-              res.data.forEach((data) => {
+
+                this.commentArray =res.data
+                     res.data.forEach((data) => {
           
        
 
@@ -228,9 +229,9 @@ console.log(this.$route.params.id)
           })     
    }  
    
-   
 
-}    
+}   
+
 </script>
 
 <style lang="scss" >
