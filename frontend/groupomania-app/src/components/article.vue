@@ -10,6 +10,8 @@
                     <h2  class="result__block__article_title">  {{ article.title }} </h2>
                     
                     <p>{{ article.description}} </p>
+
+                    <p class="createdBy"> {{ article.User.firstname}} {{ article.User.lastname}}</p>
                                           
             <form @submit="update" v-if="show" class="result__article_form">
            <i @click="closeForm" class="closeIcon">X</i>
@@ -277,6 +279,9 @@ export default {
     left: 10px;
     font-size: 10rem;
 
+}
+.createdBy{
+    font-family: 'Marck Script',cursive;
 }
 }
 </style>

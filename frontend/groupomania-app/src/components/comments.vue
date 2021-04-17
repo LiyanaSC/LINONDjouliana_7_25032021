@@ -52,8 +52,8 @@ export default {
     data(){
         return{
       
-        content: "",
-        contentUpdate: "",
+        //content: "",
+        //contentUpdate: "",
         success:false,
         show:false,
         done:false,

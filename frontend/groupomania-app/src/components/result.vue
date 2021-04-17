@@ -103,7 +103,7 @@ methods:{
 
 
 
-beforeRouteEnter(route, redirecte, next) {
+/*beforeRouteEnter(route, redirecte, next) {
               
      let token = localStorage.getItem("Token");
  
@@ -113,8 +113,8 @@ beforeRouteEnter(route, redirecte, next) {
                   }
              })
             .then(res=>{
-
-zzzzz     next()
+                    console.log(res.data)
+             next()
               this.articles =res.data;
             res.data.forEach(data => { 
            let articleId = data.id
@@ -129,9 +129,9 @@ zzzzz     next()
                             });
                   })
                      
-     })
+              })
                     
-                  },
+    },*/
 mounted(){
               let token = localStorage.getItem("Token");
 
