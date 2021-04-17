@@ -32,7 +32,7 @@
            
                     <div>
                         
-                      <h3 :id="'commentCount'+article.id"> Commentaires </h3>
+                      <h3 :id="'commentCount'+article.id"> Commentaires: </h3>
                     <Comments />
                     </div>
                 </div>
@@ -155,9 +155,10 @@ export default {
                         {
                          headers:{'Authorization': `bearer ${this.token}`},
                          })
-                         .then((response)=>{
+                         .then((res)=>{
+                             console.log(res)
                         
-                      document.getElementById(`commentCount${this.$route.params.id}`).textContent =`${response.data.length} commentaire(s)`;
+                   //   document.getElementById(`commentCount${this.$route.params.id}`).textContent =`${response.data.length} commentaire(s)`;
                       
 
                   })

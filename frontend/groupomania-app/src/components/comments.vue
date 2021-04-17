@@ -8,17 +8,9 @@
 
                      <p v-if="done" class="done">C'est fait!</p>
       
-                 <Commentitems :comment="comment"/>
+                 <Commentitems :comment="comment" @commentsUpdate="updateComments"/>
 
-              <form @submit="update" v-show="show" class="header__form" :id="'form'+comment.id" style="display: none;">
-
-                    <div class="header__form__div">
-                        <textarea @keyup="close" v-model="contentUpdate" class="header__form__article_title__article_description" type="text" name="firstname" id="firstname" aria-label="taper votre commentaire" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required></textarea>
-                    
-                    </div>
-                    <input @click="updateVueComments" type="submit" value="Modifier mon commentaire!" class="header__form__article_title__btn succes" id="btn"> 
-            
-            </form>
+        
                 </div>                          
      
           <form @submit="form_submitComment" >                
@@ -52,8 +44,8 @@ export default {
     data(){
         return{
       
-        //content: "",
-        //contentUpdate: "",
+        content: "",
+        contentUpdate: "",
         success:false,
         show:false,
         done:false,
@@ -62,6 +54,22 @@ export default {
         }    
     },
 methods:{
+    updateComments(){
+
+            let token = localStorage.getItem("Token");
+        
+            axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
+                        headers:{
+                        'Authorization': `bearer ${token}`
+                                
+                        }
+                    })
+                    .then((res)=>{
+
+                        this.commentArray =res.data
+                    })
+
+    },
         showFormComment(){
         
             this.commentArray.forEach(comment=>{
@@ -80,22 +88,20 @@ methods:{
         },
          updateVueComments(){
              let token = localStorage.getItem("Token");
- 
-     axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
-                   headers:{
-                   'Authorization': `bearer ${token}`
-                        
-                  }
-             })
-            .then(res=>{
-       this.commentArray = res.data      
-      console.log(res)       
-       this.content ="";
- 
-             
-     })
+            
+                axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
+                            headers:{
+                            'Authorization': `bearer ${token}`
+                                    
+                            }
+                        })
+                        .then(res=>{
+                                this.commentArray = res.data      
+                                console.log(res)       
+                                this.content ="";       
+                         })
 
-    },
+        },
 
 
         
@@ -112,18 +118,17 @@ methods:{
                     headers:{
                         'Authorization': `bearer ${token}`
                     }
-                }
-                )
+                })
                 .then(response=>{
-        console.log(response.data, this.commentArray)
-        this.commentArray.push(response.data)
+                    console.log(response.data, this.commentArray)
+                    this.commentArray.push(response.data)
 
                 })
                 .catch(error=>{
                     console.log(error)
                 })
         },
-       update(e){
+    /*   update(e){
                e.preventDefault();
                 let token = localStorage.getItem("Token");
                 let commentId = localStorage.getItem("commentId")
@@ -149,7 +154,7 @@ methods:{
                     console.log(error)
                 })
      
-       }
+       }*/
         
 
         
@@ -202,19 +207,6 @@ methods:{
                        console.log('en attente de commentaires d autres utilisateurs')
                    }
 
-               updateBtn.addEventListener("click", function() {
-                                   this.show=false
-                                 const  form = document.getElementById(`form${data.id}`)
-                                const  SplitFormId = form.getAttribute("id")
-                                const formId =SplitFormId.split("form")
-                           
-                           
-                                    form.removeAttribute('style')
-                                            localStorage.setItem("commentId", `${formId[1]}`)
-                               
-
-     
-               })
 
                 
 

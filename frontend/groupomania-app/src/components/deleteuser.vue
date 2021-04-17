@@ -68,9 +68,11 @@ methods:{
 
 .delete{
     width: 75vw;
-    overflow: auto;
-    z-index: 7;
+
+
     background-color: #fff;
+    height: 100%;
+    border-radius: initial;
     display: flex;
     flex-direction: column;
     align-items: center;
