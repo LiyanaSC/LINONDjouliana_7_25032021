@@ -127,11 +127,12 @@ export default {
     padding-top:150px;
     font-family: 'Roboto',sans-serif;
              @media (max-width: 900px) {
-          width: 100%;
-         overflow: auto;
+          width: 150%;
+     
           height: 100%;
           z-index: 1;
           margin: 0%;
+         
         
         
         }
