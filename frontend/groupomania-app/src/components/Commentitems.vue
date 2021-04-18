@@ -1,8 +1,8 @@
 <template>
     <div>
-         <div @click="deleteComment" class="delete"  :id="'delete'+comment.id">Supprimer </div>
-       <div @click="openForm" class="update" :id="'update'+comment.id">modifier</div>
-       
+         <div @click="deleteComment" class=" btn_delete "  :id="'delete'+comment.id"> <span class="textBtn">Supprimer</span> <i class="fas fa-trash-alt"></i> </div>
+       <div @click="openForm" class=" btn_update" :id="'update'+comment.id"> <span class="textBtn">Modifier</span> <i class="fas fa-pencil-alt"></i></div>
+      
            <p  class="result__block__article_title" style="font-weight:bold"> {{ comment.User.firstname }} {{ comment.User.lastname }}</p>
                     
                     <p> {{ comment.content}} </p> 
@@ -111,3 +111,35 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+.textBtn{
+     display: none;
+    @media (max-width: 900px) {
+      display: none;
+
+        }
+}
+.fas{
+    
+  
+      display: initial;
+
+      
+}
+.btn_delete{
+      
+        width: initial;
+        padding: 7px;
+        position:absolute;
+        right: 0;
+
+}
+.btn_update{
+     
+        width: initial;
+        padding: 7px;
+        position:absolute;
+        right: 40px;
+
+}
+</style>

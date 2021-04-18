@@ -2,7 +2,7 @@
     <div>             
          <div id="nav">
                   <header class="header">
-                    <img src="../assets/icon-left-font-monochrome-white.svg" alt="Logo du Groupe">
+                    <img class="header__pic" src="../assets/icon-left-font-monochrome-white.svg" alt="Logo du Groupe">
                   </header>
                   <div>
                         <router-link to="/">Connexion</router-link> |
@@ -32,14 +32,27 @@ export default {
    height: 100vh;
    width: 100vw;
    padding: 0%;
-   margin: 0%;
+   margin: 0%;   
+    @media (max-width: 900px) {
+    overflow: hidden;
+        
+        }
    
 }
 .header{
      display: flex;
     justify-content: center;
-    margin-bottom: 40px
+    margin-bottom: 40px;
+    &__pic{
+
+    @media (max-width: 900px) {
+          width: 100%;
+          padding: 5px;
+  
+        
+        }    }
 }
+
 .section_index {
     display: flex;
     flex-direction: row;

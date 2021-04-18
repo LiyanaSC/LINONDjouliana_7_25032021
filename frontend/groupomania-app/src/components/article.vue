@@ -4,8 +4,8 @@
    <i @click="goback" class="fas fa-arrow-left "></i>
    <div class="result__block" > 
        <p v-if="done" class="done">C'est fait!</p>
-       <div @click="deleteArticle" class="delete" v-if="success">supprimer</div>
-       <div @click="showFormArticle" class="update" v-if="success">modifier</div>
+       <div @click="deleteArticle" class="delete" v-if="success"> <span class="textBtn">Supprimer</span> <i class="fas fa-trash-alt"></i></div>
+       <div @click="showFormArticle" class="update" v-if="success"> <span class="textBtn">Modifier</span> <i class="fas fa-pencil-alt"></i></div>
                 
                     <h2  class="result__block__article_title">  {{ article.title }} </h2>
                     
@@ -193,20 +193,30 @@ export default {
     flex-direction: column;
     align-items: center;
     padding-top:150px;
-       @media (max-width: 900px) {
-        padding-top: 0%;
-          
+    @media (max-width: 900px) {
+          width: 100%;
+          height: 100vh;
+      overflow: auto;
+      padding: 5px;
+        
         }
     
   
     &__block{
         position: relative;
-        border: 1px gray solid;
+        border: 1px grey solid;
         width: 80%;
         margin:40px;
         padding:10px;
         font-family: 'Roboto',sans-serif;
-        color: #073b4c;s
+        color: #073b4c;
+            @media (max-width: 900px) {
+          width: 90vw;
+          height: 100vh;
+      overflow: auto;
+      padding: 5px;
+        
+        }
         &__article_title{
             font-family: 'Marck Script',cursive;
             
@@ -252,6 +262,14 @@ export default {
  right: 10px;
  text-shadow: 1px 1px 2px black;
  box-shadow:1px 1px 2px black ;
+      @media (max-width: 900px) {
+      
+        width: initial;
+        padding: 7px;
+        border-radius: 50%;
+        position:absolute;
+        right: 5px;
+}
 }
 .update{
  color: #fff;
@@ -266,8 +284,30 @@ export default {
  right: 120px;
  text-shadow: 1px 1px 2px black;
  box-shadow:1px 1px 2px black ;
+      @media (max-width: 900px) {
+      
+        width: initial;
+        padding: 7px;
+        border-radius: 50%;
+        position:absolute;
+        right: 40px;
+}
 
 }
+.textBtn{
+    @media (max-width: 900px) {
+      display: none;
+
+        }
+}
+.fas{
+      display: none;
+    @media (max-width: 900px) {
+      display: initial;
+
+        }
+}
+
 .done{
     position: absolute;
     right: 230px;

@@ -119,7 +119,6 @@ export default {
 .User{
     width: 75vw;
     overflow: auto;
-    z-index: 7;
     background-color: #fff;
     display: flex;
     flex-direction: column;
@@ -127,13 +126,11 @@ export default {
     padding-top:150px;
     font-family: 'Roboto',sans-serif;
              @media (max-width: 900px) {
-          width: 150%;
-     
-          height: 100%;
-          z-index: 1;
-          margin: 0%;
-         
-        
+          width: 100%;
+        justify-content: center;
+    height: 100vh;
+          overflow: auto;
+          padding: 0%
         
         }
 

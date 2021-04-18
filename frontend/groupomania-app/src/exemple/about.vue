@@ -49,6 +49,8 @@ export default {
         color: #073b4c;
         display: flex;
         justify-content: center;
+                text-align: center;
+
        
 
     }

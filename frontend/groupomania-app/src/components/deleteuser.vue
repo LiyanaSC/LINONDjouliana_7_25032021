@@ -1,11 +1,11 @@
 <template>
 
-    <section class="delete">        
+    <section class="delete_accout">        
 
-                <h2 class="delete__title"> Attention cette action est irreversible! </h2>
+                <h2 class="delete_accout__title"> Attention cette action est irreversible! </h2>
                     <p>On est triste de te voir partir {{ UserFirstName }} </p>
                     <p> Es-tu sure de vouloir nous Quitter?</p>
-                    <p class="delete__deleted" @click="deleteUser">Je souhaites suprimer mon compte</p>
+                    <p class="delete_accout__deleted" @click="deleteUser">Je souhaites suprimer mon compte</p>
                    
                    
               
@@ -66,22 +66,24 @@ methods:{
 </script>
 <style lang="scss" scoped>
 
-.delete{
+.delete_accout{
     width: 75vw;
-
-
+    overflow: auto;
     background-color: #fff;
-    height: 100%;
-    border-radius: initial;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top:150px;
     font-family: 'Roboto',sans-serif;
-        @media (max-width: 900px) {
-        padding-top: 0%;
-          
+            @media (max-width: 900px) {
+          width: 100%;
+        justify-content: center;
+    height: 100vh;
+          overflow: auto;
+          padding: 0%
+        
         }
+  
 
   
     &__title{
@@ -94,6 +96,8 @@ methods:{
         color: #073b4c;
         display: flex;
         justify-content: center;
+           text-align: center;
+       
        
 
     }

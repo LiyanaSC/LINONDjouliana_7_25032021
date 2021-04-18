@@ -123,6 +123,13 @@ export default {
   z-index: auto;
   display: flex;
   flex-direction: row;
+     @media (max-width: 900px) {
+          justify-content: center;
+          align-items: center;
+          margin: 0%;
+          padding:0%;
+          overflow: hidden;
+        }
   
 }
 a{

@@ -7,7 +7,7 @@
   <Login/>
 </div>
  
- <figure class="box_decoration">
+ <figure  class="box_decoration ">
             <img src="../assets/coude_masque.jpg" class="box_decoration__pic" alt="photo de deux collègues portant un masque, si disant bonjour avec le coude">
     </figure>
      
@@ -39,6 +39,12 @@ export default {
   align-items: center;
   width: 100%;
   margin-top: 50px;
+  @media (max-width: 900px) {
+      display: flex;
+      flex-direction: column;
+
+    }
+
   }
 .login_box{
   box-sizing: border-box;
@@ -51,7 +57,10 @@ export default {
   color: #fff;
   font-family:'Roboto',
   sans-serif;
-
+ @media (max-width: 900px) {
+    
+width: 90%;
+    }
 
           &__title{
             font-family: 'Fjalla One',
@@ -74,6 +83,10 @@ export default {
         width: 100%;
         border-radius: 20px;
         border: 1px #fff solid;
+    }
+     @media (max-width: 900px) {
+      display: none
+
     }
 }
 </style>
