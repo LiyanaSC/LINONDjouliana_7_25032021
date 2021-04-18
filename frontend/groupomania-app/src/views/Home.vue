@@ -33,8 +33,6 @@
   </div>
 </template>
 <script >
-import { mapState } from 'vuex'
-
 
 export default {
   name:'home',
@@ -43,9 +41,6 @@ export default {
       show:false
     }
   },
-        computed: {
-        ...mapState(['token'])
-    },
   methods:{
       hideSidebar(){
      this.show=false
@@ -60,12 +55,10 @@ export default {
 
   },
 created(){
-  if(this.token == ""){
-    this.$router.push({path:'/'})
-  }else{
-  this.$store.dispatch("refreshMyToken")
-  }
+             this.$store.dispatch("refreshMyToken")
+
 }
+
 
 }
 </script>
