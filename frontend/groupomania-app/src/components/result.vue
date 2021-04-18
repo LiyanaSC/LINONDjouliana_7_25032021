@@ -39,6 +39,7 @@
 <script>
 import axios from 'axios'
 import Articleitems from './Articleitems.vue'
+import { mapState } from 'vuex'
 
 
 export default {
@@ -46,6 +47,9 @@ export default {
     Articleitems
 
   },
+    computed: {
+    ...mapState(['token'])
+    },
     name: 'Result',
     data(){
         return{
@@ -77,7 +81,6 @@ methods:{
 
  form_submit(e){
                  e.preventDefault()
-                let token = localStorage.getItem("Token");
     
                 axios.post('http://localhost:8080/api/articles/',{
                      title: this.title,
@@ -85,7 +88,7 @@ methods:{
 
                 },{
                     headers:{
-                        'Authorization': `bearer ${token}`
+                        'Authorization': `bearer ${this.token}`
                     }
                 }
                 )
@@ -109,41 +112,12 @@ methods:{
 
 
 
-/*beforeRouteEnter(route, redirecte, next) {
-              
-     let token = localStorage.getItem("Token");
- 
-     axios.get('http://localhost:8080/api/articles',{
-                   headers:{
-                   'Authorization': `Bearer ${token}`
-                  }
-             })
-            .then(res=>{
-                    console.log(res.data)
-             next()
-              this.articles =res.data;
-            res.data.forEach(data => { 
-           let articleId = data.id
-                    axios.get(
-                        `http://localhost:8080/api/articles/${articleId}/comments`,
-                        {
-                         headers:{'Authorization': `bearer ${token}`},
-                         })
-                         .then((commentsArray)=>{
-                              document.getElementById(`commentCount${articleId}`).textContent =`${commentsArray.data.length} commentaire(s)`;
-           
-                            });
-                  })
-                     
-              })
-                    
-    },*/
+
 mounted(){
-              let token = localStorage.getItem("Token");
 
     axios.get('http://localhost:8080/api/articles',{
                    headers:{
-                   'Authorization': `bearer ${token}`
+                   'Authorization': `bearer ${this.token}`
                         
                   }
              })
@@ -155,7 +129,7 @@ mounted(){
        
            axios.get(`http://localhost:8080/api/articles/${articleId}/comments`,
                         {
-                         headers:{'Authorization': `bearer ${token}`},
+                         headers:{'Authorization': `bearer ${this.token}`},
                          })
                          .then(()=>{
 

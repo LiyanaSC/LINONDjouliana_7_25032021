@@ -142,12 +142,11 @@ export default {
     
   
      mounted(){
-                   let token = localStorage.getItem("Token");
 
  
      axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}`,{
                    headers:{
-                   'Authorization': `bearer ${token}`
+                   'Authorization': `bearer ${this.token}`
                         
                   }
              }).then(res=>{

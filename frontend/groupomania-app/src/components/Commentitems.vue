@@ -21,6 +21,7 @@
 
 <script>
 import axios from 'axios'
+import { mapState } from 'vuex'
 
 
 
@@ -35,6 +36,9 @@ export default {
 
             }
         },
+              computed: {
+        ...mapState(['token'])
+    },
     props:{
         comment:Object,
 
@@ -42,14 +46,13 @@ export default {
     },
     methods:{
         deleteComment(){
-                let token =localStorage.getItem('Token')
               
               
                 let articleId = localStorage.getItem("articleId")
     
                      axios.delete(`http://localhost:8080/api/articles/${articleId}/comments/${this.comment.id}`,{
                     headers:{
-                        'Authorization': `bearer ${token}`
+                        'Authorization': `bearer ${this.token}`
                         
                     }
                 })
@@ -80,7 +83,6 @@ export default {
         
            updateComment(e){
                e.preventDefault();
-                let token = localStorage.getItem("Token");
                 let articleId = localStorage.getItem("articleId")
     
                 axios.put(`http://localhost:8080/api/articles/${articleId}/comments/${this.comment.id}`,{
@@ -89,7 +91,7 @@ export default {
 
                 },{
                     headers:{
-                        'Authorization': `bearer ${token}`
+                        'Authorization': `bearer ${this.token}`
                     }
                 }
                 )

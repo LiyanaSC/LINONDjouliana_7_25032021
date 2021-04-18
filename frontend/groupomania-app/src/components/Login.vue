@@ -62,7 +62,7 @@ export default {
             },
 
                  refreshTokenStart(){
-             this.$store.commit('refreshMyToken')
+             this.$store.dispatch("refreshMyToken")
               },
 
     },

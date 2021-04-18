@@ -57,14 +57,14 @@ export default {
                                 })
                                 .then(response=>{
                                     console.log(response.data)
-                                    localStorage.setItem("Token", response.data.token );
-                                    localStorage.setItem("userId", response.data.userId )
-                                    localStorage.setItem("admin", response.data.admin )
+
                                     this.$router.push({path:'/articles'})
                                     this.$store.state.tokenList.push(response.data.token,response.data.refreshToken)
                                     this.$store.state.userId.push(response.data.userId)
                                     this.$store.state.admin.push(response.data.admin)
-                                    
+                                
+
+
                                     console.log("verif store",this.$store.state)
 
                                 })
@@ -82,7 +82,7 @@ export default {
             },
             
               refreshTokenStart(){
-             this.$store.commit('refreshMyToken')
+             this.$store.dispatch("refreshMyToken")
              }
 
     },
@@ -117,4 +117,5 @@ export default {
                     }
                             }
 }
+
 </style>

@@ -33,6 +33,8 @@
 <script>
 import axios from 'axios'
 import Commentitems from './Commentitems.vue'
+import { mapState } from 'vuex'
+
 
 export default {   
 
@@ -51,15 +53,17 @@ export default {
         commentArray:[]
 
         }    
+    },    
+      computed: {
+        ...mapState(['token'])
     },
 methods:{
     updateComments(){
 
-            let token = localStorage.getItem("Token");
         
             axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                         headers:{
-                        'Authorization': `bearer ${token}`
+                        'Authorization': `bearer ${this.token}`
                                 
                         }
                     })
@@ -86,11 +90,10 @@ methods:{
             this.done = false
         },
          updateVueComments(){
-             let token = localStorage.getItem("Token");
             
                 axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                             headers:{
-                            'Authorization': `bearer ${token}`
+                            'Authorization': `bearer ${this.token}`
                                     
                             }
                         })
@@ -107,7 +110,6 @@ methods:{
         form_submitComment(e){
             e.preventDefault()
             
-                let token = localStorage.getItem("Token");
     
                 axios.post(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                      content: this.content
@@ -115,7 +117,7 @@ methods:{
 
                 },{
                     headers:{
-                        'Authorization': `bearer ${token}`
+                        'Authorization': `bearer ${this.token}`
                     }
                 })
                 .then(response=>{
@@ -127,62 +129,20 @@ methods:{
                     console.log(error)
                 })
         },
-    /*   update(e){
-               e.preventDefault();
-                let token = localStorage.getItem("Token");
-                let commentId = localStorage.getItem("commentId")
-    
-                axios.put(`http://localhost:8080/api/articles/${this.$route.params.id}/comments/${commentId}`,{
-                     content: this.contentUpdate
-                   
-
-                },{
-                    headers:{
-                        'Authorization': `bearer ${token}`
-                    }
-                }
-                )
-                .then(response=>{
-        console.log(response)
-              
-
-                })
-
-                
-                .catch(error=>{
-                    console.log(error)
-                })
-     
-       }*/
+   
         
 
         
 
     },
 
-  /*   beforeCreate(){
-     let token = localStorage.getItem("Token");
- 
-     axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
-                   headers:{
-                   'Authorization': `bearer ${token}`
-                        
-                  }
-             })
-            .then((res)=>{
-               this.commentArray = res.data             
-      
-     })
-     
-     },*/
-    
+
    mounted(){
 
-    let token = localStorage.getItem("Token");
  
      axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                    headers:{
-                   'Authorization': `bearer ${token}`
+                   'Authorization': `bearer ${this.token}`
                         
                   }
              })
