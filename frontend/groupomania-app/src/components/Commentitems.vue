@@ -1,7 +1,7 @@
 <template>
     <div>
-         <div @click="deleteComment" class=" btn_delete "  :id="'delete'+comment.id"> <span class="textBtn">Supprimer</span> <i class="fas fa-trash-alt"></i> </div>
-       <div @click="openForm" class=" btn_update" :id="'update'+comment.id"> <span class="textBtn">Modifier</span> <i class="fas fa-pencil-alt"></i></div>
+         <div @click="deleteComment" v-show="showBtn" class=" btn_delete "  :id="'delete'+comment.id"> <span class="textBtn">Supprimer</span> <i class="fas fa-trash-alt"></i> </div>
+       <div @click="openForm" v-show="showBtn"  class=" btn_update" :id="'update'+comment.id"> <span class="textBtn">Modifier</span> <i class="fas fa-pencil-alt"></i></div>
       
            <p  class="result__block__article_title" style="font-weight:bold"> {{ comment.User.firstname }} {{ comment.User.lastname }}</p>
                     
@@ -31,6 +31,7 @@ export default {
             return{
                 show:false,
                contentUpdate: "",
+               showBtn:false,
 
             }
         },
@@ -107,7 +108,19 @@ export default {
                  
                 
         
-    }
+    },
+    created(){
+                    let userId= localStorage.getItem('userId')     
+                        
+                   if (userId == this.comment.UserId){
+                       this.showBtn = true
+                   }
+
+   
+                     
+         
+     }
+    
 }
 </script>
 
