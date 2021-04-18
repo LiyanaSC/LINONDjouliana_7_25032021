@@ -6,12 +6,12 @@
        <p v-if="done" class="done">C'est fait!</p>
        <div @click="deleteArticle" class="delete" v-if="success"> <span class="textBtn">Supprimer</span> <i class="fas fa-trash-alt"></i></div>
        <div @click="showFormArticle" class="update" v-if="success"> <span class="textBtn">Modifier</span> <i class="fas fa-pencil-alt"></i></div>
-                
+             
                     <h2  class="result__block__article_title">  {{ article.title }} </h2>
                     
                     <p>{{ article.description}} </p>
 
-                    <p class="createdBy"> {{ article.User.firstname}} {{ article.User.lastname}}</p>
+                    <p class="createdBy">Auteur {{ article.User.firstname}} {{ article.User.lastname}}</p>
                                           
             <form @submit="update" v-if="show" class="result__article_form">
            <i @click="closeForm" class="closeIcon">X</i>
@@ -330,8 +330,6 @@ export default {
     font-size: 10rem;
 
 }
-.createdBy{
-    font-family: 'Marck Script',cursive;
-}
+
 }
 </style>

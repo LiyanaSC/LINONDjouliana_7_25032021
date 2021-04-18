@@ -2,7 +2,7 @@
     <div>
          <div @click="deleteComment" v-show="showBtn" class=" btn_delete "  :id="'delete'+comment.id"> <span class="textBtn">Supprimer</span> <i class="fas fa-trash-alt"></i> </div>
        <div @click="openForm" v-show="showBtn"  class=" btn_update" :id="'update'+comment.id"> <span class="textBtn">Modifier</span> <i class="fas fa-pencil-alt"></i></div>
-      
+       <i @click="closeFormWithIcon" v-if="show" class="CloseIcon">X</i>  
            <p  class="result__block__article_title" style="font-weight:bold"> {{ comment.User.firstname }} {{ comment.User.lastname }}</p>
                     
                     <p> {{ comment.content}} </p> 
@@ -65,6 +65,10 @@ export default {
          },
          openForm(){
              this.show=true
+         },
+         closeFormWithIcon(){
+            this.show=false
+
          },
         closeForm(){
            
@@ -145,7 +149,9 @@ export default {
         padding: 7px;
         position:absolute;
         right: 0;
-
+        &:hover{
+            color: #ef476f;
+        }
 }
 .btn_update{
      
@@ -153,6 +159,17 @@ export default {
         padding: 7px;
         position:absolute;
         right: 40px;
-
+        &:hover{
+            color: #ffd166;
+        }
+}
+.CloseIcon{
+        padding: 5px;
+        position:absolute;
+        right: 70px;
+        font-size: 1.3rem;
+        &:hover{
+            color: #ef476f;
+        }
 }
 </style>

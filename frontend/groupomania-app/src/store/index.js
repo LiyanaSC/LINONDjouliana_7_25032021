@@ -21,6 +21,7 @@ export default new Vuex.Store({
     },
     mutations: {
         refreshMyToken(state) {
+            console.log('am starded')
             setInterval(function() {
                 axios.post('http://localhost:8080/api/auth/token', {
                         userId: state.userId,
@@ -45,9 +46,9 @@ export default new Vuex.Store({
             }, 30000);
         }
 
+
     },
     actions: {
-
 
     },
     modules: {}

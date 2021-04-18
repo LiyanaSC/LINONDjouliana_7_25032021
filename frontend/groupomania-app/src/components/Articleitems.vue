@@ -7,7 +7,7 @@
                         <h3 :id="'commentCount'+article.id"></h3>
                     </div>
                          
-                                 <p id="createdBy" class="createdBy">créateur {{ article.User.firstname }} {{ article.User.lastname }}</p>
+                                 <p id="createdBy" >Auteur {{ article.User.firstname }} {{ article.User.lastname }}</p>
 
                     </div>
 </template>
@@ -29,7 +29,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.createdBy{
+.result__block__article_title{
     font-family: 'Marck Script',cursive;
 }
 </style>

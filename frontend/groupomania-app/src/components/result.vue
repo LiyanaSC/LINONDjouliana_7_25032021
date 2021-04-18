@@ -19,7 +19,7 @@
                             
                             </div>
                             
-                            <input  type="submit" value="Envoyer" class="header__form__article_title__btn succes" id="btn">
+                            <input @click="closeForm" type="submit" value="Envoyer" class="header__form__article_title__btn succes" id="btn">
                     
                     </form>
                 </header>        
@@ -65,8 +65,14 @@ methods:{
  },
   close(){
      this.success=false
-       this.title ="";
-       this.description="";
+
+ },
+ closeForm(){
+    setTimeout(() => {
+        this.success=false
+        this.title ="";
+        this.description="";
+    }, 1000);
  },
 
  form_submit(e){

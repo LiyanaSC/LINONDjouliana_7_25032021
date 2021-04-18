@@ -38,12 +38,15 @@ export default {
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  margin-top: 50px;
+  margin-top: 50px;  
+
   @media (max-width: 900px) {
       display: flex;
       flex-direction: column;
 
     }
+
+
 
   }
 .login_box{
@@ -79,14 +82,16 @@ width: 90%;
 }
   .box_decoration {
     width: 45%;
+       @media (max-width: 900px) {
+      display: none
+
+    }
     &__pic {
         width: 100%;
         border-radius: 20px;
         border: 1px #fff solid;
+     
     }
-     @media (max-width: 900px) {
-      display: none
-
-    }
+ 
 }
 </style>
