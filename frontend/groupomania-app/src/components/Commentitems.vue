@@ -25,6 +25,7 @@ import { mapState } from 'vuex'
 
 
 
+
 export default {
   
         name: 'Commentitem',
@@ -37,7 +38,7 @@ export default {
             }
         },
               computed: {
-        ...mapState(['token'])
+        ...mapState(['token','userId','admin'])
     },
     props:{
         comment:Object,
@@ -116,9 +117,8 @@ export default {
         
     },
     created(){
-                    let userId= localStorage.getItem('userId')     
-                        
-                   if (userId == this.comment.UserId){
+
+                   if (this.userId == this.comment.UserId 	|| this.admin ==true){
                        this.showBtn = true
                    }
 

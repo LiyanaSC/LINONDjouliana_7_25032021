@@ -49,7 +49,7 @@ import { mapState } from 'vuex'
 
 export default {
       computed: {
-        ...mapState(['token'])
+        ...mapState(['token','userId','admin'])
     },
   components: {
     Comments
@@ -166,9 +166,8 @@ export default {
 
                   })
                      
-                   let userId = localStorage.getItem('userId')
 
-                   if (userId == res.data.UserId){
+                   if (this.userId == res.data.UserId || this.admin ==true){
                        this.success = true
                    }
      })

@@ -46,7 +46,7 @@ export default new Vuex.Store({
 
                         }
                     }).then(res => {
-                        console.log("réponse", res.data.response.token)
+                        console.log("réponse", res.data.response.token, state.userId, state.admin)
                         commit('CHANGE_THE_TOKEN', res.data.response.token)
 
                     })

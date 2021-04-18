@@ -16,7 +16,7 @@
 </template>
 <script>
 import axios from 'axios'
-
+import { mapState } from 'vuex'
 
 
 export default {
@@ -31,18 +31,19 @@ export default {
 
         }
     },
+          computed: {
+        ...mapState(['token','userId'])
+    },
 methods:{
 
     deleteUser(e){
                         e.preventDefault();
 
-        let token = localStorage.getItem("Token");
-        let userId = localStorage.getItem("userId");
 
 
-  axios.delete(`http://localhost:8080/api/users/${userId}`,{
+  axios.delete(`http://localhost:8080/api/users/${this.userId}`,{
                     headers:{
-                        'Authorization': `bearer ${token}`
+                        'Authorization': `bearer ${this.token}`
                         
                     }
                 })

@@ -35,7 +35,7 @@ import { mapState } from 'vuex'
 
 export default {
       computed: {
-        ...mapState(['token'])
+        ...mapState(['token','userId'])
     },
   components: {
   },
@@ -52,9 +52,8 @@ export default {
     },
     async created(){
     
-                    let userId = localStorage.getItem("userId");
 
-                 axios.get(`http://localhost:8080/api/users/${userId}`,{
+                 axios.get(`http://localhost:8080/api/users/${this.userId}`,{
                                 headers:{
                                     'Authorization': `bearer ${this.token}`
                                     
@@ -75,10 +74,9 @@ export default {
      form_submit(e){
                 e.preventDefault();
                 
-                    let userId = localStorage.getItem("userId");
 
                      
-                 axios.put(`http://localhost:8080/api/users/${userId}`,{
+                 axios.put(`http://localhost:8080/api/users/${this.userId}`,{
                      firstname: this.UserFirstName,
                     lastname:this.UserLastName,
               

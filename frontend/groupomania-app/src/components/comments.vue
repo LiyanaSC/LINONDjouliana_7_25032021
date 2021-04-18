@@ -55,7 +55,7 @@ export default {
         }    
     },    
       computed: {
-        ...mapState(['token'])
+        ...mapState(['token','userId','admin'])
     },
 methods:{
     updateComments(){
@@ -76,11 +76,9 @@ methods:{
         showFormComment(){
         
             this.commentArray.forEach(comment=>{
-                const userId = parseInt(localStorage.getItem("userId")) 
         const  form = document.getElementById(`form${comment.id}`)
-                   let admin = localStorage.getItem('admin')
          
-         if (userId === comment.UserId  || admin =='true' ){
+         if (this.userId === comment.UserId  || this.admin ==true ){
         form.removeAttribute('style')
          }
                console.log(form)
@@ -153,13 +151,11 @@ methods:{
           
        
 
-            let userId =parseInt(localStorage.getItem("userId"))
                 let deleteBtn =document.getElementById(`delete${data.id}`)
                 let updateBtn =document.getElementById(`update${data.id}`) 
-                 let admin = localStorage.getItem('admin')
 
 
-                    if (userId !== data.UserId  && admin !='true'){
+                    if (this.userId !== data.UserId  	|| this.admin ==true){
                 deleteBtn.setAttribute('style',' display:none ')
                 updateBtn.setAttribute('style',' display:none ')
                    }else{
