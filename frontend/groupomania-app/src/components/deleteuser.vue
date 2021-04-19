@@ -3,15 +3,10 @@
     <section class="delete_accout">        
 
                 <h2 class="delete_accout__title"> Attention cette action est irreversible! </h2>
-                    <p>On est triste de te voir partir {{ UserFirstName }} </p>
-                    <p> Es-tu sure de vouloir nous Quitter?</p>
-                    <p class="delete_accout__deleted" @click="deleteUser">Je souhaites suprimer mon compte</p>
-                   
-                   
-              
-               
-            
-
+                <p>On est triste de te voir partir {{ UserFirstName }} </p>
+                <p> Es-tu sure de vouloir nous Quitter?</p>
+                <p class="delete_accout__deleted" @click="deleteUser">Je souhaites suprimer mon compte</p>
+                
     </section>
 </template>
 <script>
@@ -35,26 +30,22 @@ export default {
         ...mapState(['token','userId'])
     },
 methods:{
-
+//METHOD delete account
     deleteUser(e){
-                        e.preventDefault();
-
-
-
-  axios.delete(`http://localhost:8080/api/users/${this.userId}`,{
+    e.preventDefault();
+    //DELETE user account (delete his articles and his comments)
+    axios.delete(`http://localhost:8080/api/users/${this.userId}`,{
                     headers:{
                         'Authorization': `bearer ${this.token}`
                         
                     }
                 })
             .then((res)=>{
-               
-                  
-
-
-        console.log(res)
+                  console.log(res)
+            }).catch(err=>{
+                console.log(err)
             })
-           this.$router.push({path:'/'})
+              this.$router.push({path:'/'})
            
     },
     
@@ -67,7 +58,7 @@ methods:{
 </script>
 <style lang="scss" scoped>
 
-.delete_accout{
+.delete_accout{//section
     width: 75vw;
     overflow: auto;
     background-color: #fff;
@@ -77,12 +68,12 @@ methods:{
     padding-top:150px;
     font-family: 'Roboto',sans-serif;
             @media (max-width: 900px) {
-          width: 100%;
-        justify-content: center;
-    height: 100vh;
-          overflow: auto;
-          padding: 0%
-        
+            width: 100%;
+            justify-content: center;
+            height: 100vh;
+            overflow: auto;
+            padding: 0%
+            
         }
   
 
@@ -97,12 +88,12 @@ methods:{
         color: #073b4c;
         display: flex;
         justify-content: center;
-           text-align: center;
+        text-align: center;
        
        
 
     }
-    &__deleted{
+    &__deleted{//text to confirm 
         color: #ef476f;
         &:hover{
             font-weight: bold;

@@ -1,37 +1,43 @@
 <template>
 
     <section class="result" id="hello">
-            <header class="header" >
+
+            <header class="header" > 
                 
                     <p @click="open" class="header__create_post">Créer un post!</p>
                     <h2 v-if="!success" class="header__title"> PAGEMANIA</h2>
-                
+
+         <!-- _________________________ FORM: create article ____________________________________ -->
+
                     <form v-if="success"  @submit="form_submit" class="header__form">
+
+                       <!-- close icon -->
                         <i @click="close" class="header__form__article_title__icon">X</i>
-                            <div class="header__form__div">
+
+
+                            <div class="header__form__div"><!-- input title -->
                                 <label class="header__form__label" for="title">Titre</label>
                                 <textarea v-model="title" class="header__form__article_title" type="textarea" size="2,200" name="title" id="title" placeholder="Titre de l'article" aria-label="taper le titre de l'articlre" pattern="[ A-Za-z-0-9.@p{L}]{2,100000}" required > </textarea>
                             </div>
                         
-                            <div class="header__form__div">
+                            <div class="header__form__div"><!-- input description-->
                                 <label class="header__form__label" for="description">Texte</label>
                                 <textarea  v-model="description" class="header__form__article_title__article_description" type="textarea" name="description" id="description" placeholder="description" aria-label="taper la description" pattern="[ A-Za-z-0-9\p{L}]{2,100000}" required></textarea>
                             
                             </div>
                             
+                            <!-- btn -->
                             <input @click="closeForm" type="submit" value="Envoyer" class="header__form__article_title__btn succes" id="btn">
                     
                     </form>
                 </header>        
 
-                <div class="result__block" v-for="article in articles"  v-bind:key="article.id" :id="article.id" > 
-                
-                        <Articleitems :article="article" />  
-                    
-             
-            
 
-                
+         <!-- _________________________ BOX: for each article ____________________________________ -->
+                <div class="result__block" v-for="article in articles"  v-bind:key="article.id" :id="article.id" > 
+    
+                        <Articleitems :article="article" />  
+              
                 </div>
              
     </section>
@@ -63,89 +69,89 @@ export default {
     },
 
 methods:{
+//METHODopen form create article by text "créer un post"
+    open(){ 
+        this.success=true
+    },
 
- open(){
-     this.success=true
- },
-  close(){
-     this.success=false
-
- },
- closeForm(){
-    setTimeout(() => {
+//METHOD close form create article by icon "X"
+    close(){ 
         this.success=false
-        this.title ="";
-        this.description="";
-    }, 1000);
- },
 
- form_submit(e){
-                 e.preventDefault()
-    
-                axios.post('http://localhost:8080/api/articles/',{
-                     title: this.title,
-                    description:this.description,
+    },
+//METHOD close one second form after POST
+    closeForm(){ 
+        setTimeout(() => {
+            this.success=false
+            this.title ="";
+            this.description="";
+        }, 1000);
+    },
 
-                },{
-                    headers:{
-                        'Authorization': `bearer ${this.token}`
+//METHOD create article
+   form_submit(e){
+                    e.preventDefault()
+                    //POST new article
+                    axios.post('http://localhost:8080/api/articles/',{
+                        title: this.title,
+                        description:this.description,
+
+                    },{
+                        headers:{
+                            'Authorization': `bearer ${this.token}`
+                        }
                     }
-                }
-                )
-                .then(response=>{
-                console.log('ici',response.data)
-                 this.articles.unshift(response.data)
-           
-  
-                })
-                .catch(error=>{
-                    console.log(error)
-                })
-          
-        
-                
-            }
+                    )
+                    .then(response=>{
+                    console.log('ici',response.data)
+                    this.articles.unshift(response.data) //added in articles array to update page
+            
     
+                    })
+                    .catch(error=>{
+                        console.log(error)
+                    })               
+                }
+        
 
 },
-
-
-
-
-
+//LIFE CYCLE
 mounted(){
+        //GET articles
+        axios.get('http://localhost:8080/api/articles',{
+                    headers:{
+                    'Authorization': `bearer ${this.token}`
+                            
+                    }
+                })
+                .then(res=>{
+                console.log(res)
+                 /*   this.articles =res.data;
 
-    axios.get('http://localhost:8080/api/articles',{
-                   headers:{
-                   'Authorization': `bearer ${this.token}`
-                        
-                  }
-             })
-            .then(res=>{
-       this.articles =res.data;
-       console.log("ici",res.data)
             res.data.forEach(data => { 
-           let articleId = data.id
-       
-           axios.get(`http://localhost:8080/api/articles/${articleId}/comments`,
-                        {
-                         headers:{'Authorization': `bearer ${this.token}`},
-                         })
-                         .then(()=>{
+                        let articleId = data.id
+                        //GET all comments for this article
+                        axios.get(`http://localhost:8080/api/articles/${articleId}/comments`,
+                                        {
+                                        headers:{'Authorization': `bearer ${this.token}`},
+                                        })
+                                        .then(()=>{
 
+    THINK THAT IS USELESS
+                            
+                            
 
-                         
-                         
+                                    
+                                });
 
-                                   
-                            });
-
+                            
+                                });*/
+                    }).catch(err=>{
+                        console.log(err)
+                    })
                         
-                            });
-                  })
-                     
-     
-}
+        
+    },
 
 
 }

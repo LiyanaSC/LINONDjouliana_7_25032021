@@ -1,23 +1,32 @@
 <template>
+                   <!-- _________________________ FORM: sign up ____________________________________ -->
+
         <form @submit="form_submit" method="POST" name="signup" id="signup" class="form">
-            <div class="form__inputs">
+           
+             
+            <div class="form__inputs"><!-- input lastname -->
                     <label for="firstname">Nom</label>
                     <input type="text" v-model="lastname" name="firstname" id="firstname" placeholder="Votre nom" aria-label="taper votre nom" pattern="[A-Za-z-0-9\p{L}]{2,200}" required>
                 </div>
-                 <div class="form__inputs">
+
+                 
+                 <div class="form__inputs"> <!-- input firstname -->
                     <label for="firstname">Prénom</label>
                     <input type="text" v-model="firstname" name="lastname" id="lastname" placeholder="Votre prénom" aria-label="taper votre prénom" pattern="[A-Za-z-0-9\p{L}]{2,100}" required>
                 </div>
-                <div class="form__inputs">
+                
+                
+                <div class="form__inputs"><!-- input email -->
                     <label for="username">Email</label>
                     <input type="email" v-model="email" name="email" id="email" placeholder="Votre adress email" aria-label="taper votre adresse mail" pattern="[A-Za-z-0-9.@]{4,1000}" required>
                 </div>
-                <div class="form__inputs">
+
+                <div class="form__inputs"><!-- input mdp -->
                     <label for="password">Mot de passe<br/>(8 caractères min, 1 minuscule, 1 majuscule, 1chiffre)</label>
                     <input type="password" v-model="password" name="password" id="password" placeholder="Votre mot de passe" aria-label="taper votre mot de passe" pattern="[ A-Za-z-0-9\p{L}]{8,100}" required>
                 </div>
                
-
+                <!-- btm -->     
                 <div><input @click="refreshTokenStart" type="submit" value="M'inscrire" class="form__btn" id="btn"></div>
             </form>
 </template>
@@ -39,9 +48,11 @@ export default {
   
  
     methods:{
+//METHOD FOR SIGN UP (submit form)
             form_submit(e){
-                e.preventDefault();
+                e.preventDefault();//stop refresh
                      
+                     //POST CREATE USER 
                 axios.post('http://localhost:8080/api/auth/signup',{
                      password: this.password,
                        email:this.email,
@@ -51,6 +62,8 @@ export default {
                 .then(response=>{
             
              let dataResponse = JSON.parse(response.config.data);
+
+                //POST connexion
                 axios.post('http://localhost:8080/api/auth/login',{
                                     password: dataResponse.password,
                                     email: dataResponse.email,
@@ -60,11 +73,11 @@ export default {
 
                                     this.$router.push({path:'/articles'})
                                     
-                                      this.$store.state.tokenList.push(response.data.token,response.data.refreshToken)
+                                    /*  this.$store.state.tokenList.push(response.data.token,response.data.refreshToken)
                                         this.$store.state.userId=response.data.userId
-                                        this.$store.state.admin=response.data.admin
+  THINK THAT IS USELESS                 this.$store.state.admin=response.data.admin
                                         this.$store.state.token=response.data.token
-                                        this.$store.state.refreshToken=response.data.refreshToken
+                                        this.$store.state.refreshToken=response.data.refreshToken*/
                                                     
 
 
@@ -83,7 +96,7 @@ export default {
                                                   
 
             },
-            
+//METHOD FOR REFRESH TOKEN (click btn)
               refreshTokenStart(){
              this.$store.dispatch("refreshMyToken")
              }

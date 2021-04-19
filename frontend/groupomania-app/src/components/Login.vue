@@ -1,15 +1,20 @@
 <template>
-        <form  @submit="login_submit" method="POST" name="login" id="login" class="form">
-                <div class="form__inputs">
+            <!-- _________________________ FORM: login ____________________________________ -->
+             <form  @submit="login_submit" method="POST" name="login" id="login" class="form">
+
+
+                <div class="form__inputs"><!-- input email -->
                     <label for="email">Email</label>
                     <input type="email" v-model="loginEmail" name="email" id="email" placeholder="Votre adress email" aria-label="taper votre adresse mail" pattern="[A-Za-z-0-9.@]{4,1000}" required>
                 
                 </div>
-                <div class="form__inputs">
+                <div class="form__inputs"><!-- input mdp -->
                     <label for="password">Mot de passe</label>
                     <input type="password" v-model="loginPassword" name="password" id="password" placeholder="Votre mot de passe" aria-label="taper votre mot de passe" pattern="[ A-Za-z-0-9\p{L}]{8,100}" required>
                 </div>
 
+
+                <!-- btn -->
                 <div><input @click="refreshTokenStart" type="submit" value="Connexion" class="form__btn"> </div>
            
 
@@ -29,21 +34,24 @@ export default {
      }
     },
     methods:{
+//METHOD login
             login_submit(e){
                 e.preventDefault();
+                //POST for login
                 axios.post('http://localhost:8080/api/auth/login',{
                      password: this.loginPassword,
                        email:this.loginEmail
                 })
                 .then(response=>{
+                    console.log(response)
                     
                     
                     this.$router.push({path:'/articles'})
-                    this.$store.state.tokenList.push(response.data.token,response.data.refreshToken)
+                   /* this.$store.state.tokenList.push(response.data.token,response.data.refreshToken)
                     this.$store.state.userId=response.data.userId
-                    this.$store.state.admin=response.data.admin
+  think that is useless                  this.$store.state.admin=response.data.admin
                     this.$store.state.token=response.data.token
-                    this.$store.state.refreshToken=response.data.refreshToken
+                    this.$store.state.refreshToken=response.data.refreshToken*/
 
                     console.log("verif store",this.$store.state)
 
@@ -59,7 +67,7 @@ export default {
 
             },
 
-                 refreshTokenStart(){
+                 refreshTokenStart(){//refresh token
              this.$store.dispatch("refreshMyToken")
               },
 
