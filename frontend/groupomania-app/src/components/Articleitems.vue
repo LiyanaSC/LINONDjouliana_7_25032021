@@ -7,7 +7,7 @@
                         <h3 :id="'commentCount'+article.id"></h3>
                     </div>
                          
-                                 <p id="createdBy" >Auteur  {{ article.User.lastname }}</p>
+                                 <p id="createdBy" >Auteur {{ article.User.firstname}} {{ article.User.lastname}}</p>
 
                     </div>
 </template>

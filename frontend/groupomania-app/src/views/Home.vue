@@ -51,7 +51,8 @@ export default {
      this.show=false
   },
     disconnected(){
-        localStorage.clear()
+        this.$store.state.token.push("")
+        this.$store.state.refreshToken.push("")
         this.$router.push({path:'/'})
     },
     showSidebar(){
@@ -59,7 +60,7 @@ export default {
     }
 
   },
-created(){
+beforeCreate(){
   if(this.token == ""){
     this.$router.push({path:'/'})
   }else{

@@ -147,32 +147,7 @@ methods:{
             .then((res)=>{
 
                 this.commentArray =res.data
-                     res.data.forEach((data) => {
-          
-       
-
-                let deleteBtn =document.getElementById(`delete${data.id}`)
-                let updateBtn =document.getElementById(`update${data.id}`) 
-
-
-                    if (this.userId !== data.UserId  	|| this.admin ==true){
-                deleteBtn.setAttribute('style',' display:none ')
-                updateBtn.setAttribute('style',' display:none ')
-                   }else{
-                       console.log('en attente de commentaires d autres utilisateurs')
-                   }
-
-
-                
-
-
-            
-          // let articleId = data.id
-                  
-                  //            document.getElementById(`commentCount${articleId}`).textContent =`${commentsArray.data.length} commentaire(s)`;
-    
-                      
-                    }) 
+             
           })     
    }  
    

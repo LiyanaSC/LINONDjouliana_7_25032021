@@ -34,7 +34,7 @@ export default {
    padding: 0%;
    margin: 0%;   
     @media (max-width: 900px) {
-    overflow: hidden;
+    overflow: auto;
         
         }
    

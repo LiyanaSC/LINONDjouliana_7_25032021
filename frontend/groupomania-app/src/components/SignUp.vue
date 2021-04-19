@@ -59,10 +59,13 @@ export default {
                                     console.log(response.data)
 
                                     this.$router.push({path:'/articles'})
-                                    this.$store.state.tokenList.push(response.data.token,response.data.refreshToken)
-                                    this.$store.state.userId.push(response.data.userId)
-                                    this.$store.state.admin.push(response.data.admin)
-                                
+                                    
+                                      this.$store.state.tokenList.push(response.data.token,response.data.refreshToken)
+                                        this.$store.state.userId=response.data.userId
+                                        this.$store.state.admin=response.data.admin
+                                        this.$store.state.token=response.data.token
+                                        this.$store.state.refreshToken=response.data.refreshToken
+                                                    
 
 
                                     console.log("verif store",this.$store.state)
