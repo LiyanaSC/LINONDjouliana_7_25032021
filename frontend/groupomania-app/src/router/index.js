@@ -5,11 +5,12 @@ import auth from '../views/auth.vue'
 Vue.use(VueRouter)
 
 const routes = [{
+        // ________________________________ CONNEXION VIEW (login)
         path: '/',
         name: 'auth',
         component: auth
     },
-    {
+    { // ________________________________ SIGN UP VIEW 
         path: '/singIn',
         name: 'singIn',
         // route level code-splitting
@@ -18,10 +19,11 @@ const routes = [{
         component: () =>
             import ( /* webpackChunkName: "singIn" */ '../views/signIn.vue')
     },
-    {
+    { // ________________________________ RESULT VIEW
         path: '/home',
         name: 'home',
         children: [{
+                // ________________________________ USER INFO VIEW
                 path: '/user/',
                 name: 'user',
                 // route level code-splitting
@@ -31,6 +33,7 @@ const routes = [{
                     import ( /* webpackChunkName: "singIn" */ '../components/user.vue'),
 
             }, {
+                // ________________________________ ALL ARTICLES VIEW
                 path: '/articles/',
                 name: 'articles',
 
@@ -47,7 +50,7 @@ const routes = [{
                       } else { redirecte('/') }
                   }*/
             }, {
-
+                // ________________________________ ONE ARTICLE VIEW
                 path: '/articles/:id(\\d+)',
                 name: 'article',
 
@@ -61,6 +64,7 @@ const routes = [{
 
 
             }, {
+                // ________________________________ DELETE ACCOUNT VIEW
                 path: '/delete/',
                 name: 'delete',
                 // route level code-splitting
@@ -71,6 +75,7 @@ const routes = [{
 
                 //before enter
             }, {
+                // ________________________________ EXEMPLE VIEW
                 path: '/exemple1/',
                 name: 'exemple1',
                 // route level code-splitting
@@ -82,6 +87,7 @@ const routes = [{
                 //before enter
             },
             {
+                // ________________________________ EXEMPLE VIEW
                 path: '/exemple2/',
                 name: 'exemple2',
                 // route level code-splitting
@@ -107,6 +113,7 @@ const routes = [{
 
     //the end
     {
+        // ________________________________ 404 PAGE
         path: '*',
         name: 'notFound',
         // route level code-splitting
