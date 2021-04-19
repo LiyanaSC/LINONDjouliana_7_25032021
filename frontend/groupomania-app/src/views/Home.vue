@@ -51,9 +51,10 @@ export default {
      this.show=false
   },
     disconnected(){
-        this.$store.state.token.push("")
-        this.$store.state.refreshToken.push("")
-        this.$router.push({path:'/'})
+      
+     this.$store.commit('CLEAR_STORE')
+     console.log("c'est fini?",this.$store)
+
     },
     showSidebar(){
       this.show=true

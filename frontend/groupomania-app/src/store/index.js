@@ -26,6 +26,14 @@ export default new Vuex.Store({
     mutations: {
         CHANGE_THE_TOKEN(state, newToken) {
             state.token = newToken
+        },
+        CLEAR_STORE(state) {
+            state.tokenList = []
+            state.userId = 0
+            state.admin = false
+            state.token = ""
+            state.refreshToken = ""
+            console.log(state.tokenList, state.userId, state.admin, state.token, state.refreshToken)
         }
 
 
