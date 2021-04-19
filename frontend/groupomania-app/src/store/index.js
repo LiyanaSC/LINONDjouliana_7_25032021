@@ -1,14 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import createPersistedState from "vuex-persistedstate"
+import createPersistedState from "vuex-persistedstate" //to keep store info after refresh
 //import * as Cookies from 'js-cookie'
 
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-    plugins: [createPersistedState({
+    plugins: [createPersistedState({ //to keep store info after refresh
+
         storage: window.sessionStorage,
     })],
     state: {
@@ -24,10 +25,10 @@ export default new Vuex.Store({
 
     },
     mutations: {
-        CHANGE_THE_TOKEN(state, newToken) {
+        CHANGE_THE_TOKEN(state, newToken) { //after connexion
             state.token = newToken
         },
-        CLEAR_STORE(state) {
+        CLEAR_STORE(state) { //after disconnexion
             state.tokenList = []
             state.userId = 0
             state.admin = false
@@ -39,7 +40,7 @@ export default new Vuex.Store({
 
     },
     actions: {
-        refreshMyToken({ commit, state }) {
+        refreshMyToken({ commit, state }) { //api call
             console.log('am starded')
             setInterval(function() {
                 axios.post('http://localhost:8080/api/auth/token', {
@@ -63,7 +64,7 @@ export default new Vuex.Store({
                     })
 
 
-            }, 3000);
+            }, 3000); //after 3 seconde for the tests
         }
     },
     modules: {},

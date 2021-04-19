@@ -1,20 +1,24 @@
 <template>
+    <!-- _________________________             LOGIN VIEW               ____________________________________ -->
+
   <section class="auth">
+        <!-- _________________________ description of form ____________________________________ --> 
 <div class="login_box">
   <h1 class="login_box__title">Pagemania</h1>
   <p class="login_box__slogan">Keep in touch*</p>
   <p class="login_box__text">*garder le contact</p>
+  <!-- _________________________ component LOGIN form ____________________________________ -->
+
   <Login/>
 </div>
- 
+    <!-- _________________________ Pic decoration          ____________________________________ -->
  <figure  class="box_decoration ">
             <img src="../assets/coude_masque.jpg" class="box_decoration__pic" alt="photo de deux collègues portant un masque, si disant bonjour avec le coude">
     </figure>
      
- 
-
   </section>
 </template>
+
 
 <script>
 import Login from '../components/Login.vue'
@@ -24,14 +28,14 @@ export default {
   name: 'auth',
   components: {
     Login,
-
   }
 }
 </script>
 
+
 <style lang= 'scss'>
 
-.auth{
+.auth{  
   box-sizing: border-box;
   display: flex;
   flex-direction: row;

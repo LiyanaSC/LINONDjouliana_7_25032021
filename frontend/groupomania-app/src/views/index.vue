@@ -1,33 +1,34 @@
 <template>
-    <div>             
+    <!-- _________________________             INDEX VIEW (contained all CONNEXION view )            ____________________________________ -->
+
+    <main>             
          <div id="nav">
-                  <header class="header">
+                  <header class="header"> <!-- _________________________ Groupomania's logo ____________________________________ -->
                     <img class="header__pic" src="../assets/icon-left-font-monochrome-white.svg" alt="Logo du Groupe">
                   </header>
                   <div>
+                    <!-- _________________________ routes ____________________________________ -->
                         <router-link to="/">Connexion</router-link> |
                         <router-link to="/singIn">Inscription</router-link>
                   </div>
                 
               </div>
+              <!-- _________________________ render place ____________________________________ -->
          <router-view/>
-    </div>
+    </main>
 </template>
 <script>
 
 export default {
     name:'index',
-    components:{
-
-    }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss"> //NOT SCOPED BE CAREFULL
 *{
   box-sizing: border-box;
 }
-#app {
+#app { //AN ID ELEMENT BE CAREFULL
    background-color: #118ab2;
    height: 100vh;
    width: 100vw;
@@ -39,11 +40,11 @@ export default {
         }
    
 }
-.header{
+.header{//header part
      display: flex;
     justify-content: center;
     margin-bottom: 40px;
-    &__pic{
+    &__pic{//logo
 
     @media (max-width: 900px) {
           width: 100%;
@@ -58,16 +59,14 @@ export default {
     flex-direction: row;
     align-items: center
 }
-#nav {
+#nav {//AN ID ELEMENT BE CAREFULL
 display: flex;
 flex-direction: column;
 align-items: center;
 
-  a {
+  a {//not scoped to aplly this on all of "a" element
     text-decoration: none;
-    font-family: 'Fjalla One',
-sans-serif;
-
+    font-family: 'Fjalla One',sans-serif;
     font-weight: bold;
     color: #fff;
     &.router-link-exact-active {

@@ -37,9 +37,7 @@ export default {
                 })
                 .then(response=>{
                     
-                    localStorage.setItem("Token", response.data.token );
-                    localStorage.setItem("userId", response.data.userId )
-                    localStorage.setItem("admin", response.data.admin )
+                    
                     this.$router.push({path:'/articles'})
                     this.$store.state.tokenList.push(response.data.token,response.data.refreshToken)
                     this.$store.state.userId=response.data.userId

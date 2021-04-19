@@ -1,5 +1,7 @@
 <template>
-    <div class="background">
+    <!-- _________________________             NOT FOUND VIEW               ____________________________________ -->
+
+    <div class="background"> <!-- _________________________ box screen size ____________________________________ -->
         <p class="background__error_code">404</p>
         <p class="background__error_code">NOT FOUND</p>
     </div>
@@ -11,14 +13,11 @@
 
 export default {
   name: 'Notfound',
-  components: {
-    
-  }
 }
 </script>
 
 <style lang="scss" scoped>
-.background{
+.background{//box
     position: absolute;
     top:0px;
     height: 100vh;
@@ -33,7 +32,7 @@ export default {
     justify-content: center;
     align-items: center;
     
-    &__error_code{
+    &__error_code{//message
         font-family: 'Roboto',sans-serif;
         font-size: 6rem;
         color: rgb(249, 216, 216);

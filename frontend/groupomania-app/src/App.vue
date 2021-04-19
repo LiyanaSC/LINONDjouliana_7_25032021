@@ -10,7 +10,7 @@ import Index from './views/index.vue'
 export default {
   name:"app",
   components:{
-    Index
+    Index 
 
   }
 }
