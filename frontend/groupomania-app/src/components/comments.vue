@@ -3,30 +3,24 @@
 <section class="commentResults">
    <div class="commentResults__block" > 
       
-       
+         <!-- _________________________ BOX: for each comment ____________________________________ -->
                 <div v-for=" comment in commentArray" :key="comment.id" class="commentResults__block__comments">
-
-                     <p v-if="done" class="done">C'est fait!</p>
-      
-                 <Commentitems :comment="comment" @commentsUpdate="updateComments"/>
-
-        
+                    <p v-if="done" class="done">C'est fait!</p>
+                    <Commentitems :comment="comment" @commentsUpdate="updateComments"/>    
                 </div>                          
-     
-          <form @submit="form_submitComment" >                
-                            <div >
-                                <textarea  v-model="content" class="textaera" type="textarea" name="description" id="description" placeholder="ajouter un commentaire..." aria-label="taper la description" pattern="[ A-Za-z-0-9\p{L}]{2,100000}" required></textarea>
-                            
-                            </div>
-                            
-                            <input @click="updateVueComments" type="submit" value="Envoyer" class="header__form__article_title__btn succes" id="btn">
-                    
-     </form>
-                    <div>
-                    
-               
-                    </div>
-                </div>
+              <!-- _________________________ FORM: create comment ____________________________________ -->
+
+                    <form @submit="form_submitComment" >                
+                        <div > <!-- textaera description -->
+                            <textarea  v-model="content" class="textaera" type="textarea" name="description" id="description" placeholder="ajouter un commentaire..." aria-label="taper la description" pattern="[ A-Za-z-0-9\p{L}]{2,100000}" required></textarea>
+                        </div>
+                        
+                        <!-- btn -->
+                        <input @click="updateVueComments" type="submit" value="Envoyer" class="header__form__article_title__btn succes" id="btn">
+                
+                    </form>
+              
+    </div>
 </section>
 </template>
 
@@ -40,8 +34,8 @@ export default {
 
   components: {
     Commentitems
-
   },
+
     name: 'Comments',
     data(){
         return{
@@ -58,9 +52,9 @@ export default {
         ...mapState(['token','userId','admin'])
     },
 methods:{
+//METHOD emit from children 
     updateComments(){
-
-        
+            //GET all comments
             axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                         headers:{
                         'Authorization': `bearer ${this.token}`
@@ -70,25 +64,32 @@ methods:{
                     .then((res)=>{
 
                         this.commentArray =res.data
+                    }).catch(err=>{
+                        console.log(err)
                     })
 
     },
-        showFormComment(){
-        
+//METHOD show the form when is the good user or an admin
+ /*       showFormComment(){
             this.commentArray.forEach(comment=>{
         const  form = document.getElementById(`form${comment.id}`)
-         
+IS THAT USELESS         
          if (this.userId === comment.UserId  || this.admin ==true ){
         form.removeAttribute('style')
          }
                console.log(form)
             })
         },
+
+IS THAT USELESS
         close(){
             this.done = false
-        },
+        },*/
+
+
+//METHOD update with the new comment
          updateVueComments(){
-            
+                //GET all comment for this article for update
                 axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                             headers:{
                             'Authorization': `bearer ${this.token}`
@@ -98,21 +99,16 @@ methods:{
                         .then(res=>{
                                 this.commentArray = res.data      
                                 console.log(res)       
-                                this.content ="";       
+                                this.content ="";   //clear textarea    
                          })
 
         },
-
-
-        
+//METHOD create a new comment   
         form_submitComment(e){
             e.preventDefault()
-            
-    
+                //POST new comment
                 axios.post(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                      content: this.content
-                   
-
                 },{
                     headers:{
                         'Authorization': `bearer ${this.token}`
@@ -127,28 +123,21 @@ methods:{
                     console.log(error)
                 })
         },
-   
-        
-
-        
-
     },
 
-
+//LIFE CYCLE
    mounted(){
-
- 
+       //GET all comments of this article
      axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                    headers:{
-                   'Authorization': `bearer ${this.token}`
-                        
+                      'Authorization': `bearer ${this.token}`                       
                   }
              })
             .then((res)=>{
-
-                this.commentArray =res.data
-             
-          })     
+                this.commentArray =res.data 
+          }).catch(err=>{
+              console.log(err)
+          })
    }  
    
 
@@ -158,7 +147,7 @@ methods:{
 
 <style lang="scss" >
 
-.commentResults{
+.commentResults{//section
     width: 90%;
     display: flex;
     flex-direction: column;

@@ -126,9 +126,9 @@ mounted(){
                 })
                 .then(res=>{
                 console.log(res)
-                 /*   this.articles =res.data;
+               this.articles =res.data;
 
-            res.data.forEach(data => { 
+           /*      res.data.forEach(data => { 
                         let articleId = data.id
                         //GET all comments for this article
                         axios.get(`http://localhost:8080/api/articles/${articleId}/comments`,

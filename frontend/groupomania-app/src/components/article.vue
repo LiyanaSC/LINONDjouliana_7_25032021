@@ -1,41 +1,52 @@
 
 <template>
 <section class="result">
+    
+    <!-- icon go back -->
    <i @click="goback" class="fas fa-arrow-left "></i>
+
    <div class="result__block" > 
+
+       <!-- icon text done -->
        <p v-if="done" class="done">C'est fait!</p>
+       <!-- icon delete -->
        <div @click="deleteArticle" class="delete" v-if="success"> <span class="textBtn">Supprimer</span> <i class="fas fa-trash-alt"></i></div>
+       <!-- icon update -->
        <div @click="showFormArticle" class="update" v-if="success"> <span class="textBtn">Modifier</span> <i class="fas fa-pencil-alt"></i></div>
              
-                    <h2  class="result__block__article_title">  {{ article.title }} </h2>
-                    
-                    <p>{{ article.description}} </p>
+        <h2  class="result__block__article_title">  {{ article.title }} </h2>                  
+        <p>{{ article.description}} </p>
+        <p class="createdBy">Auteur {{ article.User.firstname}} {{ article.User.lastname}}</p>
 
-                    <p class="createdBy">Auteur {{ article.User.firstname}} {{ article.User.lastname}}</p>
-                                          
-            <form @submit="update" v-if="show" class="result__article_form">
-           <i @click="closeForm" class="closeIcon">X</i>
+        <!-- _________________________ FORM: update article  ____________________________________ -->
+        <form @submit="update" v-if="show" class="result__article_form">
 
-                    <div class="result__article_form__div">
-                        <label class="result__article_form__div__label" for="lastname">Modifier le titre </label>
-                        <textarea @keyup="closeDone" v-model="article.title" class="result__article_form__div__textarea" type="text"  name="lastname" id="lastname" aria-label="taper votre nom de famille" pattern="[ A-Za-z-0-9.@p{L}]{2,254}" required ></textarea> 
-                    </div>
-                
-                    <div class="result__article_form__div">
-                        <label class="result__article_form__div__label" for="description">Modifier la description </label>
-                        <textarea @keyup="closeDone" v-model="article.description" class="result__article_form__div__textarea" type="text" name="firstname" id="firstname" aria-label="taper votre prénom" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required></textarea>
-                    
-                    </div>
-                    <input  type="submit" value="Modifier mes infos!" class=" succes" id="btn"> 
+            <!-- icon close form -->    
+            <i @click="closeForm" class="closeIcon">X</i>
+
+
+            <div class="result__article_form__div"> <!-- textarea title --> 
+                <label class="result__article_form__div__label" for="lastname">Modifier le titre </label>
+                <textarea @keyup="closeDone" v-model="article.title" class="result__article_form__div__textarea" type="text"  name="lastname" id="lastname" aria-label="taper votre nom de famille" pattern="[ A-Za-z-0-9.@p{L}]{2,254}" required ></textarea> 
+            </div>
+        
+            <div class="result__article_form__div">  <!-- textarea description --> 
+                <label class="result__article_form__div__label" for="description">Modifier la description </label>
+                <textarea @keyup="closeDone" v-model="article.description" class="result__article_form__div__textarea" type="text" name="firstname" id="firstname" aria-label="taper votre prénom" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required></textarea>            
+            </div>
+
+             <!-- btn --> 
+            <input  type="submit" value="Modifier mes infos!" class=" succes" id="btn"> 
             
-            </form>
-           
-                    <div>
-                        
-                      <h3 :id="'commentCount'+article.id"> Commentaires: </h3>
-                    <Comments />
-                    </div>
-                </div>
+        </form>
+       
+       <!-- _________________________ BOX: comments ____________________________________ --> 
+        <div>           
+            <h3 :id="'commentCount'+article.id"> Commentaires: </h3>
+            <Comments />
+        </div>
+
+    </div>
 </section>
 </template>
 
@@ -70,20 +81,26 @@ export default {
         }    
     },
     methods:{
+//METHODS show form to update the article with btn update
         showFormArticle(){
             this.show = true
         },
+//METHODS hide form to update the article with icon close 
         closeForm(){
             this.show = false
-        },closeDone(){
+        },
+//METHODS hide the text "c'est fait" when keyup
+        closeDone(){
             this.done = false
         },
+//METHODS go back to all post   
         goback(){
             this.$router.push({name:'articles'})
         },
+//METHOD update article 
        update(e){
      e.preventDefault();
-    
+                //PUT article
                 axios.put(`http://localhost:8080/api/articles/${this.$route.params.id}`,{
                      title: this.article.title,
                     description:this.article.description,
@@ -95,20 +112,20 @@ export default {
                 }
                 )
                 .then(response=>{
-        console.log(response)
+                      console.log(response)
                 })
                 .catch(error=>{
                     console.log(error)
                 })
             
-                this.show=false;
-                this.done=true;
+                this.show=false;//hide form to update the article
+                this.done=true;//hide the text "c'est fait"
                
 
        },
+//METHOD delete article 
        deleteArticle(){
-        
-
+           //DELETE the article (and his comments)
            axios.delete(`http://localhost:8080/api/articles/${this.$route.params.id}`,{
                     headers:{
                         'Authorization': `bearer ${this.token}`
@@ -122,7 +139,7 @@ export default {
                     console.log(error,"error front end")
                 })
                  setTimeout(() => {
-                     this.$router.push({path:'/articles/'})
+                     this.$router.push({path:'/articles/'})//go back to articles
                  }, 1000);
                 
 
@@ -130,45 +147,39 @@ export default {
         
 
     },
+//CYCLE LIFE
    created(){
-        
-
-        
-            this.title = `${this.$route.params.id}`
-        
+            this.title = `${this.$route.params.id}`//VERIF IS THAT USELESS
     },
 
 
-    
-  
      mounted(){
 
- 
+         //GET THE ARTICLE
      axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}`,{
                    headers:{
                    'Authorization': `bearer ${this.token}`
                         
                   }
              }).then(res=>{
-       this.article =res.data;
-        localStorage.setItem("articleId", res.data.id) 
-         
-                    axios.get(
+                    this.article =res.data;
+                    localStorage.setItem("articleId", res.data.id) 
+                    //GET all comments of this articles    
+                /*   axios.get(
                         `http://localhost:8080/api/articles/${this.$route.params.id}/comments`,
                         {
                          headers:{'Authorization': `bearer ${this.token}`},
                          })
                          .then((res)=>{
                              console.log(res)
-                        
-                   //   document.getElementById(`commentCount${this.$route.params.id}`).textContent =`${response.data.length} commentaire(s)`;
-                      
-
-                  })
+                           //   document.getElementById(`commentCount${this.$route.params.id}`).textContent =`${response.data.length} commentaire(s)`;
+                            }).catch(err=>{
+                                console.log(err)
+                            })
                      
-
+*/
                    if (this.userId == res.data.UserId || this.admin ==true){
-                       this.success = true
+                       this.success = true//to show btn if the user have rigth
                    }
      })
      
@@ -182,7 +193,7 @@ export default {
 
 <style lang="scss" scoped>
 
-.result{
+.result{//section
     width: 75vw;
     overflow: auto;
     z-index: 7;

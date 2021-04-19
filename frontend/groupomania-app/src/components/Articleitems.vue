@@ -1,5 +1,5 @@
 <template>
-      <div @click="goToArticle" > 
+    <div @click="goToArticle" > 
                 
                     <h2  class="result__block__article_title" >{{ article.title }} </h2>
                     <p>{{ article.description}} </p>
@@ -7,9 +7,9 @@
                         <h3 :id="'commentCount'+article.id"></h3>
                     </div>
                          
-                                 <p id="createdBy" >Auteur {{ article.User.firstname}} {{ article.User.lastname}}</p>
+                    <p id="createdBy" >Auteur {{ article.User.firstname}} {{ article.User.lastname}}</p>
 
-                    </div>
+    </div>
 </template>
 <script>
 

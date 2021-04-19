@@ -1,21 +1,27 @@
 <template>
     <div>
-         <div @click="deleteComment" v-show="showBtn" class=" btn_delete "  :id="'delete'+comment.id"> <span class="textBtn">Supprimer</span> <i class="fas fa-trash-alt"></i> </div>
-       <div @click="openForm" v-show="showBtn"  class=" btn_update" :id="'update'+comment.id"> <span class="textBtn">Modifier</span> <i class="fas fa-pencil-alt"></i></div>
-       <i @click="closeFormWithIcon" v-if="show" class="CloseIcon">X</i>  
-           <p  class="result__block__article_title" style="font-weight:bold"> {{ comment.User.firstname }} {{ comment.User.lastname }}</p>
-                    
-                    <p> {{ comment.content}} </p> 
+        <!-- icon delete -->
+        <div @click="deleteComment" v-show="showBtn" class=" btn_delete "  :id="'delete'+comment.id"> <span class="textBtn">Supprimer</span> <i class="fas fa-trash-alt"></i> </div>
+        <!-- icon update -->
+        <div @click="openForm" v-show="showBtn"  class=" btn_update" :id="'update'+comment.id"> <span class="textBtn">Modifier</span> <i class="fas fa-pencil-alt"></i></div>
+        <!-- icon close update form -->
+        <i @click="closeFormWithIcon" v-if="show" class="CloseIcon">X</i>  
 
-          <form @submit="updateComment" v-if="show" class="header__form" :id="'form'+comment.id">
 
-                    <div class="header__form__div">
-                        <textarea  v-model="contentUpdate" class="header__form__article_title__article_description" type="text" name="firstname" id="firstname" aria-label="taper votre commentaire" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required></textarea>
-                    
-                    </div>
-                    <input @click="closeForm" type="submit" value="Modifier mon commentaire!" class="header__form__article_title__btn succes" id="btn"> 
-            
-            </form>
+        <p  class="result__block__article_title" style="font-weight:bold"> {{ comment.User.firstname }} {{ comment.User.lastname }}</p>
+        <p> {{ comment.content}} </p> 
+
+        <!-- _________________________ FORM: update comment ____________________________________ -->
+        <form @submit="updateComment" v-if="show" class="header__form" :id="'form'+comment.id">
+
+                <div class="header__form__div"><!--  textarea Comment to update -->
+                    <textarea  v-model="contentUpdate" class="header__form__article_title__article_description" type="text" name="firstname" id="firstname" aria-label="taper votre commentaire" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required></textarea>                    
+                </div>
+                
+                <!-- btn  -->
+                <input @click="closeForm" type="submit" value="Modifier mon commentaire!" class="header__form__article_title__btn succes" id="btn"> 
+        
+         </form>
     </div>
 </template>
 
@@ -42,16 +48,13 @@ export default {
     },
     props:{
         comment:Object,
-
-        
     },
     methods:{
+//METHOD delete a comment
         deleteComment(){
-              
-              
                 let articleId = localStorage.getItem("articleId")
-    
-                     axios.delete(`http://localhost:8080/api/articles/${articleId}/comments/${this.comment.id}`,{
+                    //DELETE comment
+                    axios.delete(`http://localhost:8080/api/articles/${articleId}/comments/${this.comment.id}`,{
                     headers:{
                         'Authorization': `bearer ${this.token}`
                         
@@ -59,7 +62,7 @@ export default {
                 })
                 .then((res)=>{
                         console.log(res)
-                            this.$emit('commentsUpdate')
+                            this.$emit('commentsUpdate')//emit to the parent
 
                  })
                  .catch(error=>{
@@ -67,13 +70,16 @@ export default {
                   })
                     
          },
+//METHOD show update form
          openForm(){
              this.show=true
          },
+//METHOD hide update form with icon
          closeFormWithIcon(){
             this.show=false
 
          },
+//METHOD hide update form with form
         closeForm(){
            
              setTimeout(() => {
@@ -81,11 +87,11 @@ export default {
                    this.contentUpdate=""
              }, 1000);
          },
-        
+//METHOD  update the comment
            updateComment(e){
                e.preventDefault();
                 let articleId = localStorage.getItem("articleId")
-    
+                //PUT the comment
                 axios.put(`http://localhost:8080/api/articles/${articleId}/comments/${this.comment.id}`,{
                      content: this.contentUpdate
                    
@@ -97,16 +103,13 @@ export default {
                 }
                 )
                 .then(response=>{
-            console.log(response)
-                this.$emit('commentsUpdate')
+                    console.log(response)
+                    this.$emit('commentsUpdate')//emit to the parent
 
-                  this.show=false
+                    this.show=false//hide update form
           
 
-                })
-
-                
-                .catch(error=>{
+                }).catch(error=>{
                     console.log(error)
                 })
      
@@ -116,6 +119,7 @@ export default {
                 
         
     },
+//CYCLE LIFE
     created(){
 
                    if (this.userId == this.comment.UserId 	|| this.admin ==true){
@@ -131,7 +135,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.textBtn{
+.textBtn{//btn window width >900px text
      display: none;
     @media (max-width: 900px) {
       display: none;
@@ -140,10 +144,8 @@ export default {
 }
 .fas{
     
-  
       display: initial;
-
-      
+     
 }
 .btn_delete{
       

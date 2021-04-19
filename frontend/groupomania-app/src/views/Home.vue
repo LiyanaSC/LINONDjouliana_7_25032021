@@ -54,7 +54,7 @@ export default {
     }
   },
         computed: {
-        ...mapState(['token']) 
+        ...mapState(['userId']) 
     },
   methods:{
       hideSidebar(){
@@ -63,7 +63,10 @@ export default {
     disconnected(){
       
      this.$store.commit('CLEAR_STORE')
-     console.log("c'est fini?",this.$store)
+    
+     window.clearInterval()
+     this.$router.push({path:'/'}) 
+      console.log("c'est fini?",this.$store)
 
     },
     showSidebar(){
@@ -71,12 +74,13 @@ export default {
     }
 
   },
-beforeEnter(route, redirecte, next) { 
-  if(this.token == ""){         //verified user before enter
+mounted() { 
+  console.log(this.userId)
+if(this.userId <= 0 || this.userId == undefined ){         //verified user before enter
     this.$router.push({path:'/'})    //redirect
   }else{
   this.$store.dispatch("refreshMyToken") //start refresh
-  next()
+
   }
 }
 

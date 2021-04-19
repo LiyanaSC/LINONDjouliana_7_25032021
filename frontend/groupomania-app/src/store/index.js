@@ -42,7 +42,7 @@ export default new Vuex.Store({
     actions: {
         refreshMyToken({ commit, state }) { //api call
             console.log('am starded')
-            setInterval(function() {
+            let tokenInterval = setInterval(function() {
                 axios.post('http://localhost:8080/api/auth/token', {
                         userId: state.userId,
                         admin: state.admin,
@@ -60,7 +60,9 @@ export default new Vuex.Store({
 
                     })
                     .catch(error => {
+                        clearInterval(tokenInterval)
                         console.log(error)
+
                     })
 
 
