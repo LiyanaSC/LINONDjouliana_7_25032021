@@ -22,7 +22,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+import {logUser} from '../api/user.api'
+
 
 
 export default {
@@ -38,18 +39,15 @@ export default {
             login_submit(e){
                 e.preventDefault();
                 //POST for login
-                axios.post('http://localhost:8080/api/auth/login',{
-                     password: this.loginPassword,
-                       email:this.loginEmail
-                })
+                logUser(this.loginPassword, this.loginEmail)
                 .then(response=>{
                     console.log(response)
                     
                     
                     this.$router.push({path:'/articles'})
-             this.$store.state.tokenList.push(response.data.token,response.data.refreshToken)
+                    this.$store.state.tokenList.push(response.data.token,response.data.refreshToken)
                     this.$store.state.userId=response.data.userId
-                 this.$store.state.admin=response.data.admin
+                    this.$store.state.admin=response.data.admin
                     this.$store.state.token=response.data.token
                     this.$store.state.refreshToken=response.data.refreshToken
 

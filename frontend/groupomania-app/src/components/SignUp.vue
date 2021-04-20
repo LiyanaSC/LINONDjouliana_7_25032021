@@ -32,7 +32,9 @@
 </template>
 
 <script>
-import axios from 'axios'
+
+import {logUser,signupUser} from '../api/user.api'
+
 
 export default {
     
@@ -53,31 +55,23 @@ export default {
                 e.preventDefault();//stop refresh
                      
                      //POST CREATE USER 
-                axios.post('http://localhost:8080/api/auth/signup',{
-                     password: this.password,
-                       email:this.email,
-                      firstname: this.firstname,
-                     lastname:this.lastname,
-                })
+                signupUser(this.password, this.email, this.firstname, this.lastname)
                 .then(response=>{
             
              let dataResponse = JSON.parse(response.config.data);
 
                 //POST connexion
-                axios.post('http://localhost:8080/api/auth/login',{
-                                    password: dataResponse.password,
-                                    email: dataResponse.email,
-                                })
+                logUser(dataResponse.password, dataResponse.email)
                                 .then(response=>{
                                     console.log(response.data)
 
                                     this.$router.push({path:'/articles'})
                                     
-                                    /*  this.$store.state.tokenList.push(response.data.token,response.data.refreshToken)
+                                    this.$store.state.tokenList.push(response.data.token,response.data.refreshToken)
                                         this.$store.state.userId=response.data.userId
-  THINK THAT IS USELESS                 this.$store.state.admin=response.data.admin
+                                        this.$store.state.admin=response.data.admin
                                         this.$store.state.token=response.data.token
-                                        this.$store.state.refreshToken=response.data.refreshToken*/
+                                        this.$store.state.refreshToken=response.data.refreshToken
                                                     
 
 

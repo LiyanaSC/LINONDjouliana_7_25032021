@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mapState } from 'vuex'
+import {deleteCommentsByIdAndArticleId,updateCommentsById} from '../api/comment.api'
 
 
 
@@ -54,12 +54,7 @@ export default {
         deleteComment(){
                 let articleId = localStorage.getItem("articleId")
                     //DELETE comment
-                    axios.delete(`http://localhost:8080/api/articles/${articleId}/comments/${this.comment.id}`,{
-                    headers:{
-                        'Authorization': `bearer ${this.token}`
-                        
-                    }
-                })
+                deleteCommentsByIdAndArticleId(articleId, this.comment.id, this.token)
                 .then((res)=>{
                         console.log(res)
                             this.$emit('commentsUpdate')//emit to the parent
@@ -92,16 +87,7 @@ export default {
                e.preventDefault();
                 let articleId = localStorage.getItem("articleId")
                 //PUT the comment
-                axios.put(`http://localhost:8080/api/articles/${articleId}/comments/${this.comment.id}`,{
-                     content: this.contentUpdate
-                   
-
-                },{
-                    headers:{
-                        'Authorization': `bearer ${this.token}`
-                    }
-                }
-                )
+               updateCommentsById(articleId, this.comment.id, this.contentUpdate, this.token)
                 .then(response=>{
                     console.log(response)
                     this.$emit('commentsUpdate')//emit to the parent

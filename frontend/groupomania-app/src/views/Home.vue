@@ -190,6 +190,7 @@ a{
 }
 .sidebar{
     position:fixed;
+    overflow: auto;
     left: 0;
     top: 0;
     width: 25vw;
