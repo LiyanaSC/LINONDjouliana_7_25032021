@@ -10,7 +10,7 @@
     </section>
 </template>
 <script>
-import axios from 'axios'
+import {deleteUserById} from '../api/user.api'
 import { mapState } from 'vuex'
 
 
@@ -34,12 +34,7 @@ methods:{
     deleteUser(e){
     e.preventDefault();
     //DELETE user account (delete his articles and his comments)
-    axios.delete(`http://localhost:8080/api/users/${this.userId}`,{
-                    headers:{
-                        'Authorization': `bearer ${this.token}`
-                        
-                    }
-                })
+            deleteUserById(this.userId, this.token)
             .then((res)=>{
                   console.log(res)
             }).catch(err=>{

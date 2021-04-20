@@ -24,3 +24,26 @@ export function signupUser(password, email, firstname, lastname) {
         lastname: lastname,
     })
 }
+
+export function updateUserById(userId, firstname, lastname, token) {
+    return axios.put(`http://localhost:8080/api/users/${userId}`, {
+        firstname: firstname,
+        lastname: lastname,
+
+
+    }, {
+        headers: {
+            'Authorization': `bearer ${token}`
+
+        }
+    })
+}
+
+export function getUserById(userId, token) {
+    return axios.get(`http://localhost:8080/api/users/${userId}`, {
+        headers: {
+            'Authorization': `bearer ${token}`
+
+        }
+    })
+}

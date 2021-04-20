@@ -34,8 +34,8 @@
     </section>
 </template>
 <script>
-import axios from 'axios' 
-import { mapState } from 'vuex' 
+import { mapState } from 'vuex'
+import {updateUserById,getUserById} from '../api/user.api'
 
 
 export default {
@@ -59,12 +59,7 @@ export default {
     async created(){
    
     //GET user Info
-                 axios.get(`http://localhost:8080/api/users/${this.userId}`,{
-                                headers:{
-                                    'Authorization': `bearer ${this.token}`
-                                    
-                                }
-                            })
+                        getUserById(this.userId, this.token)
                         .then((res)=>{
                             this.UserFirstName = res.data.firstname; //change info firstname
                             this.UserLastName = res.data.lastname;  //change info lastname
@@ -84,18 +79,7 @@ export default {
                 
 
                   //PUT modif user info   
-                 axios.put(`http://localhost:8080/api/users/${this.userId}`,{
-                     firstname: this.UserFirstName,
-                    lastname:this.UserLastName,
-              
-
-                },{
-                    headers:{
-                        'Authorization': `bearer ${this.token}`
-                        
-                    }
-                }
-                )
+                updateUserById(this.userId, this.UserFirstName, this.UserLastName, this.token)
                 .then(response=>{
         console.log(response)
                 })
