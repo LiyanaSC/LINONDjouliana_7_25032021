@@ -1,11 +1,11 @@
 <template>
     <div>
         <!-- icon delete -->
-        <div @click="deleteComment" v-show="showBtn" class=" btn_delete "  :id="'delete'+comment.id"> <span class="textBtn">Supprimer</span> <i class="fas fa-trash-alt"></i> </div>
+        <button @click="deleteComment" v-show="showBtn" class=" btn_delete "  :id="'delete'+comment.id"> <span class="textBtn">Supprimer</span> <i class="fas fa-trash-alt" aria-label="icône de suppression du commentaire"></i> </button>
         <!-- icon update -->
-        <div @click="openForm" v-show="showBtn"  class=" btn_update" :id="'update'+comment.id"> <span class="textBtn">Modifier</span> <i class="fas fa-pencil-alt"></i></div>
+        <button @click="openForm" v-show="showBtn"  class=" btn_update" :id="'update'+comment.id"> <span class="textBtn">Modifier</span> <i class="fas fa-pencil-alt" aria-label="icône de modification du commentaire"></i></button>
         <!-- icon close update form -->
-        <i @click="closeFormWithIcon" v-if="show" class="CloseIcon">X</i>  
+        <button @click="closeFormWithIcon" v-if="show" class="CloseIcon" aria-label="icône de fermeture du formulaire de modification du commentaire"><i>X</i> </button>  
 
 
         <p  class="result__block__article_title" style="font-weight:bold"> {{ comment.User.firstname }} {{ comment.User.lastname }}</p>
@@ -153,6 +153,7 @@ export default {
         padding: 7px;
         position:absolute;
         right: 0;
+
         &:hover{
             color: #ef476f;
         }
@@ -163,6 +164,7 @@ export default {
         padding: 7px;
         position:absolute;
         right: 40px;
+
         &:hover{
             color: #ffd166;
         }
@@ -170,8 +172,11 @@ export default {
 .CloseIcon{
         padding: 5px;
         position:absolute;
-        right: 70px;
-        font-size: 1.3rem;
+        right: 80px;
+        font-size: 1.1rem;
+        height: 2.04rem;
+        width: 2.04rem;
+
         &:hover{
             color: #ef476f;
         }

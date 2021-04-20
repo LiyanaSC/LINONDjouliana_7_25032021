@@ -2,11 +2,11 @@
     <!-- _________________________             HOME VIEW (contained all "results" view)               ____________________________________ -->
 
   <section class="home">      <!-- _________________________ pincipale view after connexion ____________________________________ -->
-    <i v-if="!show" @click="showSidebar" class="fas fa-plus-circle" ></i>     <!--  show the sidebad  -->
-    <i  v-if="show" @click="hideSidebar" class="fas fa-times-circle"></i>          <!--  hide the sidebar  -->
+    <i v-if="!show" @click="showSidebar" class="fas fa-plus-circle" aria-label="ouvrir la bar de navigation" ></i>     <!--  show the sidebad  -->
+    <i  v-if="show" @click="hideSidebar" class="fas fa-times-circle" aria-label="fermer la bar de navigation"></i>          <!--  hide the sidebar  -->
 
          <!--  animated pic for decoration  -->
-    <div  class="box_animated_pic"><img class="box_animated_pic__img" src="../assets/team.jpg" alt="photo d'une équipe"></div>
+    <div  class="box_animated_pic"><img class="box_animated_pic__img" src="../assets/team.jpg" alt="photo d'une équipe"><img class="box_animated_pic__img__logo" src="../assets/icon-left-font-monochrome-white.png" alt="logo du groupe"></div>
 
          <!-- _________________________ the sidebar ____________________________________ -->
       <header  v-if="show" class="sidebar">
@@ -168,7 +168,7 @@ a{
       position:fixed;
     left: 0;
     top: 0;
-    width: 25vw;
+    width: 24.9vw;
     height: 100%;
    overflow: hidden;
     &__img{
@@ -177,6 +177,13 @@ a{
         @media (max-width: 900px) {
           display: none;
         }
+    &__logo{
+      width: 100%;
+      position: absolute;
+     bottom:0;
+     padding: 5px;
+    
+    }
     }
       
 

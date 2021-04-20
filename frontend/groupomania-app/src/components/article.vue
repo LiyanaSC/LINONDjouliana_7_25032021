@@ -10,9 +10,9 @@
        <!-- icon text done -->
        <p v-if="done" class="done">C'est fait!</p>
        <!-- icon delete -->
-       <div @click="deleteArticle" class="delete" v-if="success"> <span class="textBtn">Supprimer</span> <i class="fas fa-trash-alt"></i></div>
+       <button @click="deleteArticle" class="delete" v-if="success"> <span class="textBtn">Supprimer</span> <i class="fas fa-trash-alt" aria-label="icône de suppression de l'article"></i></button>
        <!-- icon update -->
-       <div @click="showFormArticle" class="update" v-if="success"> <span class="textBtn">Modifier</span> <i class="fas fa-pencil-alt"></i></div>
+       <button @click="showFormArticle" class="update" v-if="success"> <span class="textBtn">Modifier</span> <i class="fas fa-pencil-alt" aria-label="icône de modification de l'article"></i></button>
              
         <h2  class="result__block__article_title">  {{ article.title }} </h2>                  
         <p>{{ article.description}} </p>
@@ -22,7 +22,7 @@
         <form @submit="update" v-if="show" class="result__article_form">
 
             <!-- icon close form -->    
-            <i @click="closeForm" class="closeIcon">X</i>
+            <button @click="closeForm" class="closeIcon" aria-label="icône de fermeture du formulaire d'ajout d'article"> <i>X</i> </button>
 
 
             <div class="result__article_form__div"> <!-- textarea title --> 
@@ -329,6 +329,8 @@ export default {
     font-size: 1.5rem;
     position:absolute;
     right: 20px;
+    background: none;
+    border: none;
     &:hover{
         color: #ef476f;
      

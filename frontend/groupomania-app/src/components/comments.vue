@@ -123,7 +123,7 @@ IS THAT USELESS
                             'Authorization': `bearer ${this.token}`
                                     
                             }, params: {
-                    limit: this.commentArray.length,
+                    limit: this.commentArray.length-1,
                  }
                         })
                         .then(res=>{

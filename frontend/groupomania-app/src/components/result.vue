@@ -12,7 +12,7 @@
                     <form v-if="success"  @submit="form_submit" class="header__form">
 
                        <!-- close icon -->
-                        <i @click="close" class="header__form__article_title__icon">X</i>
+                        <i @click="close" class="header__form__article_title__icon" aria-label="icône de fermeture du formulaire de création d'un nouveau post">X</i>
 
 
                             <div class="header__form__div"><!-- input title -->
