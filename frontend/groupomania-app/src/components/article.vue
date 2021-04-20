@@ -51,9 +51,10 @@
 </template>
 
 <script>
-import axios from 'axios'
 import Comments from './comments.vue'
 import { mapState } from 'vuex'
+import {getArticleById,updateArticleById,deleteArticleById} from '../api/article.api'
+
 
 
 
@@ -101,16 +102,7 @@ export default {
        update(e){
      e.preventDefault();
                 //PUT article
-                axios.put(`http://localhost:8080/api/articles/${this.$route.params.id}`,{
-                     title: this.article.title,
-                    description:this.article.description,
-
-                },{
-                    headers:{
-                        'Authorization': `bearer ${this.token}`
-                    }
-                }
-                )
+            updateArticleById(this.$route.params.id,this.article.title,this.article.description,this.token)
                 .then(response=>{
                       console.log(response)
                 })
@@ -126,12 +118,7 @@ export default {
 //METHOD delete article 
        deleteArticle(){
            //DELETE the article (and his comments)
-           axios.delete(`http://localhost:8080/api/articles/${this.$route.params.id}`,{
-                    headers:{
-                        'Authorization': `bearer ${this.token}`
-                    }
-                }
-                )
+             deleteArticleById(this.$route.params.id, this.token)
                 .then(response=>{
              console.log(response)
                   })
@@ -156,12 +143,8 @@ export default {
      mounted(){
 
          //GET THE ARTICLE
-     axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}`,{
-                   headers:{
-                   'Authorization': `bearer ${this.token}`
-                        
-                  }
-             }).then(res=>{
+                    getArticleById(this.$route.params.id, this.token)
+                    .then(res=>{
                     this.article =res.data;
                     localStorage.setItem("articleId", res.data.id) 
                     //GET all comments of this articles    

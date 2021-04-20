@@ -44,10 +44,9 @@
     </section>
 </template>
 <script>
-import axios from 'axios'
 import Articleitems from './Articleitems.vue'
 import { mapState } from 'vuex'
-import {getAllArticles} from '../api/article.api'
+import {getAllArticles, createArticle} from '../api/article.api'
 
 
 
@@ -96,16 +95,7 @@ methods:{
    form_submit(e){
                     e.preventDefault()
                     //POST new article
-                    axios.post('http://localhost:8080/api/articles/',{
-                        title: this.title,
-                        description:this.description,
-
-                    },{
-                        headers:{
-                            'Authorization': `bearer ${this.token}`
-                        }
-                    }
-                    )
+                    createArticle(this.title, this.description, this.token)
                     .then(response=>{
                     console.log('ici',response.data)
                     this.articles.unshift(response.data) //added in articles array to update page
@@ -121,7 +111,7 @@ pageByPage(){
     let page = this.page++
     console.log("coucou",page)
         //GET article 5 by 5
-getAllArticles(this.token, this.page)
+                getAllArticles(this.token, this.page)
                 .then(res=>{
                 console.log("télécharger des article supp",res.data)
                 res.data.forEach(data => {
@@ -155,14 +145,7 @@ getAllArticles(this.token, this.page)
 //LIFE CYCLE
 mounted(){
         //GET articles
-        axios.get('http://localhost:8080/api/articles',{
-                    headers:{
-                    'Authorization': `bearer ${this.token}`
-                            
-                    },  params: {
-      page: this.page
-     }
-                })
+                getAllArticles(this.token, this.page)
                 .then(res=>{
                 console.log(res)
                this.articles =res.data;
