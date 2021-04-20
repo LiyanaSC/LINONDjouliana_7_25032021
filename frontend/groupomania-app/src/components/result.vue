@@ -39,6 +39,7 @@
                         <Articleitems :article="article" />  
               
                 </div>
+                <i @click="pageByPage" class="fas fa-chevron-circle-down" ></i>
              
     </section>
 </template>
@@ -65,6 +66,7 @@ export default {
         success:false,
         title:"",
         description:"",
+        page:2
         }
     },
 
@@ -111,7 +113,48 @@ methods:{
                     .catch(error=>{
                         console.log(error)
                     })               
-                }
+                },
+//METHOD pagination
+pageByPage(){
+    let page = this.page++
+    console.log(page)
+
+      axios.get('http://localhost:8080/api/articles',{
+                    headers:{
+                    'Authorization': `bearer ${this.token}`
+                            
+                    },  params: {
+                    limit: 5,
+                    offset:5*page
+                    }
+                })
+                .then(res=>{
+                console.log("télécharger des article supp",res.data)
+                res.data.forEach(data => {
+                 this.articles.push(data)   
+                    
+                });
+              
+
+           /*      res.data.forEach(data => { 
+                        let articleId = data.id
+                        //GET all comments for this article
+                        axios.get(`http://localhost:8080/api/articles/${articleId}/comments`,
+                                        {
+                                        headers:{'Authorization': `bearer ${this.token}`},
+                                        })
+                                        .then(()=>{
+
+    THINK THAT IS USELESS
+                             
+                                });
+                            
+                                });*/
+                    }).catch(err=>{
+                        console.log(err)
+                    })
+}
+
         
 
 },
@@ -122,7 +165,9 @@ mounted(){
                     headers:{
                     'Authorization': `bearer ${this.token}`
                             
-                    }
+                    },  params: {
+      limit: 5
+     }
                 })
                 .then(res=>{
                 console.log(res)
@@ -138,19 +183,13 @@ mounted(){
                                         .then(()=>{
 
     THINK THAT IS USELESS
-                            
-                            
-
-                                    
+                             
                                 });
-
                             
                                 });*/
                     }).catch(err=>{
                         console.log(err)
                     })
-                        
-        
     },
 
 
@@ -272,6 +311,10 @@ mounted(){
     }
    }
     
+}
+.fa-chevron-circle-down{
+    font-size: 5rem;
+    color: #118ab2;
 }
 *{
       box-sizing: border-box;
