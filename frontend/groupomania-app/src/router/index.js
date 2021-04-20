@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import auth from '../views/auth.vue'
 
+
 Vue.use(VueRouter)
 
 const routes = [{
@@ -132,6 +133,12 @@ const routes = [{
 const router = new VueRouter({
     mode: 'history',
     routes
+})
+
+
+router.beforeEach((to, from, next) => {
+    console.log("change moi!")
+    next()
 })
 
 export default router

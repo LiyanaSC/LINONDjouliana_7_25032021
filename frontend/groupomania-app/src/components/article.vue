@@ -5,7 +5,7 @@
     <!-- icon go back -->
    <i @click="goback" class="fas fa-arrow-left "></i>
 
-   <div class="result__block" > 
+   <div class="result__block" v-if="article!=null"> 
 
        <!-- icon text done -->
        <p v-if="done" class="done">C'est fait!</p>
@@ -16,7 +16,7 @@
              
         <h2  class="result__block__article_title">  {{ article.title }} </h2>                  
         <p>{{ article.description}} </p>
-        <p class="createdBy">Auteur {{ article.User.firstname}} {{ article.User.lastname}}</p>
+        <p class="createdBy">Auteur {{ article.User.firstname }} {{ article.User.lastname}}</p>
 
         <!-- _________________________ FORM: update article  ____________________________________ -->
         <form @submit="update" v-if="show" class="result__article_form">
@@ -70,7 +70,7 @@ export default {
     data(){
         return{
           
-            article:[""],
+        article:null,
         success:false,
         title:"",
         description:"",

@@ -47,6 +47,8 @@
 import axios from 'axios'
 import Articleitems from './Articleitems.vue'
 import { mapState } from 'vuex'
+import {getAllArticles} from '../api/article.api'
+
 
 
 export default {
@@ -66,7 +68,7 @@ export default {
         success:false,
         title:"",
         description:"",
-        page:1
+        page:0
         }
     },
 
@@ -117,17 +119,9 @@ methods:{
 //METHOD pagination
 pageByPage(){
     let page = this.page++
-    console.log(page)
+    console.log("coucou",page)
         //GET article 5 by 5
-      axios.get('http://localhost:8080/api/articles',{
-                    headers:{
-                    'Authorization': `bearer ${this.token}`
-                            
-                    },  params: {
-                    limit: 5,//how many articles we GET
-                    offset:5*page//how many articles we ignore
-                    }
-                })
+getAllArticles(this.token, this.page)
                 .then(res=>{
                 console.log("télécharger des article supp",res.data)
                 res.data.forEach(data => {
@@ -166,7 +160,7 @@ mounted(){
                     'Authorization': `bearer ${this.token}`
                             
                     },  params: {
-      limit: 5
+      page: this.page
      }
                 })
                 .then(res=>{

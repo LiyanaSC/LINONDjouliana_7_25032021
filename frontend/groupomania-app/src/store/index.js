@@ -66,7 +66,7 @@ export default new Vuex.Store({
                     })
 
 
-            }, 3000); //after 3 seconde for the tests
+            }, 10000); //after 3 seconde for the tests
         }
     },
     modules: {},

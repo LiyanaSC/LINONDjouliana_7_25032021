@@ -30,6 +30,7 @@
 import axios from 'axios'
 import Commentitems from './Commentitems.vue'
 import { mapState } from 'vuex'
+import {getCommentsByArticleId} from '../api/comment.api'
 
 
 export default {   
@@ -60,15 +61,7 @@ methods:{
     commentByFive(){
             let page = this.page++
 
-           axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
-                   headers:{
-                      'Authorization': `bearer ${this.token}`                       
-                  },  params: {
-                       limit: 5,
-                       offset:5*page//how many articles we ignore
-
-                 }
-             })
+       getCommentsByArticleId(this.$route.params.id, this.token, page)
             .then((res)=>{
                 res.data.forEach(data => {
                     this.commentArray.push(data) 
