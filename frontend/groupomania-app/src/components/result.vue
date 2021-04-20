@@ -66,7 +66,7 @@ export default {
         success:false,
         title:"",
         description:"",
-        page:2
+        page:1
         }
     },
 
@@ -118,20 +118,20 @@ methods:{
 pageByPage(){
     let page = this.page++
     console.log(page)
-
+        //GET article 5 by 5
       axios.get('http://localhost:8080/api/articles',{
                     headers:{
                     'Authorization': `bearer ${this.token}`
                             
                     },  params: {
-                    limit: 5,
-                    offset:5*page
+                    limit: 5,//how many articles we GET
+                    offset:5*page//how many articles we ignore
                     }
                 })
                 .then(res=>{
                 console.log("télécharger des article supp",res.data)
                 res.data.forEach(data => {
-                 this.articles.push(data)   
+                 this.articles.push(data)  //articles injected 
                     
                 });
               

@@ -2,13 +2,7 @@
 <template>
 <section class="commentResults">
    <div class="commentResults__block" > 
-      
-         <!-- _________________________ BOX: for each comment ____________________________________ -->
-                <div v-for=" comment in commentArray" :key="comment.id" class="commentResults__block__comments">
-                    <p v-if="done" class="done">C'est fait!</p>
-                    <Commentitems :comment="comment" @commentsUpdate="updateComments"/>    
-                </div>                          
-              <!-- _________________________ FORM: create comment ____________________________________ -->
+            <!-- _________________________ FORM: create comment ____________________________________ -->
 
                     <form @submit="form_submitComment" >                
                         <div > <!-- textaera description -->
@@ -19,6 +13,14 @@
                         <input @click="updateVueComments" type="submit" value="Envoyer" class="header__form__article_title__btn succes" id="btn">
                 
                     </form>
+      
+         <!-- _________________________ BOX: for each comment ____________________________________ -->
+                <div v-for=" comment in commentArray" :key="comment.id" class="commentResults__block__comments">
+                    <p v-if="done" class="done">C'est fait!</p>
+                    <Commentitems :comment="comment" @commentsUpdate="updateComments"/>    
+                </div>       
+                 <i @click="commentByFive" class="fas fa-chevron-circle-down" ></i>                   
+         
               
     </div>
 </section>
@@ -44,7 +46,8 @@ export default {
         success:false,
         show:false,
         done:false,
-        commentArray:[]
+        commentArray:[],
+        page:1
 
         }    
     },    
@@ -52,14 +55,39 @@ export default {
         ...mapState(['token','userId','admin'])
     },
 methods:{
+//METHOD get 5 more comments 
+
+    commentByFive(){
+            let page = this.page++
+
+           axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
+                   headers:{
+                      'Authorization': `bearer ${this.token}`                       
+                  },  params: {
+                       limit: 5,
+                       offset:5*page//how many articles we ignore
+
+                 }
+             })
+            .then((res)=>{
+                res.data.forEach(data => {
+                    this.commentArray.push(data) 
+                });
+          }).catch(err=>{
+              console.log(err)
+          })
+    },
 //METHOD emit from children 
     updateComments(){
+
             //GET all comments
             axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                         headers:{
                         'Authorization': `bearer ${this.token}`
                                 
-                        }
+                        }, params: {
+                       limit: this.commentArray.length,
+                 }
                     })
                     .then((res)=>{
 
@@ -94,7 +122,9 @@ IS THAT USELESS
                             headers:{
                             'Authorization': `bearer ${this.token}`
                                     
-                            }
+                            }, params: {
+                    limit: this.commentArray.length,
+                 }
                         })
                         .then(res=>{
                                 this.commentArray = res.data      
@@ -116,7 +146,7 @@ IS THAT USELESS
                 })
                 .then(response=>{
                     console.log(response.data, this.commentArray)
-                    this.commentArray.push(response.data)
+                    this.commentArray.unshift(response.data)
 
                 })
                 .catch(error=>{
@@ -131,7 +161,9 @@ IS THAT USELESS
      axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
                    headers:{
                       'Authorization': `bearer ${this.token}`                       
-                  }
+                  },  params: {
+                       limit: 5
+                 }
              })
             .then((res)=>{
                 this.commentArray =res.data 
