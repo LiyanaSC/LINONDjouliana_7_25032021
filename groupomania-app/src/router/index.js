@@ -59,7 +59,7 @@ const routes = [{
                 // this generates a separate chunk (singIn.[hash].js) for this route
                 // which is lazy-loaded when the route is visited.
                 component: () =>
-                    import ( /* webpackChunkName: "singIn" */ '../components/Article.vue')
+                    import ( /* webpackChunkName: "singIn" */ '../components/article.vue')
 
                 //before enter
 
