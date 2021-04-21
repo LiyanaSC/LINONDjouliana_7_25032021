@@ -31,6 +31,7 @@ export default {
 }
 #app { //AN ID ELEMENT BE CAREFULL
    background-color: #118ab2;
+   overflow: auto;
    height: 100vh;
    width: 100vw;
    padding: 0%;
