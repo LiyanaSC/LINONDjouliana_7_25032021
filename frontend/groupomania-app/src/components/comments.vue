@@ -83,22 +83,6 @@ methods:{
                     })
 
     },
-//METHOD show the form when is the good user or an admin
- /*       showFormComment(){
-            this.commentArray.forEach(comment=>{
-        const  form = document.getElementById(`form${comment.id}`)
-IS THAT USELESS         
-         if (this.userId === comment.UserId  || this.admin ==true ){
-        form.removeAttribute('style')
-         }
-               console.log(form)
-            })
-        },
-
-IS THAT USELESS
-        close(){
-            this.done = false
-        },*/
 
 
 //METHOD update with the new comment

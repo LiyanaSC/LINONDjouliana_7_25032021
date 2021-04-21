@@ -74,15 +74,6 @@ this.$store.commit('CLEAR_STORE')
 
   },
  
-/*mounted() { 
-  console.log(this.userId)
-if(this.userId <= 0 || this.userId == undefined ){         //verified user before enter
-    this.$router.push({path:'/'})    //redirect
-  }else{
-  this.$store.dispatch("refreshMyToken") //start refresh
-
-  }
-}*/
 
 }
 </script>
@@ -182,7 +173,9 @@ a{
       position: absolute;
      bottom:0;
      padding: 5px;
-    
+     @media (max-width: 900px) {
+          display: none;
+        }
     }
     }
       

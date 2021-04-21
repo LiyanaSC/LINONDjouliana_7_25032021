@@ -115,32 +115,17 @@ pageByPage(){
     console.log("coucou",page)
         //GET article 5 by 5
                 getAllArticles(this.token, this.page,this.added)
-                .then(res=>{
-               
-                console.log("télécharger des article supp",res.data)
-                res.data.forEach(data => {
-                 this.articles.push(data)  //articles injected 
+                        .then(res=>{
                     
-                });
+                            console.log("télécharger des article supp",res.data)
+                            res.data.forEach(data => {
+                            this.articles.push(data)  //articles injected 
+                                
+                        });
               
-
-           /*      res.data.forEach(data => { 
-                        let articleId = data.id
-                        //GET all comments for this article
-                        axios.get(`http://localhost:8080/api/articles/${articleId}/comments`,
-                                        {
-                                        headers:{'Authorization': `bearer ${this.token}`},
-                                        })
-                                        .then(()=>{
-
-    THINK THAT IS USELESS
-                             
-                                });
-                            
-                                });*/
-                    }).catch(err=>{
+                }).catch(err=>{
                         console.log(err)
-                    })
+                })
 }
 
         
@@ -151,26 +136,11 @@ mounted(){
         //GET articles
                 getAllArticles(this.token, this.page,this.added)
                 .then(res=>{
-                console.log(res)
-               this.articles =res.data;
-
-           /*      res.data.forEach(data => { 
-                        let articleId = data.id
-                        //GET all comments for this article
-                        axios.get(`http://localhost:8080/api/articles/${articleId}/comments`,
-                                        {
-                                        headers:{'Authorization': `bearer ${this.token}`},
-                                        })
-                                        .then(()=>{
-
-    THINK THAT IS USELESS
-                             
-                                });
-                            
-                                });*/
-                    }).catch(err=>{
-                        console.log(err)
-                    })
+                        console.log(res)
+                      this.articles =res.data; 
+                }).catch(err=>{
+                    console.log(err)
+                })
     },
 
 

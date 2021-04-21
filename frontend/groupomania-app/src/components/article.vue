@@ -148,19 +148,7 @@ export default {
                     this.article =res.data;
                     localStorage.setItem("articleId", res.data.id) 
                     //GET all comments of this articles    
-                /*   axios.get(
-                        `http://localhost:8080/api/articles/${this.$route.params.id}/comments`,
-                        {
-                         headers:{'Authorization': `bearer ${this.token}`},
-                         })
-                         .then((res)=>{
-                             console.log(res)
-                           //   document.getElementById(`commentCount${this.$route.params.id}`).textContent =`${response.data.length} commentaire(s)`;
-                            }).catch(err=>{
-                                console.log(err)
-                            })
-                     
-*/
+          
                    if (this.userId == res.data.UserId || this.admin ==true){
                        this.success = true//to show btn if the user have rigth
                    }
