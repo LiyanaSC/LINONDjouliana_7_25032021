@@ -67,7 +67,8 @@ export default {
         success:false,
         title:"",
         description:"",
-        page:0
+        page:0,
+        added: 0
         }
     },
 
@@ -97,6 +98,8 @@ methods:{
                     //POST new article
                     createArticle(this.title, this.description, this.token)
                     .then(response=>{
+                         this.added++
+                console.log("added",this.added)
                     console.log('ici',response.data)
                     this.articles.unshift(response.data) //added in articles array to update page
             
@@ -111,8 +114,9 @@ pageByPage(){
     let page = this.page++
     console.log("coucou",page)
         //GET article 5 by 5
-                getAllArticles(this.token, this.page)
+                getAllArticles(this.token, this.page,this.added)
                 .then(res=>{
+               
                 console.log("télécharger des article supp",res.data)
                 res.data.forEach(data => {
                  this.articles.push(data)  //articles injected 
@@ -145,7 +149,7 @@ pageByPage(){
 //LIFE CYCLE
 mounted(){
         //GET articles
-                getAllArticles(this.token, this.page)
+                getAllArticles(this.token, this.page,this.added)
                 .then(res=>{
                 console.log(res)
                this.articles =res.data;

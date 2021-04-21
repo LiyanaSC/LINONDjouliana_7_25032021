@@ -27,10 +27,9 @@
 </template>
 
 <script>
-import axios from 'axios'
 import Commentitems from './Commentitems.vue'
 import { mapState } from 'vuex'
-import {getCommentsByArticleId} from '../api/comment.api'
+import {getCommentsByArticleIdWithOffset,getCommentsByArticleIdWithLimit,createComment} from '../api/comment.api'
 
 
 export default {   
@@ -48,7 +47,8 @@ export default {
         show:false,
         done:false,
         commentArray:[],
-        page:1
+        page:1,
+        added:0
 
         }    
     },    
@@ -61,7 +61,7 @@ methods:{
     commentByFive(){
             let page = this.page++
 
-       getCommentsByArticleId(this.$route.params.id, this.token, page)
+       getCommentsByArticleIdWithOffset(this.$route.params.id, this.token, page,this.added)
             .then((res)=>{
                 res.data.forEach(data => {
                     this.commentArray.push(data) 
@@ -74,14 +74,7 @@ methods:{
     updateComments(){
 
             //GET all comments
-            axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
-                        headers:{
-                        'Authorization': `bearer ${this.token}`
-                                
-                        }, params: {
-                       limit: this.commentArray.length,
-                 }
-                    })
+                    getCommentsByArticleIdWithLimit(this.$route.params.id, this.token, this.commentArray.length)
                     .then((res)=>{
 
                         this.commentArray =res.data
@@ -111,18 +104,13 @@ IS THAT USELESS
 //METHOD update with the new comment
          updateVueComments(){
                 //GET all comment for this article for update
-                axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
-                            headers:{
-                            'Authorization': `bearer ${this.token}`
-                                    
-                            }, params: {
-                    limit: this.commentArray.length-1,
-                 }
-                        })
+                             this.added++  
+                          getCommentsByArticleIdWithLimit(this.$route.params.id, this.token, this.commentArray.length)
                         .then(res=>{
                                 this.commentArray = res.data      
                                 console.log(res)       
-                                this.content ="";   //clear textarea    
+                                this.content ="";   //clear textarea
+                                
                          })
 
         },
@@ -130,13 +118,7 @@ IS THAT USELESS
         form_submitComment(e){
             e.preventDefault()
                 //POST new comment
-                axios.post(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
-                     content: this.content
-                },{
-                    headers:{
-                        'Authorization': `bearer ${this.token}`
-                    }
-                })
+                createComment(this.$route.params.id, this.content, this.token) 
                 .then(response=>{
                     console.log(response.data, this.commentArray)
                     this.commentArray.unshift(response.data)
@@ -151,13 +133,8 @@ IS THAT USELESS
 //LIFE CYCLE
    mounted(){
        //GET all comments of this article
-     axios.get(`http://localhost:8080/api/articles/${this.$route.params.id}/comments`,{
-                   headers:{
-                      'Authorization': `bearer ${this.token}`                       
-                  },  params: {
-                       limit: 5
-                 }
-             })
+   
+             getCommentsByArticleIdWithLimit(this.$route.params.id, this.token, 5)
             .then((res)=>{
                 this.commentArray =res.data 
           }).catch(err=>{

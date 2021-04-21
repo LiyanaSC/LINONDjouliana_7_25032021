@@ -1,13 +1,14 @@
 import axios from 'axios'
 
-export function getAllArticles(token, page) {
+export function getAllArticles(token, page, added) {
     return axios.get('http://localhost:8080/api/articles', {
         headers: {
             'Authorization': `bearer ${token}`
 
         },
         params: {
-            page: page
+            page: page,
+            added: added
         }
     })
 }

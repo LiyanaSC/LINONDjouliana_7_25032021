@@ -44,13 +44,13 @@ export default {
                     console.log(response)
                     
                     
-                    this.$router.push({path:'/articles'})
-                    this.$store.state.tokenList.push(response.data.token,response.data.refreshToken)
                     this.$store.state.userId=response.data.userId
                     this.$store.state.admin=response.data.admin
                     this.$store.state.token=response.data.token
                     this.$store.state.refreshToken=response.data.refreshToken
 
+
+                    this.$router.push({path:'/articles'})
                     console.log("verif store",this.$store.state)
 
 

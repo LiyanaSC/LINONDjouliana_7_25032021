@@ -54,19 +54,18 @@ export default {
     }
   },
         computed: {
-        ...mapState(['userId']) 
+        ...mapState(['userId','token','refreshToken','admin']) 
     },
   methods:{
       hideSidebar(){
      this.show=false
   },
     disconnected(){
-      
-     this.$store.commit('CLEAR_STORE')
+ 
+this.$store.commit('CLEAR_STORE')
     
      window.clearInterval()
      this.$router.push({path:'/'}) 
-      console.log("c'est fini?",this.$store)
 
     },
     showSidebar(){
@@ -74,7 +73,8 @@ export default {
     }
 
   },
-mounted() { 
+ 
+/*mounted() { 
   console.log(this.userId)
 if(this.userId <= 0 || this.userId == undefined ){         //verified user before enter
     this.$router.push({path:'/'})    //redirect
@@ -82,7 +82,7 @@ if(this.userId <= 0 || this.userId == undefined ){         //verified user befor
   this.$store.dispatch("refreshMyToken") //start refresh
 
   }
-}
+}*/
 
 }
 </script>

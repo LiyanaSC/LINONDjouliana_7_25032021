@@ -7,17 +7,16 @@ import createPersistedState from "vuex-persistedstate" //to keep store info afte
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
     plugins: [createPersistedState({ //to keep store info after refresh
 
         storage: window.sessionStorage,
     })],
     state: {
-        tokenList: [],
-        token: "",
-        refreshToken: "",
-        userId: Number,
-        admin: Boolean,
+        token: null,
+        refreshToken: null,
+        userId: null,
+        admin: null
 
 
     },
@@ -29,12 +28,10 @@ export default new Vuex.Store({
             state.token = newToken
         },
         CLEAR_STORE(state) { //after disconnexion
-            state.tokenList = []
-            state.userId = 0
-            state.admin = false
-            state.token = ""
-            state.refreshToken = ""
-            console.log(state.tokenList, state.userId, state.admin, state.token, state.refreshToken)
+            state.userId = null
+            state.admin = null
+            state.token = null
+            state.refreshToken = null
         }
 
 
@@ -47,7 +44,6 @@ export default new Vuex.Store({
                         userId: state.userId,
                         admin: state.admin,
                         refreshToken: state.refreshToken,
-                        tokenList: state.tokenList,
 
                     }, {
                         headers: {
@@ -66,9 +62,11 @@ export default new Vuex.Store({
                     })
 
 
-            }, 10000); //after 3 seconde for the tests
+            }, 10000); //after 10 seconde for the tests
         }
     },
     modules: {},
 
 })
+
+export default store

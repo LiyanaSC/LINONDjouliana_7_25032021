@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import auth from '../views/auth.vue'
-
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -104,10 +104,27 @@ const routes = [{
         // this generates a separate chunk (singIn.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "home" */ '../views/Home.vue')
+            import ( /* webpackChunkName: "home" */ '../views/Home.vue'),
 
 
         //before enter
+        beforeEnter(to, from, next) {
+            if (store.state.admin != null ||
+                store.state.userId != null ||
+                store.state.refreshToken != null ||
+                store.state.token != null
+
+            ) {
+                console.log("c'est parti!", store.state.admin)
+                store.dispatch("refreshMyToken")
+                next()
+            } else {
+                //  window.alert("Vous n'êtes pas connecté!")
+                router.push('/')
+                console.log("unconnected!")
+
+            }
+        }
 
     },
 
@@ -136,9 +153,6 @@ const router = new VueRouter({
 })
 
 
-router.beforeEach((to, from, next) => {
-    console.log("change moi!")
-    next()
-})
+
 
 export default router
