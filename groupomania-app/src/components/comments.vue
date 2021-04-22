@@ -19,7 +19,7 @@
                     <p v-if="done" class="done">C'est fait!</p>
                     <Commentitems :comment="comment" @commentsUpdate="updateComments"/>    
                 </div>       
-                 <i @click="commentByFive" class="fas fa-chevron-circle-down" ></i>                   
+                 <i @click="commentByFive" v-show="moreComments" class="fas fa-chevron-circle-down" ></i>                   
          
               
     </div>
@@ -48,7 +48,8 @@ export default {
         done:false,
         commentArray:[],
         page:1,
-        added:0
+        added:0,
+        moreComments: true
 
         }    
     },    
@@ -63,6 +64,10 @@ methods:{
 
        getCommentsByArticleIdWithOffset(this.$route.params.id, this.token, page,this.added)
             .then((res)=>{
+                if(res.data.length ==0){
+                  this.moreComments=false
+                            
+                 }
                 res.data.forEach(data => {
                     this.commentArray.push(data) 
                 });

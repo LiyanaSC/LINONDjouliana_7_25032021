@@ -57,7 +57,8 @@ export default {
                 })
                 .catch(error=>{
                     console.log(error)
-              
+                                                    window.alert('L’adresse e-mail ou le mot de passe que vous avez saisi(e) n’est associé(e) à aucun compte')
+
  
 
                 })

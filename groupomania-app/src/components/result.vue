@@ -39,7 +39,7 @@
                         <Articleitems :article="article" />  
               
                 </div>
-                <i @click="pageByPage" class="fas fa-chevron-circle-down" ></i>
+                <i @click="pageByPage" v-show="moreArticle" class="fas fa-chevron-circle-down" ></i>
              
     </section>
 </template>
@@ -68,7 +68,8 @@ export default {
         title:"",
         description:"",
         page:0,
-        added: 0
+        added: 0,
+        moreArticle:true
         }
     },
 
@@ -116,8 +117,11 @@ pageByPage(){
         //GET article 5 by 5
                 getAllArticles(this.token, this.page,this.added)
                         .then(res=>{
-                    
-                            console.log("télécharger des article supp",res.data)
+                            if(res.data.length ==0){
+                               this.moreArticle=false
+                            
+                            }
+                            console.log("télécharger des article supp",res.data.length ==0)
                             res.data.forEach(data => {
                             this.articles.push(data)  //articles injected 
                                 
