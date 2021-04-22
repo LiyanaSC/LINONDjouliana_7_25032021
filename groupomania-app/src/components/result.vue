@@ -4,7 +4,7 @@
 
             <header class="header" > 
                 
-                    <p @click="open" class="header__create_post">Créer un post!</p>
+                    <p @click="open" v-if="!success" class="header__create_post">Créer un post!</p>
                     <h2 v-if="!success" class="header__title"> PAGEMANIA</h2>
 
          <!-- _________________________ FORM: create article ____________________________________ -->
