@@ -37,6 +37,9 @@ methods:{
             deleteUserById(this.userId, this.token)
             .then((res)=>{
                   console.log(res)
+                   
+            this.$store.commit('CLEAR_STORE')
+             window.clearInterval()
             }).catch(err=>{
                 console.log(err)
             })

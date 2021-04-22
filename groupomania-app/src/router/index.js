@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import auth from '../views/auth.vue'
 import store from '../store'
 
+
 Vue.use(VueRouter)
 
 const routes = [{
@@ -109,20 +110,21 @@ const routes = [{
 
         //before enter
         beforeEnter(to, from, next) {
-            if (store.state.admin != null ||
-                store.state.userId != null ||
-                store.state.refreshToken != null ||
-                store.state.token != null
+            if (store.state.admin == null ||
+                store.state.userId == null ||
+                store.state.refreshToken == null ||
+                store.state.token == null
+
 
             ) {
-                console.log("c'est parti!", store.state.admin)
-                store.dispatch("refreshMyToken")
-                next()
-            } else {
                 //  window.alert("Vous n'êtes pas connecté!")
                 router.push('/')
                 console.log("unconnected!")
+            } else {
 
+                console.log("c'est parti!", store.state)
+                store.dispatch("refreshMyToken")
+                next()
             }
         }
 

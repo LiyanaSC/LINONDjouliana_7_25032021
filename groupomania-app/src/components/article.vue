@@ -67,7 +67,7 @@ export default {
     Comments
 
   },
-    name: 'Result',
+    name: 'Article',
     data(){
         return{
           
