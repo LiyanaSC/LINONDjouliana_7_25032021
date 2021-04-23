@@ -5,14 +5,14 @@
            
              
             <div class="form__inputs"><!-- input lastname -->
-                    <label for="firstname">Nom</label>
-                    <input type="text" v-model="lastname" name="firstname" id="firstname" placeholder="Votre nom" aria-label="taper votre nom" pattern="[A-Za-z-0-9\p{L}]{2,200}" required>
+                    <label for="lastname">Nom</label>
+                    <input type="text" v-model="lastname" name="lastname" id="lastname" placeholder="Votre nom" aria-label="taper votre nom" pattern="[A-Za-z-0-9\p{L}]{2,200}" required>
                 </div>
 
                  
                  <div class="form__inputs"> <!-- input firstname -->
                     <label for="firstname">Prénom</label>
-                    <input type="text" v-model="firstname" name="lastname" id="lastname" placeholder="Votre prénom" aria-label="taper votre prénom" pattern="[A-Za-z-0-9\p{L}]{2,100}" required>
+                    <input type="text" v-model="firstname" name="firstname" id="firstname" placeholder="Votre prénom" aria-label="taper votre prénom" pattern="[A-Za-z-0-9\p{L}]{2,100}" required>
                 </div>
                 
                 

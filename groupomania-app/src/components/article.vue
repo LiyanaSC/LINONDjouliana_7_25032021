@@ -10,9 +10,9 @@
        <!-- icon text done -->
        <p v-if="done" class="done">C'est fait!</p>
        <!-- icon delete -->
-       <button @click="deleteArticle" class="delete" v-if="success"> <span class="textBtn">Supprimer</span> <i class="fas fa-trash-alt" aria-label="icône de suppression de l'article"></i></button>
+       <button @click="deleteArticle" class="delete" aria-label="bouton supprimé" v-if="success"> <span aria-label="bouton supprimé" class="textBtn">Supprimer</span> <i class="fas fa-trash-alt" aria-label="icône de suppression de l'article"></i></button>
        <!-- icon update -->
-       <button @click="showFormArticle" class="update" v-if="success"> <span class="textBtn">Modifier</span> <i class="fas fa-pencil-alt" aria-label="icône de modification de l'article"></i></button>
+       <button @click="showFormArticle" class="update" aria-label="bouton modifié" v-if="success"> <span aria-label="bouton supprimé" class="textBtn">Modifier</span> <i class="fas fa-pencil-alt" aria-label="icône de modification de l'article"></i></button>
              
         <h2  class="result__block__article_title">  {{ article.title }} </h2>                  
         <p>{{ article.description}} </p>
@@ -42,7 +42,7 @@
        
        <!-- _________________________ BOX: comments ____________________________________ --> 
         <div>           
-            <h3 :id="'commentCount'+article.id"> Commentaires: </h3>
+            <h3 > Commentaires: </h3>
             <Comments />
         </div>
 
@@ -168,7 +168,6 @@ export default {
     width: 75vw;
     overflow: auto;
     z-index: 7;
-    background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -184,12 +183,12 @@ export default {
   
     &__block{
         position: relative;
-        border: 1px grey solid;
+        border: 1px black solid;
         width: 80%;
         margin:40px;
         padding:10px;
         font-family: 'Roboto',sans-serif;
-        color: #073b4c;
+        color: rgb(14, 32, 65);
             @media (max-width: 900px) {
           width: 90vw;
           height: 100vh;
@@ -204,7 +203,7 @@ export default {
 
     }
     &__article_form{
-                        background-color: #ffd166;
+                        background-color: rgb(202, 200, 200);
                                         padding: 10px;
 
 
@@ -231,7 +230,7 @@ export default {
 }
 .delete{
  color: #fff;
- background-color: #ef476f;
+ background-color: rgb(194, 89, 93);
  position:absolute;
  border-radius: 10%;
  height: 30px;
@@ -253,7 +252,7 @@ export default {
 }
 .update{
  color: #fff;
- background-color: #ffd166;
+ background-color: rgb(14, 32, 65);
   position:absolute;
  border-radius: 10%;
  height: 30px;
@@ -303,7 +302,7 @@ export default {
     background: none;
     border: none;
     &:hover{
-        color: #ef476f;
+        color: rgb(194, 89, 93);
      
     }
 .fas{

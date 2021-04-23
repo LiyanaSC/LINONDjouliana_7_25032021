@@ -109,7 +109,6 @@ export default {
 .User{ //section
     width: 75vw;
     overflow: auto;
-    background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -130,7 +129,7 @@ export default {
         margin:40px;
         padding:10px;
         font-family: 'Roboto',sans-serif;
-        color: #073b4c;
+        color: rgb(14, 32, 65);
         display: flex;
         justify-content: center;
        
@@ -142,7 +141,7 @@ export default {
         align-items: center;
     }
     &__update{//IS THAT USEFULL
-        color: #ffd166;
+        color: rgb(14, 32, 65);
         &:hover{
             font-weight: bold;
         }

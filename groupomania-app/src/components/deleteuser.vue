@@ -59,7 +59,6 @@ methods:{
 .delete_accout{//section
     width: 75vw;
     overflow: auto;
-    background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -83,7 +82,7 @@ methods:{
         margin:40px;
         padding:10px;
         font-family: 'Roboto',sans-serif;
-        color: #073b4c;
+        color: rgb(14, 32, 65);
         display: flex;
         justify-content: center;
         text-align: center;
@@ -92,7 +91,7 @@ methods:{
 
     }
     &__deleted{//text to confirm 
-        color: #ef476f;
+        color: rgb(148, 60, 63);
         &:hover{
             font-weight: bold;
         }

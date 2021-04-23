@@ -3,11 +3,8 @@
                 
                     <h2  class="result__block__article_title" >{{ article.title }} </h2>
                     <p>{{ article.description}} </p>
-                    <div>
-                        <h3 :id="'commentCount'+article.id"></h3>
-                    </div>
                          
-                    <p id="createdBy" >Auteur {{ article.User.firstname}} {{ article.User.lastname}}</p>
+                    <p :id="'createdBy'+article.id" >Auteur {{ article.User.firstname}} {{ article.User.lastname}}</p>
 
     </div>
 </template>

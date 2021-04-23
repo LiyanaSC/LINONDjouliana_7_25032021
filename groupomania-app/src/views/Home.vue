@@ -2,6 +2,7 @@
     <!-- _________________________             HOME VIEW (contained all "results" view)               ____________________________________ -->
 
   <section class="home">      <!-- _________________________ pincipale view after connexion ____________________________________ -->
+   
     <i v-if="!show" @click="showSidebar" class="fas fa-plus-circle" aria-label="ouvrir la bar de navigation" ></i>     <!--  show the sidebad  -->
     <i  v-if="show" @click="hideSidebar" class="fas fa-times-circle" aria-label="fermer la bar de navigation"></i>          <!--  hide the sidebar  -->
 
@@ -17,18 +18,18 @@
         <nav class="sidebar__nav">
              <ul class="sidebar__nav__list">
                     <li  @click="hideSidebar"> <router-link to="/user"> Mon profil</router-link></li>      <!--  user info  -->
-                    <div class="line_80"></div>
+                    <li> <div class="line_80"></div></li>
 
-                    <li @click="hideSidebar"><i class="far fa-list-alt"></i> <router-link to="/articles" >Tous les posts</router-link></li>      <!--  get all post  -->
+                    <li @click="hideSidebar"><router-link to="/articles" ><i class="far fa-list-alt"></i> Tous les posts</router-link></li>      <!--  get all post  -->
                     
                     <li @click="hideSidebar"> <a href="#"><i class="fas fa-photo-video"></i> Médias</a> </li>      <!--  AGILE   -->
                     <li @click="hideSidebar"><a href="#"><i class="far fa-newspaper"></i> Articles</a></li>      <!-- AGILE -->
-                    <div class="line_80"></div>
-                    <li @click="hideSidebar"><i class="fas fa-shield-alt"></i><router-link to="/exemple2/"> À propos</router-link></li>      <!-- AGILE -->
-                    <li @click="hideSidebar"><i class="fas fa-lock"></i><router-link to="/exemple1/"> Confidentialité</router-link></li>         <!--  AGILE  -->
-                    <li @click="hideSidebar"><i class="fas fa-cogs"></i><router-link to="/delete"> Supprimer mon compte</router-link> </li>        <!--  delete account  -->
-                    <div class="line_80"></div>
-                    <li @click="disconnected"><i class="fas fa-power-off"></i> Déconnexion</li>      <!--  disconnect  -->
+                    <li> <div class="line_80"></div></li>
+                    <li @click="hideSidebar"><router-link to="/exemple2/"><i class="fas fa-shield-alt"></i> À propos</router-link></li>      <!-- AGILE -->
+                    <li @click="hideSidebar"><router-link to="/exemple1/"><i class="fas fa-lock"></i> Confidentialité</router-link></li>         <!--  AGILE  -->
+                    <li @click="hideSidebar"><router-link to="/delete"> <i class="fas fa-cogs"></i>Supprimer mon compte</router-link> </li>        <!--  delete account  -->
+                    <li> <div class="line_80"></div></li>
+                    <li @click="disconnected" class="disconnected"><i class="fas fa-power-off"></i> Déconnexion</li>      <!--  disconnect  -->
 
 
                 </ul>
@@ -47,7 +48,7 @@ import { mapState } from 'vuex' //store
 
 
 export default {
-  name:'home',
+  name:'Home',
   data(){
     return{
       show:false
@@ -88,10 +89,12 @@ this.$store.commit('CLEAR_STORE')
         transform: translateX(-400px);
     }
 }
-
+.disconnected{
+  color:rgb(202, 200, 200) ;
+}
 
 .fa-plus-circle{ //open sidebar
-  color: #ffd166;
+  color: rgb(14, 32, 65);
   position: fixed;
   top:10px;
  left: 10px;
@@ -107,7 +110,7 @@ this.$store.commit('CLEAR_STORE')
         }
 }
 .fa-times-circle{ //close sidebar
-   color: #ef476f;
+   color: rgb(194, 89, 93);
   position: fixed;
   top:10px;
  left: 10px;
@@ -135,7 +138,8 @@ this.$store.commit('CLEAR_STORE')
 .home{ //section
   width: 100vw;
   height: 100vh;
-  background-color: #fff;
+  background-color: rgb(202, 200, 200);
+  overflow: auto;
   position:absolute;
   top:0;
   z-index: auto;
@@ -152,7 +156,7 @@ this.$store.commit('CLEAR_STORE')
 }
 a{
     text-decoration: none;
-    color: #fff;
+    color: rgb(202, 200, 200);
     font-size: 1.5rem;
 }
 .box_animated_pic{
@@ -188,7 +192,7 @@ a{
     top: 0;
     width: 25vw;
     height: 100%;
-    background-color: #ffd166;
+    background-color: rgb(14, 32, 65);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -213,11 +217,12 @@ a{
         flex-direction: column;
         align-items: center;
         width: 100%;
+         color: #fff;
         &__list{
             width: 100%;
             list-style-type: none;
             font-family: 'Roboto',sans-serif;
-            color: #fff;
+           
             
             
         }

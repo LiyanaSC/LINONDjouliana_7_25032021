@@ -31,7 +31,7 @@ export default {
     width: 75vw;
     overflow: auto;
     z-index: 7;
-    background-color: #fff;
+ 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -46,7 +46,7 @@ export default {
         margin:40px;
         padding:10px;
         font-family: 'Roboto',sans-serif;
-        color: #073b4c;
+        color: rgb(14, 32, 65);
         display: flex;
         justify-content: center;
                 text-align: center;
@@ -55,7 +55,7 @@ export default {
 
     }
     &__deleted{
-        color: #ef476f;
+        color: rgb(194, 89, 93);
         &:hover{
             font-weight: bold;
         }

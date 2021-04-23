@@ -2,6 +2,7 @@
   <div id="app">
  <Index />
 
+
   </div>
 </template>
 <script>

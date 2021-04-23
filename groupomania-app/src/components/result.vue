@@ -34,11 +34,11 @@
 
 
          <!-- _________________________ BOX: for each article ____________________________________ -->
-                <div class="result__block" v-for="article in articles"  v-bind:key="article.id" :id="article.id" > 
+                <button class="result__block" v-for="article in articles"  v-bind:key="article.id" :id="article.id" aria-label="un élément article" > 
     
                         <Articleitems :article="article" />  
               
-                </div>
+                </button>
                 <i @click="pageByPage" v-show="moreArticle" class="fas fa-chevron-circle-down" ></i>
              
     </section>
@@ -161,7 +161,6 @@ mounted(){
     width: 75vw;
     overflow: auto;
     z-index: 7;
-    background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -177,13 +176,13 @@ mounted(){
   
     &__block{
   
-        border: 1px gray solid;
+        border: 1px black solid;
         width: 80%;
         margin:40px;
         padding:10px;
         font-family: 'Roboto',sans-serif;
-        color: #073b4c;
-    
+        color: rgb(14, 32, 65);
+        background-color: rgb(202, 200, 200);
         &__article_title{
             font-family: 'Marck Script',cursive;
            
@@ -194,10 +193,10 @@ mounted(){
 }
 .header{
     width: 75vw;
+    background-color: rgb(202, 200, 200);
    display: flex;
    font-family: 'Fjalla One',sans-serif;
    justify-content: flex-start;
-   background-color: #fff;
    padding: 10px;
    position: fixed;
    top: 0;
@@ -228,6 +227,7 @@ mounted(){
        justify-content: space-around;
        flex:1;
        align-items: flex-start;
+       
        &__div{
                   display: flex;
        flex-direction: row;
@@ -260,7 +260,7 @@ mounted(){
             right: 15px;
             font-size: 1.5rem;
             &:hover{
-                color: #ef476f;
+                color: rgb(194, 89, 93);
             }
         }
     }
@@ -269,7 +269,7 @@ mounted(){
 }
 .fa-chevron-circle-down{
     font-size: 5rem;
-    color: #118ab2;
+    color: rgb(14, 32, 65);
 }
 *{
       box-sizing: border-box;

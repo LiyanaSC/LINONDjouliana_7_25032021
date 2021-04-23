@@ -144,7 +144,7 @@ methods:{
     flex-direction: column;
     align-items: center;
    border: 1px black solid;
-       background-color: rgb(210, 241, 255);
+       background-color: rgb(202, 200, 200);
 
    padding: 0%;
    margin: 0%;
@@ -155,17 +155,14 @@ methods:{
       
         padding:10px;
         font-family: 'Roboto',sans-serif;
-        color: #073b4c;s
-        &__comments{
-              border: 1px #073b4c solid;
-        border-radius: 20%;
-        }
+        color:rgb(14, 32, 65) ;
+       
 
     }
 }
 .delete{
  color: #fff;
- background-color: #ef476f;
+ background-color: rgb(194, 89, 93);
  position:absolute;
  border-radius: 10%;
  height: 30px;
@@ -179,7 +176,7 @@ methods:{
 }
 .update{
  color: #fff;
- background-color: #ffd166;
+ background-color: rgb(14, 32, 65);
   position:absolute;
  border-radius: 10%;
  height: 30px;
