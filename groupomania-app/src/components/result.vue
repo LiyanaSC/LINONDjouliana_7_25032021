@@ -182,12 +182,8 @@ mounted(){
         padding:10px;
         font-family: 'Roboto',sans-serif;
         color: rgb(14, 32, 65);
-        background-color: rgb(202, 200, 200);
-        &__article_title{
-            font-family: 'Marck Script',cursive;
-           
-
-        }
+        background-color: #fff;
+   
 
     }
 }
@@ -225,6 +221,7 @@ mounted(){
        display: flex;
        flex-direction: column;
        justify-content: space-around;
+       width: 100%;
        flex:1;
        align-items: flex-start;
        

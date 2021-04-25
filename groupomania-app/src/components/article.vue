@@ -16,7 +16,7 @@
              
         <h2  class="result__block__article_title">  {{ article.title }} </h2>                  
         <p>{{ article.description}} </p>
-        <p class="createdBy">Auteur {{ article.User.firstname }} {{ article.User.lastname}}</p>
+        <p class="result__block__author">Auteur {{ article.User.firstname }} {{ article.User.lastname}}</p>
 
         <!-- _________________________ FORM: update article  ____________________________________ -->
         <form @submit="update" v-if="show" class="result__article_form">
@@ -184,6 +184,7 @@ export default {
     &__block{
         position: relative;
         border: 1px black solid;
+        background-color: #fff;
         width: 80%;
         margin:40px;
         padding:10px;
@@ -197,8 +198,11 @@ export default {
         
         }
         &__article_title{
-            font-family: 'Marck Script',cursive;
+           font-weight: bold;
             
+        }
+        &__author{
+             font-family: 'Marck Script',cursive;
         }
 
     }
