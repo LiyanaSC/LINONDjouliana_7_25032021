@@ -143,8 +143,6 @@ methods:{
     display: flex;
     flex-direction: column;
     align-items: center;
-   border: 1px black solid;
-       background-color: rgb(202, 200, 200);
 
    padding: 0%;
    margin: 0%;
@@ -156,7 +154,13 @@ methods:{
         padding:10px;
         font-family: 'Roboto',sans-serif;
         color:rgb(14, 32, 65) ;
-       
+       &__comments{
+             border-radius: 20px 20px 20px 20px;
+             background-color: rgb(202, 200, 200);
+             padding: 10px;
+             margin: 10px;
+
+       }
 
     }
 }
@@ -199,5 +203,8 @@ methods:{
 }
 .textaera{
 width: 95%;
+border-radius: 30px 30px 30px 30px;
+           padding: 10px;
+
 }
 </style>

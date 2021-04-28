@@ -240,11 +240,16 @@ mounted(){
            display: flex;
            width: 50%;
            min-height: 30px;
+           border-radius: 30px 30px 30px 30px;
+           padding: 10px;
+
 
         &__article_description{
             display: flex;
            min-height: 30px;
            width: 90%;
+           border-radius: 30px 30px 30px 30px;
+           padding: 10px;
 
 
         }

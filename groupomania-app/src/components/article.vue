@@ -208,7 +208,9 @@ export default {
     }
     &__article_form{
                         background-color: rgb(202, 200, 200);
-                                        padding: 10px;
+                                        padding: 10px;border-radius: 30px 30px 30px 30px;
+           padding: 10px;
+
 
 
         &__div{
@@ -217,6 +219,9 @@ export default {
             align-items: center;
             &__label{
                 font-weight: bold;
+                border-radius: 30px 30px 30px 30px;
+           padding: 10px;
+
             }
             &__textarea{
                 display: flex;
@@ -224,6 +229,9 @@ export default {
                 margin-top: 5px;
                 margin-right: 30px;
                 margin-left: 5px;
+                border-radius: 30px 30px 30px 30px;
+           padding: 10px;
+
             }
             &__btn{
                 border: 1px white solid;

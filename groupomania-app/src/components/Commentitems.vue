@@ -138,7 +138,7 @@ export default {
         width: initial;
         padding: 7px;
         position:absolute;
-        right: 0;
+        right: 40px;
 
         &:hover{
             color: rgb(194, 89, 93);
@@ -149,7 +149,7 @@ export default {
         width: initial;
         padding: 7px;
         position:absolute;
-        right: 40px;
+        right: 80px;
 
         &:hover{
             color: rgb(14, 32, 65);
@@ -158,7 +158,7 @@ export default {
 .CloseIcon{
         padding: 5px;
         position:absolute;
-        right: 80px;
+        right:120px;
         font-size: 1.1rem;
         height: 2.04rem;
         width: 2.04rem;
