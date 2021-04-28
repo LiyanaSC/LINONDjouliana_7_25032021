@@ -15,7 +15,7 @@
         <form @submit="updateComment" v-if="show" class="header__form" :id="'form'+comment.id">
 
                 <div class="header__form__div"><!--  textarea Comment to update -->
-                    <textarea  v-model="contentUpdate" class="header__form__article_title__article_description" type="text" name="firstname" id="firstname" aria-label="taper votre commentaire" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required></textarea>                    
+                    <textarea  v-model="comment.content" class="update_comment_textaera" type="text" name="firstname" id="firstname" aria-label="taper votre commentaire" pattern="[ A-Za-z-0-9\p{L}]{2,254}" required></textarea>                    
                 </div>
                 
                 <!-- btn  -->
@@ -38,7 +38,7 @@ export default {
         data(){
             return{
                 show:false,
-               contentUpdate: "",
+           
                showBtn:false,
 
             }
@@ -87,7 +87,7 @@ export default {
                e.preventDefault();
                 let articleId = localStorage.getItem("articleId")
                 //PUT the comment
-               updateCommentsById(articleId, this.comment.id, this.contentUpdate, this.token)
+               updateCommentsById(articleId, this.comment.id, this.comment.content, this.token)
                 .then(response=>{
                     console.log(response)
                     this.$emit('commentsUpdate')//emit to the parent
@@ -132,6 +132,12 @@ export default {
     
       display: initial;
      
+}
+.update_comment_textaera{
+    border-radius: 30px 30px 30px 30px;
+           padding: 10px;
+           width: 90%;
+
 }
 .btn_delete{
       
