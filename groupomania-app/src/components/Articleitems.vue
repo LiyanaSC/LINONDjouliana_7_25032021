@@ -6,6 +6,8 @@
                          
                     <p :id="'createdBy'+article.id" class="author" >Auteur {{ article.User.firstname}} {{ article.User.lastname}}</p>
 
+                    
+
     </div>
 </template>
 <script>

@@ -24,7 +24,7 @@ const routes = [{
     { // ________________________________ RESULT VIEW
         path: '/home',
         name: 'home',
-        children: [{
+      children: [{  
                 // ________________________________ USER INFO VIEW
                 path: '/user/',
                 name: 'user',
